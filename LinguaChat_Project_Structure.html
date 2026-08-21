@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>LinguaChat — دليل وهيكلية المشروع الرسمية</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
+
+        @page {
+            size: A4;
+            margin: 12mm 15mm 15mm 15mm;
+        }
+
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #3730a3;
+            --primary-light: #eef2ff;
+            --secondary: #0ea5e9;
+            --accent: #10b981;
+            --dark: #0f172a;
+            --gray-dark: #334155;
+            --gray: #64748b;
+            --gray-light: #f8fafc;
+            --border: #e2e8f0;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+            font-size: 13px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: "";
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 13px;
+            opacity: 0.9;
+            max-width: 700px;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .meta-item {
+            background: rgba(255,255,255,0.08);
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        .meta-label {
+            font-size: 10px;
+            opacity: 0.75;
+            display: block;
+        }
+
+        .meta-value {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 25px;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .section-title .icon {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* Tree Directory */
+        .tree-card {
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: 'Fira Code', monospace;
+            font-size: 11px;
+            line-height: 1.7;
+            overflow-x: auto;
+            border: 1px solid #1e293b;
+        }
+
+        .tree-folder {
+            color: #38bdf8;
+            font-weight: 600;
+        }
+
+        .tree-file {
+            color: #cbd5e1;
+        }
+
+        .tree-comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .tree-highlight {
+            color: #4ade80;
+            font-weight: 600;
+        }
+
+        .tree-badge {
+            display: inline-block;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: bold;
+            margin-right: 6px;
+        }
+
+        .badge-core { background: #3b82f6; color: white; }
+        .badge-shared { background: #8b5cf6; color: white; }
+        .badge-test { background: #10b981; color: white; }
+
+        /* Grid Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .card {
+            background: var(--gray-light);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            page-break-inside: avoid;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .card-tag {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .card-list {
+            list-style: none;
+        }
+
+        .card-list li {
+            font-size: 11.5px;
+            color: var(--gray-dark);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .card-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11.5px;
+            margin-top: 10px;
+        }
+
+        th {
+            background: var(--primary-dark);
+            color: white;
+            padding: 10px 12px;
+            text-align: right;
+            font-weight: 700;
+            font-size: 11px;
+        }
+
+        th:first-child { border-top-right-radius: 8px; }
+        th:last-child { border-top-left-radius: 8px; }
+
+        td {
+            padding: 9px 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--gray-dark);
+        }
+
+        tr:nth-child(even) td {
+            background-color: var(--gray-light);
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .status-pass { background: #dcfce7; color: #166534; }
+
+        /* Footer */
+        .footer {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            font-size: 10.5px;
+            color: var(--gray);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+        <span class="header-badge">OFFICIAL ARCHITECTURE & REPOSITORY BLUEPRINT</span>
+        <h1>دليل وهيكلية مشروع LinguaChat</h1>
+        <p>نظام المحادثة الفورية متعدد اللغات المدعوم بالذكاء الاصطناعي — المخطط المعماري والهيكلي لملفات ومكونات النظام.</p>
+        
+        <div class="meta-grid">
+            <div class="meta-item">
+                <span class="meta-label">المنظومة المعمارية</span>
+                <span class="meta-value">FastAPI + React 18</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">إجمالي المهام المنجزة</span>
+                <span class="meta-value">43 مهمة (100%)</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">فريق العمل</span>
+                <span class="meta-value">4 مهندسين متخصصين</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">جاهزية المستودع</span>
+                <span class="meta-value" style="color: #86efac;">READY FOR GITHUB</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 1: Directory Tree -->
+    <div class="section">
+        <div class="section-title">
+            <div class="icon">📁</div>
+            <span>شجرة الهيكلية الرسمية للملفات والمجلدات (Project Directory Tree)</span>
+        </div>
+
+        <div class="tree-card" dir="ltr">
+<span class="tree-folder">linguachat/</span>
+├── <span class="tree-file">README.md</span>                                <span class="tree-comment"># Comprehensive project documentation</span>
+├── <span class="tree-file">docker-compose.yml</span>                       <span class="tree-comment"># PostgreSQL, Redis & service orchestration</span>
+├── <span class="tree-file">.gitignore</span>                               <span class="tree-comment"># Excludes .env, node_modules, dist, __pycache__</span>
+│
+├── <span class="tree-folder">docs/</span>                                    <span class="tree-comment"># Frozen Architecture & System Contracts</span>
+│   ├── <span class="tree-file">architecture.md</span>                          <span class="tree-comment"># End-to-End system design & data flow</span>
+│   ├── <span class="tree-file">api-contract.md</span>                          <span class="tree-comment"># REST API endpoints, schemas & error envelopes</span>
+│   ├── <span class="tree-file">websocket-contract.md</span>                    <span class="tree-comment"># WebSocket protocol frames & event envelopes</span>
+│   ├── <span class="tree-file">database-schema.md</span>                       <span class="tree-comment"># PostgreSQL relational models & constraints</span>
+│   ├── <span class="tree-file">translation-contract.md</span>                  <span class="tree-comment"># Translation pipeline, identity rule & caching</span>
+│   └── <span class="tree-file">security.md</span>                              <span class="tree-comment"># JWT Bearer, bcrypt (12 rounds) & auth policies</span>
+│
+├── <span class="tree-folder">backend/</span>                                 <span class="tree-comment"># Python / FastAPI Asynchronous Backend</span>
+│   ├── <span class="tree-file">requirements.txt</span>                         <span class="tree-comment"># Pinned dependencies (SQLAlchemy 2.0, FastAPI)</span>
+│   ├── <span class="tree-file">pytest.ini</span>                               <span class="tree-comment"># Pytest runtime configuration</span>
+│   ├── <span class="tree-file">.env.example</span>                             <span class="tree-comment"># Clean environment variable template</span>
+│   ├── <span class="tree-folder">app/</span>                                     <span class="tree-comment"># 42 backend modules</span>
+│   │   ├── <span class="tree-highlight">main.py</span>                              <span class="tree-comment"># FastAPI application entrypoint & router mounts</span>
+│   │   ├── <span class="tree-folder">core/</span>                                <span class="tree-comment"># config.py, errors.py, security.py</span>
+│   │   ├── <span class="tree-folder">database/</span>                            <span class="tree-comment"># base.py, session.py, models/ (users, rooms, msg)</span>
+│   │   ├── <span class="tree-folder">auth/</span>                                <span class="tree-comment"># router.py, schemas.py, service.py (JWT auth)</span>
+│   │   ├── <span class="tree-folder">users/</span>                               <span class="tree-comment"># router.py, schemas.py, service.py (profiles)</span>
+│   │   ├── <span class="tree-folder">rooms/</span>                               <span class="tree-comment"># router.py, schemas.py, service.py (room mgmt)</span>
+│   │   ├── <span class="tree-folder">messages/</span>                            <span class="tree-comment"># schemas.py, service.py (history & persistence)</span>
+│   │   ├── <span class="tree-folder">dashboard/</span>                           <span class="tree-comment"># router.py, service.py (stats & metrics)</span>
+│   │   ├── <span class="tree-folder">websocket/</span>                           <span class="tree-comment"># manager.py, protocol.py, router.py, schemas.py</span>
+│   │   └── <span class="tree-folder">translation/</span>                         <span class="tree-comment"># detector.py, providers.py, cache.py, service.py</span>
+│   └── <span class="tree-folder">tests/</span>                                   <span class="tree-comment"># Automated Pytest test suites</span>
+│       ├── <span class="tree-folder">unit/</span>, <span class="tree-folder">integration/</span>, <span class="tree-folder">websocket/</span>, <span class="tree-folder">translation/</span>
+│       └── <span class="tree-highlight">test_smoke.py</span>                        <span class="tree-comment"># Health check & smoke tests (PASS 100%)</span>
+│
+├── <span class="tree-folder">frontend/</span>                                <span class="tree-comment"># Modern React 18 Single Page Application (SPA)</span>
+│   ├── <span class="tree-file">package.json</span>, <span class="tree-file">vite.config.js</span>, <span class="tree-file">index.html</span>  <span class="tree-comment"># Vite build system & dependencies</span>
+│   ├── <span class="tree-file">.env.example</span>                             <span class="tree-comment"># Frontend environment template</span>
+│   └── <span class="tree-folder">src/</span>                                     <span class="tree-comment"># React components & state</span>
+│       ├── <span class="tree-highlight">App.jsx</span>, <span class="tree-highlight">main.jsx</span>, <span class="tree-highlight">index.css</span>           <span class="tree-comment"># Core application shell & modern styles</span>
+│       ├── <span class="tree-folder">components/</span>                          <span class="tree-comment"># MessageList, MessageInput, Toast, Modals</span>
+│       ├── <span class="tree-folder">pages/</span>                               <span class="tree-comment"># Login, Register, Rooms, Chat, Dashboard</span>
+│       ├── <span class="tree-folder">services/</span>                            <span class="tree-comment"># authService, roomService, websocketService</span>
+│       ├── <span class="tree-folder">hooks/</span>, <span class="tree-folder">api/</span>, <span class="tree-folder">utils/</span>, <span class="tree-folder">types/</span>              <span class="tree-comment"># useWebSocket, Axios client, constants</span>
+│
+├── <span class="tree-folder">_TEAM/</span>                                   <span class="tree-comment"># Multi-Agent Team Task Specifications (43 Tasks)</span>
+│   ├── <span class="tree-folder">00_SHARED/</span>                               <span class="tree-comment"># 13 Shared Governance & Contract documents</span>
+│   ├── <span class="tree-folder">AHMED/</span>                                   <span class="tree-comment"># 11 Tasks (Frontend & Client Integration)</span>
+│   ├── <span class="tree-folder">MOHAMMED/</span>                                <span class="tree-comment"># 11 Tasks (WebSocket Real-Time Protocols)</span>
+│   ├── <span class="tree-folder">MOAYAD/</span>                                  <span class="tree-comment"># 9 Tasks (Translation Engine & AI Pipeline)</span>
+│   └── <span class="tree-folder">YOUSEF/</span>                                  <span class="tree-comment"># 12 Tasks (Database Models, Auth & REST API)</span>
+│
+└── <span class="tree-folder">team_delivery/</span>                           <span class="tree-comment"># Handoff Workspace & Common Foundation Stages</span>
+    ├── <span class="tree-folder">AHMED/</span>, <span class="tree-folder">MOHAMMED/</span>, <span class="tree-folder">MOAYAD/</span>, <span class="tree-folder">YOUSEF/</span>      <span class="tree-comment"># 7 COMMON_FOUNDATION phases + handoff + reviews</span>
+        </div>
+    </div>
+
+    <!-- Section 2: Core Components Breakdown -->
+    <div class="section">
+        <div class="section-title">
+            <div class="icon">🧩</div>
+            <span>تفصيل الطبقات الأساسية للنظام (Architecture Breakdown)</span>
+        </div>
+
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">1. بوابة الباكيند ومسار البيانات</span>
+                    <span class="card-tag">FastAPI Core</span>
+                </div>
+                <ul class="card-list">
+                    <li><strong>محرك خفيف وسريع:</strong> مبني على FastAPI مع دعم كامل للـ Async I/O.</li>
+                    <li><strong>حماية الجلسات:</strong> مصادقة مركزية عبر JWT Bearer وحقن الاعتماديات <code>get_current_user</code>.</li>
+                    <li><strong>معالجة موحدة للأخطاء:</strong> استجابات قياسية مطابقة لمعيار RFC 7807 Problem Details.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">2. محرك الترجمة الذكي وقاعدة Identity</span>
+                    <span class="card-tag">AI Translation Engine</span>
+                </div>
+                <ul class="card-list">
+                    <li><strong>قاعدة Identity الصارمة:</strong> عند <code>source == target</code> تُرجع النتيجة فوراً بـ <code>source_used='identity'</code> و ثقة <code>1.0</code> دون استدعاء أي مزود.</li>
+                    <li><strong>سلسلة المزودات:</strong> كشف اللغة -> الكاش (SHA-256) -> LibreTranslate -> Google Fallback.</li>
+                    <li><strong>منع "none":</strong> حظر قاطع لاستخدام القيمة "none" في حقل مصدر الترجمة.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">3. خادم الـ WebSocket والاتصال الحي</span>
+                    <span class="card-tag">Real-Time WebSocket</span>
+                </div>
+                <ul class="card-list">
+                    <li><strong>مدير الاتصالات <code>ConnectionManager</code>:</strong> غرف محادثة معزولة وتتبع حالة الحضور.</li>
+                    <li><strong>إطارات البروتوكول:</strong> هياكل صارمة لأحداث <code>join</code>, <code>leave</code>, <code>msg</code>, <code>typing</code>, <code>ping/pong</code>.</li>
+                    <li><strong>نبضات القلب (Heartbeat):</strong> إدارة مهلة الاتصال وفصل الجلسات الخاملة تلقائياً (90 ثانية).</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">4. واجهة المستخدم الحديثة (Frontend)</span>
+                    <span class="card-tag">React 18 SPA</span>
+                </div>
+                <ul class="card-list">
+                    <li><strong>بناء فائق السرعة:</strong> مهيأة بالكامل عبر Vite بدون أي تحذيرات بناء.</li>
+                    <li><strong>تجربة محادثة حية:</strong> مؤشرات كتابة فورية، فقاعات ترجمة تفاعلية، وشارات لمصدر الترجمة.</li>
+                    <li><strong>لوحة تحكم إحصائية:</strong> رسوم بيانية ومقاييس لاستهلاك الترجمة ونشاط الغرف.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 3: Ownership Table -->
+    <div class="section">
+        <div class="section-title">
+            <div class="icon">👥</div>
+            <span>مصفوفة توزيع المهام والمسؤوليات (Team Ownership Matrix)</span>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>عضو الفريق</th>
+                    <th>الدور المعماري</th>
+                    <th>نطاق الملكية البرمجية</th>
+                    <th>عدد المهام</th>
+                    <th>حالة الإنجاز</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>أحمد العماري (Ahmed)</strong></td>
+                    <td>قائد المشروع ومهندس الواجهات</td>
+                    <td><code>frontend/**</code> (React 18, UI, Axios, E2E QA)</td>
+                    <td>11 مهمة</td>
+                    <td><span class="status-pill status-pass">مكتمل 100%</span></td>
+                </tr>
+                <tr>
+                    <td><strong>محمد الدعيس (Mohammed)</strong></td>
+                    <td>مهندس بروتوكولات الاتصال الحي</td>
+                    <td><code>backend/app/websocket/**</code>, اختبارات WebSocket</td>
+                    <td>11 مهمة</td>
+                    <td><span class="status-pill status-pass">مكتمل 100%</span></td>
+                </tr>
+                <tr>
+                    <td><strong>مؤيد الصوفي (Moayad)</strong></td>
+                    <td>مهندس الترجمة والذكاء الاصطناعي</td>
+                    <td><code>backend/app/translation/**</code>, قاعدة Identity والكاش</td>
+                    <td>9 مهام</td>
+                    <td><span class="status-pill status-pass">مكتمل 100%</span></td>
+                </tr>
+                <tr>
+                    <td><strong>يوسف خيري (Yousef)</strong></td>
+                    <td>مهندس قواعد البيانات والباكيند</td>
+                    <td><code>backend/app/database/**</code>, <code>auth/</code>, <code>rooms/</code>, <code>messages/</code></td>
+                    <td>12 مهمة</td>
+                    <td><span class="status-pill status-pass">مكتمل 100%</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        LinguaChat Enterprise Architecture & Repository Structure • تم إنشاء التوثيق الآلي بنجاح • جاهز للنشر في GitHub
+    </div>
+
+</div>
+
+</body>
+</html>

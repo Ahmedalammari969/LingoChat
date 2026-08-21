@@ -1,0 +1,43 @@
+# ============================================================
+# LinguaChat Backend — Python Dependencies
+# ============================================================
+# Pin all versions for reproducibility.
+# Run: pip install -r requirements.txt
+# ============================================================
+
+# ── Core Framework ────────────────────────────────────────────
+fastapi==0.111.1
+uvicorn[standard]==0.30.1
+
+# ── Configuration ─────────────────────────────────────────────
+pydantic==2.7.4
+pydantic-settings==2.3.4
+
+# ── Database ──────────────────────────────────────────────────
+sqlalchemy[asyncio]==2.0.31
+asyncpg==0.29.0
+# Migrations (to be configured by Yousef Khairy)
+alembic==1.13.2
+
+# ── Security / Auth ───────────────────────────────────────────
+# Implementation: Yousef Khairy
+passlib[bcrypt]==1.7.4
+python-jose[cryptography]==3.3.0
+
+# ── HTTP Client (for Translation providers) ───────────────────
+# Implementation: Moayad Al-Soufi
+httpx==0.27.0
+
+# ── Language Detection ────────────────────────────────────────
+# Implementation: Moayad Al-Soufi
+# NOTE: langdetect may be replaced — Moayad to confirm before implementing
+langdetect==1.0.9
+
+# ── Redis Cache ───────────────────────────────────────────────
+# Implementation: Moayad Al-Soufi
+redis[asyncio]==5.0.7
+
+# ── Testing ───────────────────────────────────────────────────
+pytest==8.2.2
+pytest-asyncio==0.23.7
+httpx==0.27.0  # also used as async test client

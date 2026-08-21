@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>دليل العمل: يوسف خيري (Yousef Khairy)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap');
+        @page {
+            size: A4;
+            margin: 12mm;
+            @bottom-right {
+                content: counter(page);
+                font-family: 'Cairo', sans-serif;
+                font-size: 8.5pt;
+                color: #64748b;
+            }
+        }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            line-height: 1.55;
+            margin: 0;
+            padding: 0;
+            font-size: 9pt;
+        }
+        .hero {
+            background: linear-gradient(135deg, #090d16 0%, #1e1b4b 60%, #8b5cf6 100%);
+            color: #ffffff;
+            padding: 22px 18px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            page-break-after: avoid;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 8.5pt;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        h1.main-title {
+            font-size: 18pt;
+            font-weight: 900;
+            margin: 0 0 4px 0;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+        .sub-title { font-size: 11pt; color: #cbd5e1; margin-bottom: 10px; }
+        .meta-strip {
+            background: rgba(0, 0, 0, 0.35);
+            padding: 6px 12px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 8.5pt;
+        }
+        h1.section-title {
+            color: #0f172a;
+            font-size: 13pt;
+            font-weight: 900;
+            border-bottom: 2px solid #8b5cf6;
+            padding-bottom: 4px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            page-break-after: avoid;
+        }
+        h2 {
+            color: #0f172a;
+            font-size: 11.5pt;
+            font-weight: 800;
+            border-right: 5px solid #8b5cf6;
+            padding-right: 8px;
+            margin-top: 16px;
+            margin-bottom: 8px;
+            page-break-after: avoid;
+        }
+        h3 {
+            color: #1e293b;
+            font-size: 10pt;
+            font-weight: 700;
+            margin-top: 12px;
+            margin-bottom: 6px;
+            page-break-after: avoid;
+            background: #f1f5f9;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        h4 {
+            color: #334155;
+            font-size: 9pt;
+            font-weight: 700;
+            margin-top: 8px;
+            margin-bottom: 3px;
+            page-break-after: avoid;
+        }
+        p { margin: 0 0 6px 0; text-align: justify; }
+        .callout-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-right: 4px solid #f59e0b;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin: 8px 0;
+            page-break-inside: avoid;
+            font-size: 8.5pt;
+        }
+        .diagram {
+            background-color: #090d16;
+            color: #38bdf8;
+            padding: 8px 10px;
+            border-radius: 6px;
+            font-family: 'Fira Code', monospace;
+            font-size: 7.2pt;
+            line-height: 1.35;
+            direction: ltr;
+            text-align: left;
+            margin: 8px 0;
+            border: 1px solid #1e293b;
+            page-break-inside: avoid;
+        }
+        pre, code { font-family: 'Fira Code', monospace; direction: ltr; text-align: left; }
+        code {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-size: 8pt;
+        }
+        pre {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 7px 10px;
+            border-radius: 4px;
+            font-size: 7.5pt;
+            margin: 5px 0;
+            line-height: 1.3;
+            page-break-inside: avoid;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 8px 0;
+            font-size: 8.2pt;
+            page-break-inside: avoid;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 4px 6px;
+            text-align: right;
+        }
+        th { background-color: #f1f5f9; font-weight: 700; color: #0f172a; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+        .list-item {
+            margin-bottom: 3px;
+            padding-right: 4px;
+        }
+        .chk { font-size: 8.5pt; }
+        .divider {
+            border: 0;
+            height: 1px;
+            background: #e2e8f0;
+            margin: 14px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="badge">LinguaChat Engineering Handbook — Notion Standard Edition</div>
+    <div class="main-title">دليل العمل الكامل — يوسف خيري (Yousef Khairy)</div>
+    <div class="sub-title">مهندس النواة وقواعد البيانات والمصادقة والـ REST API (Backend & Database Lead)</div>
+    <div class="meta-strip">
+        <div><strong>المشروع:</strong> LinguaChat</div>
+        <div><strong>حالة النظام:</strong> Notion Ready &amp; Architecture Frozen 100%</div>
+    </div>
+</div>
+
+<h1 class="section-title">📘 دليل العمل الكامل — يوسف خيري (Yousef Khairy)</h1>
+<h2>👤 العضو</h2>
+<p><strong>يوسف خيري (Yousef Khairy)</strong></p>
+<h2>🎯 الدور</h2>
+<p><strong>مهندس النواة وقواعد البيانات والمصادقة والـ REST API (Backend & Database Lead)</strong></p>
+<h2>📦 نطاق العمل والملكية البرمجية</h2>
+<p><code>backend/app/database/<strong>, backend/app/auth/</strong>, backend/app/rooms/<strong>, backend/app/messages/</strong>, backend/app/dashboard/<strong>, backend/alembic/</strong>, team_delivery/YOUSEF/**</code></p>
+<h2>🚦 الحالة الحالية للمهام</h2>
+<li class="list-item"><strong>ما تم إنجازه:</strong> تجهيز البنية التحتية، الفهرسة، وهياكل المهام الـ 12 بالكامل.</li>
+<li class="list-item"><strong>ما لم يبدأ بعد:</strong> برمجة نماذج الجداول الخمسة، هجرات Alembic، تشفير Bcrypt/JWT، ومسارات Auth, Rooms, Messages, Dashboard.</li>
+<li class="list-item"><strong>ما ينتظر أعضاء آخرين:</strong> جاهز للعمل، ويوفر نماذج البيانات ومسارات الـ REST لكافة أعضاء الفريق.</li>
+<hr class="divider"/>
+<h1 class="section-title">📑 فهرس الدليل</h1>
+<p>1. [🏗️ 1. صورة النظام كاملة](#-1-صورة-النظام-كاملة)</p>
+<p>2. [🧭 2. مكان العضو داخل المعمارية](#-2-مكان-العضو-داخل-المعمارية)</p>
+<p>3. [📜 3. الميثاق البصري للقواعد الذهبية ومسار التنفيذ والتسليم](#-3-الميثاق-البصري-للقواعد-الذهبية-ومسار-التنفيذ-والتسليم)</p>
+<p>4. [🔐 4. حدود الملكية البرمجية](#-4-حدود-الملكية-البرمجية)</p>
+<p>5. [📊 5. جدول الحصر التنفيذي لمهام العضو ومكان الكود ومسار التسليم](#-5-جدول-الحصر-التنفيذي-لمهام-العضو-ومكان-الكود-ومسار-التسليم)</p>
+<p>6. [📚 6. الملفات المشتركة التي يجب قراءتها](#-6-الملفات-المشتركة-التي-يجب-قراءتها)</p>
+<p>7. [🧱 7. مراحل التأسيس المشترك COMMON FOUNDATION](#-7-مراحل-التأسيس-المشترك-common-foundation)</p>
+<p>8. [🤖 8. طريقة استخدام Antigravity IDE](#-8-طريقة-استخدام-antigravity-ide)</p>
+<p>9. [🔄 9. دورة تنفيذ المهمة الواحدة](#-9-دورة-تنفيذ-المهمة-الواحدة)</p>
+<p>10. [🧩 10. شرح المهام تفصيلياً خطوة بخطوة](#-10-شرح-المهام-تفصيلياً-خطوة-بخطوة)</p>
+<p>11. [🧪 11. منظومة الاختبارات وطريقة التشغيل](#-11-منظومة-الاختبارات-وطريقة-التشغيل)</p>
+<p>12. [🛡️ 12. الضوابط والمتطلبات الأمنية](#-12-الضوابط-والمتطلبات-الأمنية)</p>
+<p>13. [🔌 13. مصفوفة التكامل والاعتمادية مع بقية الفريق](#-13-مصفوفة-التكامل-والاعتمادية-مع-بقية-الفريق)</p>
+<p>14. [🚨 14. الحالات الحدية والمشاكل المحتملة](#-14-الحالات-الحدية-والمشاكل-المحتملة)</p>
+<p>15. [🛑 15. بروتوكول التصعيد والتعامل مع الأخطاء](#-15-بروتوكول-التصعيد-والتعامل-مع-الأخطاء)</p>
+<p>16. [📦 16. بروتوكول التسليم والاعتماد النهائي](#-16-بروتوكول-التسليم-والاعتماد-النهائي)</p>
+<p>17. [📊 17. لوحة تتبع الإنجاز (Progress Tracker)](#-17-لوحة-تتبع-الإنجاز-progress-tracker)</p>
+<p>18. [🏁 18. بوابة الاعتماد النهائي (FINAL GATE)](#-18-بوابة-الاعتماد-النهائي-final-gate)</p>
+<hr class="divider"/>
+<h1 class="section-title">🏗️ 1. صورة النظام كاملة</h1>
+<p>مشروع <strong>LinguaChat</strong> هو منصة محادثة جماعية فورية متعددة اللغات قائمة على معمارية معزولة تعتمد على FastAPI في الباك إند، React في الواجهة الأمامية، LibreTranslate لخدمات الترجمة الذكية، و PostgreSQL لحفظ البيانات.</p>
+<h3>المشكلة التي يحلها النظام:</h3>
+<p>إتاحة المحادثة الفورية السلسة بين أشخاص يتحدثون لغات مختلفة، بحيث يكتب كل مستخدم بلغته الأم، ويستلم بقية الأعضاء الرسالة مترجمة تلقائياً إلى لغاتهم المفضلة في أجزاء من الثانية.</p>
+<div class="diagram"><pre><code>flowchart TB
+    CLIENT["عميل الواجهة الأمامية (Ahmed)"]
+    WS_ENGINE["خادم الـ WebSocket (Mohammed)"]
+    subgraph BACKEND_CORE["Backend Core & REST Layer (Yousef)"]
+        AUTH_ROUTER["POST /api/v1/auth/register & login"]
+        ROOMS_ROUTER["GET & POST /api/v1/rooms"]
+        MEMBERSHIP["POST /api/v1/rooms/{id}/join"]
+        MSG_HISTORY["GET /api/v1/rooms/{id}/messages"]
+        DASH_ROUTER["GET /api/v1/dashboard/stats"]
+        SEC_LAYER["Security Layer (Bcrypt cost 12 & JWT HS256)"]
+        AUTH_DEP["get_current_user Dependency"]
+    end
+    subgraph DATABASE_LAYER["PostgreSQL Database Layer"]
+        MODELS["SQLAlchemy Async Models (UUIDv4)"]
+        ALEMBIC["Alembic Migrations"]
+        TABLES[("5 Tables: users, rooms, room_members, messages, translations")]
+    end
+    CLIENT --> AUTH_ROUTER
+    CLIENT --> ROOMS_ROUTER
+    CLIENT --> MEMBERSHIP
+    CLIENT --> MSG_HISTORY
+    CLIENT --> DASH_ROUTER
+    WS_ENGINE -->|Verify Token & Membership| SEC_LAYER
+    WS_ENGINE -->|Persist Message| MODELS
+    AUTH_ROUTER --> SEC_LAYER
+    ROOMS_ROUTER --> AUTH_DEP
+    MSG_HISTORY --> AUTH_DEP
+    AUTH_DEP --> SEC_LAYER
+    SEC_LAYER --> MODELS
+    MODELS --> TABLES</code></pre></div>
+<hr class="divider"/>
+<h1 class="section-title">🧭 2. مكان العضو داخل المعمارية</h1>
+<div class="diagram"><pre><code>flowchart LR
+    YOUSEF["يوسف خيري (Backend Lead)"]
+    subgraph OWNED["نطاق الملكية"]
+        DB["backend/app/database/**"]
+        AUTH["backend/app/auth/**"]
+        ROOMS["backend/app/rooms/**"]
+        MESSAGES["backend/app/messages/**"]
+        DASHBOARD["backend/app/dashboard/**"]
+        ALEMBIC["backend/alembic/**"]
+        TESTS["backend/tests/unit/**"]
+    end
+    YOUSEF --> OWNED
+    OWNED -->|REST Endpoints| AHMED_UI["واجهات أحمد (Auth, Rooms, Dashboard)"]
+    OWNED -->|JWT Decode & Save Msg| MOHAMMED_WS["خادم محمد (WebSocket)"]</code></pre></div>
+<hr class="divider"/>
+<h1 class="section-title">📜 3. الميثاق البصري للقواعد الذهبية ومسار التنفيذ والتسليم</h1>
+<div class="callout-box">💡 <strong>خريطة الطريق:</strong> يوضح المخطط أدناه القواعد الصارمة الحاكمة لعملك، ومكان كتابة الكود، وكيفية فحص واختبار المهمة، وأين يتم تسليم التقرير النهائي تمهيداً للدمج في الفرع الرئيسي:</div>
+<div class="diagram"><pre><code>flowchart TB
+    subgraph CONSTITUTION["📜 الدستور البرمجي والقواعد الذهبية (The Golden Rules)"]
+        R1["1. عزل الملكية: ممنوع كتابة أي سطر خارج مجلدك"]
+        R2["2. تجميد العقود: مسارات الـ API وأنواع الـ WS مجمدة"]
+        R3["3. قاعدة Identity: ممنوع استخدام 'none' نهائياً"]
+        R4["4. حظر الأسرار: كافة المفاتيح تقرأ من .env حصراً"]
+        R5["5. قاعدة Stop & Fail: لا تسليم إذا كان الاختبار FAIL"]
+    end
+
+    subgraph WORKFLOW["🔄 مسار العمل التنفيذي وموقع الكود والتسليم"]
+        direction TB
+        STEP1["1. استلام المهمة<br><code>team_delivery/.../tasks/TASK-XX/</code>"]
+        STEP2["2. كتابة وتعديل الكود<br><b>مكان الكود المسموح لك فقط</b>"]
+        STEP3["3. تشغيل الاختبار الآلي<br><code>pytest / npm test (PASS 100%)</code>"]
+        STEP4["4. مراجعة الذكاء الاصطناعي<br><code>03_EXTERNAL_AI_REVIEW.md</code>"]
+        STEP5["5. توثيق وتسليم الإنجاز<br><code>team_delivery/.../handoff/TASK-XX.md</code>"]
+
+        STEP1 --> STEP2
+        STEP2 --> STEP3
+        STEP3 --> STEP4
+        STEP4 --> STEP5
+    end
+
+    subgraph MERGE_GATE["🏁 بوابة الدمج النهائي والاعتماد"]
+        GATE["مراجعة واعتماد قائد المشروع (أحمد العماري)<br><b>الدمج في الفرع الرئيسي للمشروع</b>"]
+    end
+
+    CONSTITUTION -.->|حاكم لكافة الخطوات| WORKFLOW
+    STEP5 --> GATE</code></pre></div>
+<hr class="divider"/>
+<h1 class="section-title">🔐 4. حدود الملكية البرمجية</h1>
+<div class="callout-box">⚠️ <strong>تنبيه صارم:</strong> لا يحق لك كتابة أو تعديل أي سطر برمجي خارج نطاق ملكيتك المباشرة المبينة في الجدول أدناه.</div>
+<table>
+<tr><th>المسار البرمجي</th><th>الحالة الرسمية</th><th>الشرح والمسؤولية</th></tr>
+<tr><td>`backend/app/database/**`</td><td>🟢 مسموح ومملوك بالكامل</td><td>نماذج الجداول، محرك PostgreSQL، وجلسات AsyncSession</td></tr>
+<tr><td>`backend/app/auth/**`</td><td>🟢 مسموح ومملوك بالكامل</td><td>مسارات التسجيل والدخول وتوابع get_current_user</td></tr>
+<tr><td>`backend/app/rooms/**`</td><td>🟢 مسموح ومملوك بالكامل</td><td>مسارات إنشاء واستعراض والانضمام للغرف</td></tr>
+<tr><td>`backend/app/messages/**`</td><td>🟢 مسموح ومملوك بالكامل</td><td>مسارات استرجاع سجل الرسائل المترجمة التاريخية</td></tr>
+<tr><td>`backend/app/dashboard/**`</td><td>🟢 مسموح ومملوك بالكامل</td><td>مسار إحصائيات النظام ومقاييس الأداء</td></tr>
+<tr><td>`backend/alembic/**`</td><td>🟢 مسموح ومملوك بالكامل</td><td>إدارة هجرات قاعدة البيانات وسكريبتات الترقية</td></tr>
+<tr><td>`backend/tests/unit/**`</td><td>🟢 مسموح</td><td>اختبارات الـ Unit لكافة مسارات ونماذج الباك إند</td></tr>
+<tr><td>`frontend/**`</td><td>🔴 ممنوع منعاً باتاً</td><td>ملكية أحمد العماري</td></tr>
+<tr><td>`backend/app/websocket/**`</td><td>🔴 ممنوع منعاً باتاً</td><td>ملكية محمد الداعس</td></tr>
+<tr><td>`backend/app/translation/**`</td><td>🔴 ممنوع منعاً باتاً</td><td>ملكية مؤيد الصوفي</td></tr>
+</table>
+<div class="diagram"><pre><code>flowchart TD
+    subgraph ALLOWED["🟢 النطاق المصرح به ليوسف"]
+        Y1["backend/app/database/**"]
+        Y2["backend/app/auth/**"]
+        Y3["backend/app/rooms/**"]
+        Y4["backend/app/messages/**"]
+        Y5["backend/app/dashboard/**"]
+        Y6["backend/alembic/**"]
+        Y7["backend/tests/unit/**"]
+    end
+    subgraph FORBIDDEN["🔴 النطاق المحظور تماماً"]
+        F1["frontend/** (Ahmed)"]
+        F2["backend/app/websocket/** (Mohammed)"]
+        F3["backend/app/translation/** (Moayad)"]
+        F4["docs/** (Frozen Contracts)"]
+    end</code></pre></div>
+<hr class="divider"/>
+<h1 class="section-title">📊 5. جدول الحصر التنفيذي لمهام العضو ومكان الكود ومسار التسليم</h1>
+<div class="callout-box">🎯 <strong>جدول الإدارة السريع:</strong> يلخص هذا الجدول لكافة المهام: رقم المهمة، الهدف الهندسي، مكان الملفات المستهدفة بالكود، أمر الاختبار المطلوب، ومسار تسليم التقرير النهائي في `handoff/`:</div>
+<table>
+<tr><th>#</th><th>المهمة</th><th>الهدف من المهمة</th><th>مكان الكود والملفات المستهدفة</th><th>أمر الاختبار</th><th>مسار التسليم بعد الإنجاز</th></tr>
+<tr><td>01</td><td>**`TASK-01-DATABASE-FOUNDATION`**</td><td>إعداد محرك SQLAlchemy غير المتزامن `create_async_engine` في database/session.py وإدارة سياق الجلسات `get_db`.</td><td>`backend/app/database/session.py`<br>`backend/app/database/base.py`</td><td>`فحص وتشغيل`</td><td>`team_delivery/YOUSEF/handoff/TASK-01-DATABASE-FOUNDATION.md`</td></tr>
+<tr><td>02</td><td>**`TASK-02-DATABASE-MODELS`**</td><td>إنشاء نماذج الجداول الخمسة في models.py: User, Room, RoomMember, Message, MessageTranslation بمعرفات UUIDv4 والفهارس.</td><td>`backend/app/database/models.py`</td><td>`pytest backend/tests/unit/test_models.py`</td><td>`team_delivery/YOUSEF/handoff/TASK-02-DATABASE-MODELS.md`</td></tr>
+<tr><td>03</td><td>**`TASK-03-DATABASE-MIGRATIONS`**</td><td>ضبط ملفات Alembic (env.py, alembic.ini) وتوليد أول هجرة أولية `001_initial_schema` وتطبيقها على قاعدة البيانات.</td><td>`backend/alembic/env.py`<br>`backend/alembic.ini`</td><td>`alembic upgrade head`</td><td>`team_delivery/YOUSEF/handoff/TASK-03-DATABASE-MIGRATIONS.md`</td></tr>
+<tr><td>04</td><td>**`TASK-04-SECURITY-AND-PASSWORD-HASHING`**</td><td>برمجة دوال تجزئة كلمات المرور عبر Passlib Bcrypt (cost 12)، وتوليد وفك رموز JWT عبر PyJWT (HS256, 60 min).</td><td>`backend/app/core/security.py`</td><td>`pytest backend/tests/unit/test_security.py`</td><td>`team_delivery/YOUSEF/handoff/TASK-04-SECURITY-AND-PASSWORD-HASHING.md`</td></tr>
+<tr><td>05</td><td>**`TASK-05-AUTH-REGISTRATION-API`**</td><td>برمجة مسار التسجيل: التحقق من فرادة اسم المستخدم، تشفير كلمة المرور، حفظ السجل، وإرجاع بيانات المستخدم برمز 201 Created.</td><td>`backend/app/auth/router.py`<br>`backend/app/auth/service.py`</td><td>`pytest backend/tests/unit/test_auth_register.py`</td><td>`team_delivery/YOUSEF/handoff/TASK-05-AUTH-REGISTRATION-API.md`</td></tr>
+<tr><td>06</td><td>**`TASK-06-AUTH-LOGIN-JWT-API`**</td><td>برمجة مسار تسجيل الدخول: التحقق من اسم المستخدم وكلمة المرور، وإصدار رمز JWT صالح لمدة 60 دقيقة.</td><td>`backend/app/auth/router.py`<br>`backend/app/auth/service.py`</td><td>`pytest backend/tests/unit/test_auth_login.py`</td><td>`team_delivery/YOUSEF/handoff/TASK-06-AUTH-LOGIN-JWT-API.md`</td></tr>
+<tr><td>07</td><td>**`TASK-07-USERS-AUTH-DEPENDENCY`**</td><td>إنشاء تابع FastAPI Dependency `get_current_user` لاستخراج الـ Bearer Token، فك تشفيره، وجلب المستخدم من قاعدة البيانات.</td><td>`backend/app/auth/dependencies.py`</td><td>`pytest backend/tests/unit/test_auth_dependencies.py`</td><td>`team_delivery/YOUSEF/handoff/TASK-07-USERS-AUTH-DEPENDENCY.md`</td></tr>
+<tr><td>08</td><td>**`TASK-08-ROOMS-MANAGEMENT-API`**</td><td>برمجة مسارات إدارة الغرف: إنشاء غرفة جديدة POST /rooms، استعراض الغرف المتاحة GET /rooms، وجلب تفاصيل غرفة GET /rooms/{id}.</td><td>`backend/app/rooms/router.py`<br>`backend/app/rooms/service.py`</td><td>`pytest backend/tests/unit/test_rooms_api.py`</td><td>`team_delivery/YOUSEF/handoff/TASK-08-ROOMS-MANAGEMENT-API.md`</td></tr>
+<tr><td>09</td><td>**`TASK-09-ROOM-MEMBERSHIP-API`**</td><td>برمجة مسار الانضمام للغرفة POST /rooms/{id}/join، ومسار استعراض الأعضاء GET /rooms/{id}/members.</td><td>`backend/app/rooms/router.py`<br>`backend/app/rooms/service.py`</td><td>`pytest backend/tests/unit/test_room_members.py`</td><td>`team_delivery/YOUSEF/handoff/TASK-09-ROOM-MEMBERSHIP-API.md`</td></tr>
+<tr><td>10</td><td>**`TASK-10-MESSAGE-PERSISTENCE-AND-HISTORY-API`**</td><td>برمجة مسار جلب سجل الرسائل المترجمة السابقة للغرفة، مع ترقيم الصفحات (limit/offset) والتحقق من العضوية.</td><td>`backend/app/messages/router.py`<br>`backend/app/messages/service.py`</td><td>`pytest backend/tests/unit/test_messages_history.py`</td><td>`team_delivery/YOUSEF/handoff/TASK-10-MESSAGE-PERSISTENCE-AND-HISTORY-API.md`</td></tr>
+<tr><td>11</td><td>**`TASK-11-DASHBOARD-STATS-API`**</td><td>برمجة مسار الإحصائيات العامة: إجمالي المستخدمين، الغرف، الرسائل، اللغات الأكثر استخداماً، ومعدلات الكاش.</td><td>`backend/app/dashboard/router.py`<br>`backend/app/dashboard/service.py`</td><td>`pytest backend/tests/unit/test_dashboard_stats.py`</td><td>`team_delivery/YOUSEF/handoff/TASK-11-DASHBOARD-STATS-API.md`</td></tr>
+<tr><td>12</td><td>**`TASK-12-BACKEND-INTEGRATION-AND-FINAL-QA`**</td><td>تشغيل حزمة الاختبارات الشاملة لكافة مسارات الـ REST ونماذج قاعدة البيانات والتأكد من نجاح 100%.</td><td>`backend/tests/unit/**`</td><td>`فحص وتشغيل`</td><td>`team_delivery/YOUSEF/handoff/TASK-12-BACKEND-INTEGRATION-AND-FINAL-QA.md`</td></tr>
+</table>
+<hr class="divider"/>
+<h1 class="section-title">📚 6. الملفات المشتركة التي يجب قراءتها</h1>
+<h3>1. يجب قراءته أولاً (Mandatory First)</h3>
+<li class="list-item"><strong><code>_TEAM/00_SHARED/DATABASE_CONTRACT.md</code></strong>: العقد الحاكم لنماذج الجداول الخمسة والأنواع والـ UUIDs.</li>
+<li class="list-item"><strong><code>_TEAM/00_SHARED/API_CONTRACT.md</code></strong>: العقد الحاكم لمسارات الـ REST API ونماذج الاستجابة الموحدة.</li>
+<h3>2. يجب قراءته قبل التنفيذ (Before Implementation)</h3>
+<li class="list-item"><strong><code>_TEAM/00_SHARED/SECURITY_CONTRACT.md</code></strong>: معايير تشفير Bcrypt ورموز JWT HS256.</li>
+<li class="list-item"><strong><code>_TEAM/00_SHARED/PROJECT_CONSTITUTION.md</code></strong>: قواعد عزل التعديلات وتجميد العقود.</li>
+<h3>3. مرجع مستمر أثناء العمل (Ongoing Reference)</h3>
+<li class="list-item"><strong><code>_TEAM/00_SHARED/CODING_RULES.md</code></strong>: قواعد الـ Async SQLAlchemy والتعامل مع الجلسات.</li>
+<li class="list-item"><strong><code>_TEAM/00_SHARED/DELIVERY_RULES.md</code></strong>: معايير تسليم واختبار الباك إند.</li>
+<hr class="divider"/>
+<h1 class="section-title">🧱 7. مراحل التأسيس المشترك COMMON FOUNDATION</h1>
+<p>قبل البدء في تنفيذ المهام الفردية، يمر العضو بمراحل التأسيس السبع لضمان استيعاب كافة القواعد والعقود:</p>
+<div class="diagram"><pre><code>flowchart LR
+    A["01 Orientation"] --> B["02 Architecture"]
+    B --> C["03 Coding Rules"]
+    C --> D["04 Security"]
+    D --> E["05 Integration"]
+    E --> F["06 Member Specific"]
+    F --> G["07 Final Gate"]
+
+    G -->|PASS 100%| TASKS["🔓 فتح المهام الفردية"]
+    G -->|FAIL| FIX["🛠️ مراجعة وتصحيح"]
+    FIX --> G</code></pre></div>
+<li class="list-item"><strong>01 Orientation:</strong> استيعاب دور الباك إند كعمود فقري للبيانات والمصادقة في LinguaChat.</li>
+<li class="list-item"><strong>02 Architecture:</strong> معمارية FastAPI و SQLAlchemy Async ونمط التوجيه الموديلاري.</li>
+<li class="list-item"><strong>03 Coding Rules:</strong> استخدام الجلسات غير المتزامنة وإغلاقها بأمان مع <code>async with</code>.</li>
+<li class="list-item"><strong>04 Security:</strong> تشفير كلمات المرور بـ Bcrypt cost 12 وحجب <code>hashed_password</code> تماماً.</li>
+<li class="list-item"><strong>05 Integration:</strong> نموذج الاستجابة المعياري <code>data/error</code> وتوحيد أكواد الحالة.</li>
+<li class="list-item"><strong>06 Database Specific:</strong> استخدام هجرات Alembic وتطبيق قيود المفاتيح الأجنبية والـ UUIDs.</li>
+<li class="list-item"><strong>07 Final Gate:</strong> نجاح كافة اختبارات <code>pytest backend/tests/unit/</code> بنسبة 100%.</li>
+<hr class="divider"/>
+<h1 class="section-title">🤖 8. طريقة استخدام Antigravity IDE</h1>
+<p>اتبع هذا الدليل التفاعلي خطوة بخطوة عند تنفيذ أي مهمة داخل الـ IDE:</p>
+<div class="diagram"><pre><code>flowchart TD
+    S1["1. فتح مجلد المهمة في tasks/"] --> S2["2. قراءة TASK.md بالكامل"]
+    S2 --> S3["3. نسخ برومبت 01_IMPLEMENT_IDE.md"]
+    S3 --> S4["4. لصق البرومبت في Antigravity IDE"]
+    S4 --> S5["5. تنفيذ الكود آلياً داخل ملفاتك"]
+    S5 --> S6["6. نسخ برومبت 02_TEST_IDE.md"]
+    S6 --> S7["7. تشغيل الاختبار في الـ Terminal"]
+    S7 --> CHK1{"هل الاختبار PASSED؟"}
+    CHK1 -->|لا FAIL| FIX1["إصلاح الكود فوراً داخل ملفك"]
+    FIX1 --> S7
+    CHK1 -->|نعم PASS| S8["8. نسخ 03_EXTERNAL_AI_REVIEW.md"]
+    S8 --> S9["9. لصق البرومبت في ChatGPT / Claude"]
+    S9 --> CHK2{"هل المراجعة PASS؟"}
+    CHK2 -->|لا FAIL| FIX2["تعديل الملاحظات الحرجة"]
+    FIX2 --> S7
+    CHK2 -->|نعم PASS| S10["10. كتابة تقرير التسليم في handoff/"]
+    S10 --> S11["11. الانتقال للمهمة التالية"]</code></pre></div>
+<h3>الخطوات التفصيلية للعمل:</h3>
+<p>1. <strong>افتح مجلد المهمة:</strong> توجه إلى <code>team_delivery/YOUSEF/tasks/<TASK_ID>/</code>.</p>
+<p>2. <strong>اقرأ ملف <code>TASK.md</code>:</strong> افهم الهدف، الملفات المسموحة والمحظورة، وشروط النجاح.</p>
+<p>3. <strong>انسخ محتوى <code>01_IMPLEMENT_IDE.md</code> بالكامل:</strong> أرسله لمحادثة Antigravity IDE.</p>
+<p>4. <strong>دع الـ IDE ينفذ الكود:</strong> راقب التعديلات وتأكد أنها تمت فقط داخل ملفاتك المصرحة.</p>
+<p>5. <strong>افتح <code>02_TEST_IDE.md</code>:</strong> انسخ أمر الاختبار وشغله في الـ Terminal.</p>
+<p>6. <strong>تحقق من النتيجة:</strong> ممنوع الانتقال إذا كانت النتيجة <code>FAIL</code>. أصلح الكود حتى يصبح <code>PASSED</code> باللون الأخضر.</p>
+<p>7. <strong>افتح <code>03_EXTERNAL_AI_REVIEW.md</code>:</strong> انسخ البرومبت وافحصه عبر ذكاء اصطناعي خارجي مستقل.</p>
+<p>8. <strong>وثق الإنجاز:</strong> أنشئ تقرير المهمة في مجلد <code>handoff/</code> وانتقل للمهمة التالية.</p>
+<hr class="divider"/>
+<h1 class="section-title">🔄 9. دورة تنفيذ المهمة الواحدة</h1>
+<div class="diagram"><pre><code>flowchart TD
+    A["📄 TASK.md"] --> B["⚙️ 01_IMPLEMENT_IDE.md"]
+    B --> C["💻 تنفيذ Antigravity IDE"]
+    C --> D["🧪 02_TEST_IDE.md"]
+    D --> E["⚡ تشغيل الاختبارات الآلية"]
+    E --> F{"هل النتيجة PASSED 100%؟"}
+    F -->|لا FAIL| K["🛑 التوقف وتحليل الخطأ وإصلاحه"]
+    K --> C
+    F -->|نعم PASS| G["☁️ 03_EXTERNAL_AI_REVIEW.md"]
+    G --> H["🔍 مراجعة الذكاء الاصطناعي الخارجي"]
+    H --> I{"هل المراجعة معتمدة؟"}
+    I -->|لا ملاحظات حرجة| K
+    I -->|نعم APPROVED| J["📦 توثيق الإنجاز في handoff/ والتسليم"]</code></pre></div>
+<hr class="divider"/>
+<h1 class="section-title">🧩 10. شرح المهام تفصيلياً خطوة بخطوة</h1>
+<h3>📌 TASK-01-DATABASE-FOUNDATION — تأسيس محرك وقاعدة بيانات PostgreSQL وجلسات SQLAlchemy غير المتزامنة</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>إعداد محرك SQLAlchemy غير المتزامن <code>create_async_engine</code> في database/session.py وإدارة سياق الجلسات <code>get_db</code>.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/database/session.py</code></li>
+<li class="list-item"><code>backend/app/database/base.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>team_delivery/YOUSEF/reviews/TASK-01-ANALYSIS-REPORT.md</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<li class="list-item"><code>backend/app/websocket/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>backend/app/core/config.py</code></li>
+<li class="list-item"><code>_TEAM/00_SHARED/DATABASE_CONTRACT.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>إدارة دورة حياة جلسات قاعدة البيانات غير المتزامنة AsyncSession، والتأكد من إغلاق الجلسات والتراجع عند الأخطاء.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>بناء دالة التزويد <code>get_db</code> مع إدارة السياق <code>async with</code> والـ rollback التلقائي عند الاستثناءات.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>فحص اتصال محرك قاعدة البيانات وتشغيل اختبارات الاتصال.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة إدارة الـ Connection Pool والتعامل مع الجلسات غير المتزامنة.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>انقطاع الاتصال بقاعدة البيانات، استعلامات متزامنة متعددة.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>حماية بيانات الاتصال بقاعدة البيانات وقراءتها من متغيرات البيئة عبر settings.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>توفير حقن التبعيات <code>Depends(get_db)</code> لكافة مسارات الـ API.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> محرك قاعدة البيانات والجلسات مهيأة بنجاح ومستقرة</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 استخدام جلسات متزامنة Synchronous تحظر حلقة FastAPI</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/YOUSEF/handoff/TASK-01-DATABASE-FOUNDATION.md</code></p>
+<p><strong>محتوى التسليم:</strong> طبقة تأسيس قاعدة البيانات وجلسات العمل.</p>
+<hr class="divider"/>
+<h3>📌 TASK-02-DATABASE-MODELS — بناء نماذج الجداول الخمسة SQLAlchemy بالـ UUID والقيود المعيارية</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>إنشاء نماذج الجداول الخمسة في models.py: User, Room, RoomMember, Message, MessageTranslation بمعرفات UUIDv4 والفهارس.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/database/models.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_models.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<li class="list-item"><code>backend/app/translation/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>_TEAM/00_SHARED/DATABASE_CONTRACT.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>تطبيق قيود المفاتيح الفريدة Unique، المفاتيح الأجنبية Foreign Keys، الحذف المتسلسل CASCADE، والفهارس Indexes على الحقول الشائعة.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>كتابة نماذج الجداول الخمسة بدقة مطابقة 100% للأسماء والأنواع في عقد DATABASE_CONTRACT.md.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_models.py</code> وفحص إنشاء النماذج والقيود.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة العلاقات بين الجداول والفهارس والحذف المتسلسل.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>حذف مستخدم أو غرفة مرتبطة برسائل، محاولة إدخال قيم فارغة في حقول إلزامية.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>تخزين كلمة المرور المشفرة فقط وعدم وجود أي حقول حساسة مكشوفة.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>توفير النماذج لكافة خدمات الـ REST والـ WebSocket.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> الجداول الخمسة مبنية بدقة ومطابقة للعقد</li>
+<li class="list-item"><span class="chk">⬜</span> اختبارات النماذج تنجح 100%</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 تغيير أي اسم حقل أو جدول عن العقد الرسمي</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/YOUSEF/handoff/TASK-02-DATABASE-MODELS.md</code></p>
+<p><strong>محتوى التسليم:</strong> ملف models.py واختباراته.</p>
+<hr class="divider"/>
+<h3>📌 TASK-03-DATABASE-MIGRATIONS — إعداد وتوليد هجرات قاعدة البيانات عبر Alembic</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>ضبط ملفات Alembic (env.py, alembic.ini) وتوليد أول هجرة أولية <code>001_initial_schema</code> وتطبيقها على قاعدة البيانات.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/alembic/env.py</code></li>
+<li class="list-item"><code>backend/alembic.ini</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/alembic/versions/001_initial_schema.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>backend/app/database/models.py</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>إدارة هجرات قاعدة البيانات تلقائياً وتتبع التغييرات في المخطط Schema عبر Alembic.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>ضبط <code>target_metadata = Base.metadata</code> في env.py وتوليد ملف الهجرة.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>alembic upgrade head</code> والتأكد من إنشاء كافة الجداول بنجاح.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة سلامة سكريبت الهجرة والـ Upgrade/Downgrade functions.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>تضارب هجرات سابقة، عدم تطابق الأنواع في PostgreSQL.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>منع التعديلات اليدوية المباشرة على قاعدة البيانات دون هجرات موثقة.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>تجهيز قاعدة البيانات لاستقبال بيانات المستخدمين والغرف والرسائل.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> الهجرة الأولية مطبقة بنجاح وكافة الجداول منشأة بدقة</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 تعديل الجداول يدوياً في DB دون سكريبت migration</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/YOUSEF/handoff/TASK-03-DATABASE-MIGRATIONS.md</code></p>
+<p><strong>محتوى التسليم:</strong> ملفات Alembic وسكريبت الهجرة المعتمد.</p>
+<hr class="divider"/>
+<h3>📌 TASK-04-SECURITY-AND-PASSWORD-HASHING — بناء طبقة التشفير وإدارة كلمات المرور ورموز JWT (Security & Hashing)</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>برمجة دوال تجزئة كلمات المرور عبر Passlib Bcrypt (cost 12)، وتوليد وفك رموز JWT عبر PyJWT (HS256, 60 min).</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/core/security.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_security.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>_TEAM/00_SHARED/SECURITY_CONTRACT.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>التحقق من كلمة المرور ومقارنة التجزئة الثابتة زمنياً لمنع Timing Attacks، وتضمين sub و exp في الـ JWT payload.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>تنفيذ دوال <code>hash_password</code>, <code>verify_password</code>, <code>create_access_token</code>, <code>decode_access_token</code>.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_security.py</code>.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة معايير التشفير وصلاحية التوكن والتحقق الأمني.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>كلمات مرور تحتوي رموزاً خاصة، توكن منتهي الصلاحية، توكن مشوه أو مفتاح سري غير صحيح.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>استخدام خوارزمية Bcrypt بمعامل تكلفة 12، ومنع تشفير كلمات المرور بخوارزميات ضعيفة كالـ MD5 أو SHA1.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>توفير دوال الأمان لمسارات المصادقة ولطبقة الـ WebSocket الخاصة بمحمد الداعس.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> التشفير وتوليد وفك الـ JWT يعملان بأمان تام</li>
+<li class="list-item"><span class="chk">⬜</span> اختبارات الأمان تنجح 100%</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 تخزين كلمات مرور مكشوفة أو فك توكن بدون التحقق من التوقيع</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/YOUSEF/handoff/TASK-04-SECURITY-AND-PASSWORD-HASHING.md</code></p>
+<p><strong>محتوى التسليم:</strong> ملف security.py واختباراته.</p>
+<hr class="divider"/>
+<h3>📌 TASK-05-AUTH-REGISTRATION-API — بناء مسار تسجيل الحساب الجديد (POST /api/v1/auth/register)</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>برمجة مسار التسجيل: التحقق من فرادة اسم المستخدم، تشفير كلمة المرور، حفظ السجل، وإرجاع بيانات المستخدم برمز 201 Created.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/auth/router.py</code></li>
+<li class="list-item"><code>backend/app/auth/service.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_auth_register.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>backend/app/core/security.py</code></li>
+<li class="list-item"><code>backend/app/database/models.py</code></li>
+<li class="list-item"><code>_TEAM/00_SHARED/API_CONTRACT.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>استقبال username, password, preferred_language وإرجاع نموذج الاستجابة المعياري مع حجب كلمة المرور.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>بناء نماذج Pydantic للطلب والاستجابة، وفحص وجود المستخدم، وإرجاع كود 409 في حالة التكرار.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_auth_register.py</code>.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة دقة نموذج الاستجابة ومطابقة أكواد الأخطاء للعقد.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>اسم مستخدم مكرر (409 USERNAME_ALREADY_EXISTS)، حقول ناقصة (422)، كلمة مرور قصيرة.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>عدم إرجاع hashed_password في الاستجابة نهائياً.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>تكامل مع واجهة التسجيل لأحمد العماري.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> مسار التسجيل يعمل بنجاح ويرجع 201 مع الاستجابة المعيارية</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 السماح بتسجيل أسماء مستخدمين مكررة</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/YOUSEF/handoff/TASK-05-AUTH-REGISTRATION-API.md</code></p>
+<p><strong>محتوى التسليم:</strong> مسار التسجيل واختباراته.</p>
+<hr class="divider"/>
+<h3>📌 TASK-06-AUTH-LOGIN-JWT-API — بناء مسار تسجيل الدخول وإصدار رمز الدخول (POST /api/v1/auth/login)</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>برمجة مسار تسجيل الدخول: التحقق من اسم المستخدم وكلمة المرور، وإصدار رمز JWT صالح لمدة 60 دقيقة.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/auth/router.py</code></li>
+<li class="list-item"><code>backend/app/auth/service.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_auth_login.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>backend/app/core/security.py</code></li>
+<li class="list-item"><code>_TEAM/00_SHARED/API_CONTRACT.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>إرجاع token, token_type='bearer', expires_in=3600، وبيانات المستخدم ولغته المفضلة.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>التحقق من صحة البيانات، وإرجاع كود 401 INVALID_CREDENTIALS عند الخطأ دون كشف ما إذا كان الخطأ في الاسم أو كلمة المرور.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_auth_login.py</code>.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة مطابقة استجابة تسجيل الدخول للعقد الرسمي.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>مستخدم غير موجود، كلمة مرور خاطئة، حساب معطل.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>رسالة خطأ موحدة لمنع User Enumeration Attacks.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>تكامل مع واجهة تسجيل الدخول لأحمد وعميل الـ API.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> مسار تسجيل الدخول يصدر JWT صالح بنجاح مع كود 200</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 إرجاع رسائل خطأ تكشف وجود اسم المستخدم من عدمه</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/YOUSEF/handoff/TASK-06-AUTH-LOGIN-JWT-API.md</code></p>
+<p><strong>محتوى التسليم:</strong> مسار تسجيل الدخول واختباراته.</p>
+<hr class="divider"/>
+<h3>📌 TASK-07-USERS-AUTH-DEPENDENCY — بناء حقن تبعية التوثيق وحماية المسارات (get_current_user Dependency)</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>إنشاء تابع FastAPI Dependency <code>get_current_user</code> لاستخراج الـ Bearer Token، فك تشفيره، وجلب المستخدم من قاعدة البيانات.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/auth/dependencies.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_auth_dependencies.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>backend/app/core/security.py</code></li>
+<li class="list-item"><code>backend/app/database/models.py</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>حماية مسارات الـ REST من الوصول غير المصرح، ورفع استثناء 401 عند غياب أو تلف التوكن.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>بناء التابع <code>get_current_user</code> والتحقق من وجود المستخدم وصلاحية الجلسة.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_auth_dependencies.py</code>.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة سلامة حماية المسارات وتطبيق معايير OAuth2 Bearer.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>ترويسة Authorization غائبة، توكن غير صالح، مستخدم محذوف من قاعدة البيانات.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>عزل المسارات المحمية ومنع أي وصول بدون توكن موثوق.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>استخدامه لحماية كافة مسارات الغرف والرسائل والإحصائيات.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> التابع يحمي المسارات بكفاءة ويرجع بيانات المستخدم الحالي</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 السماح بالوصول لمسار محمي بدون توكن صالح</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/YOUSEF/handoff/TASK-07-USERS-AUTH-DEPENDENCY.md</code></p>
+<p><strong>محتوى التسليم:</strong> ملف dependencies.py واختباراته.</p>
+<hr class="divider"/>
+<h3>📌 TASK-08-ROOMS-MANAGEMENT-API — بناء مسارات إنشاء واستعراض وتفاصيل الغرف (Rooms Management API)</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>برمجة مسارات إدارة الغرف: إنشاء غرفة جديدة POST /rooms، استعراض الغرف المتاحة GET /rooms، وجلب تفاصيل غرفة GET /rooms/{id}.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/rooms/router.py</code></li>
+<li class="list-item"><code>backend/app/rooms/service.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_rooms_api.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>backend/app/auth/dependencies.py</code></li>
+<li class="list-item"><code>backend/app/database/models.py</code></li>
+<li class="list-item"><code>_TEAM/00_SHARED/API_CONTRACT.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>إرجاع قائمة الغرف مع عدد الأعضاء الحاليين وترقيم الصفحات Pagination.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>بناء مسارات الغرف وخدمات الاستعلام مع تصفية الغرف وحساب الأعضاء.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_rooms_api.py</code>.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة كفاءة استعلامات قاعدة البيانات وتجنب مشكلة N+1 Queries.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>اسم غرفة مكرر (409)، معرف غرفة غير موجود (404 ROOM_NOT_FOUND).</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>التحقق من هوية منشئ الغرفة عبر get_current_user.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>تكامل مع شاشات اللوبي والغرف لأحمد العماري.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> مسارات الغرف تعمل بكفاءة وترجع بيانات مطابقة للعقد</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 عدم إرجاع رمز 404 عند طلب غرفة غير موجودة</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/YOUSEF/handoff/TASK-08-ROOMS-MANAGEMENT-API.md</code></p>
+<p><strong>محتوى التسليم:</strong> مسارات إدارة الغرف واختباراتها.</p>
+<hr class="divider"/>
+<h3>📌 TASK-09-ROOM-MEMBERSHIP-API — بناء مسار الانضمام والمغادرة واستعراض أعضاء الغرفة (Membership API)</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>برمجة مسار الانضمام للغرفة POST /rooms/{id}/join، ومسار استعراض الأعضاء GET /rooms/{id}/members.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/rooms/router.py</code></li>
+<li class="list-item"><code>backend/app/rooms/service.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_room_members.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>backend/app/auth/dependencies.py</code></li>
+<li class="list-item"><code>backend/app/database/models.py</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>تسجيل عضوية المستخدم في جدول room_members، ومنع تكرار الانضمام (إرجاع 409 ALREADY_MEMBER).</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>تنفيذ عمليات الانضمام وجلب قائمة الأعضاء مع أدوارهم ولغاتهم المفضلة.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_room_members.py</code>.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة قيود العضوية ومعالجة محاولات الانضمام المتكررة.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>انضمام لغرفة محذوفة، انضمام متكرر لنفس الغرفة، استعراض أعضاء غرفة فارغة.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>التحقق من هوية العضو ومنع انضمام مستخدم نيابة عن آخر.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>التحقق من العضوية يستخدمه محمد الداعس قبل قبول اتصال الـ WebSocket.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> مسار الانضمام يسجل العضوية بدقة ويمنع التكرار</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 السماح بانضمام مكرر لنفس المستخدم في نفس الغرفة</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/YOUSEF/handoff/TASK-09-ROOM-MEMBERSHIP-API.md</code></p>
+<p><strong>محتوى التسليم:</strong> مسارات العضوية واختباراتها.</p>
+<hr class="divider"/>
+<h3>📌 TASK-10-MESSAGE-PERSISTENCE-AND-HISTORY-API — بناء مسار استرجاع تاريخ الرسائل المترجمة (GET /api/v1/rooms/{id}/messages)</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>برمجة مسار جلب سجل الرسائل المترجمة السابقة للغرفة، مع ترقيم الصفحات (limit/offset) والتحقق من العضوية.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/messages/router.py</code></li>
+<li class="list-item"><code>backend/app/messages/service.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_messages_history.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>backend/app/auth/dependencies.py</code></li>
+<li class="list-item"><code>backend/app/database/models.py</code></li>
+<li class="list-item"><code>_TEAM/00_SHARED/API_CONTRACT.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>استرجاع الرسائل وربطها بالترجمات المخزنة المناسبة للغة المستخدم الطالب للبيانات.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>بناء استعلام الاسترجاع مع الفهرسة والترتيب الزمني وتصفية الترجمات حسب لغة المستخدم.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_messages_history.py</code>.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة كفاءة الاستعلام وسرعة استرجاع السجلات التاريخية.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>طلب الرسائل من مستخدم غير منضم للغرفة (403 FORBIDDEN)، غرفة بدون رسائل سابقة.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>منع أي مستخدم خارج الغرفة من قراءة تاريخ الرسائل.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>تكامل مع شاشة المحادثة لأحمد عند فتح الغرفة لتحميل السجل السابق.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> استرجاع السجل التاريخي يعمل بدقة وسرعة مع مراعاة لغة المستخدم</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 السماح لمستخدم غير عضو بقراءة رسائل الغرفة</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/YOUSEF/handoff/TASK-10-MESSAGE-PERSISTENCE-AND-HISTORY-API.md</code></p>
+<p><strong>محتوى التسليم:</strong> مسار تاريخ الرسائل واختباراته.</p>
+<hr class="divider"/>
+<h3>📌 TASK-11-DASHBOARD-STATS-API — بناء مسار إحصائيات النظام ومقاييس الأداء (GET /api/v1/dashboard/stats)</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>برمجة مسار الإحصائيات العامة: إجمالي المستخدمين، الغرف، الرسائل، اللغات الأكثر استخداماً، ومعدلات الكاش.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/dashboard/router.py</code></li>
+<li class="list-item"><code>backend/app/dashboard/service.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_dashboard_stats.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>backend/app/database/models.py</code></li>
+<li class="list-item"><code>_TEAM/00_SHARED/API_CONTRACT.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>استعلامات تجميعية سريعة Aggregate Queries تعيد مؤشرات النظام الحية بصيغة JSON معيارية.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>تنفيذ دوال الحساب الإحصائي وتجميع البيانات في نموذج الاستجابة المعياري.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_dashboard_stats.py</code>.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة سرعة الاستعلامات الإحصائية وعدم استهلاك الموارد.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>قاعدة بيانات جديدة فارغة (إرجاع أصفار دون أخطاء division by zero).</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>حماية مسار الإحصائيات عبر التوثيق.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>تكامل مع شاشة لوحة التحكم Dashboard لأحمد العماري.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> مسار الإحصائيات يعيد مقاييس دقيقة وسريعة</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 حدوث خطأ حسابي عند فراغ قاعدة البيانات من السجلات</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/YOUSEF/handoff/TASK-11-DASHBOARD-STATS-API.md</code></p>
+<p><strong>محتوى التسليم:</strong> مسار الإحصائيات واختباراته.</p>
+<hr class="divider"/>
+<h3>📌 TASK-12-BACKEND-INTEGRATION-AND-FINAL-QA — الفحص النهائي الشامل واختبارات تكامل الـ REST وقاعدة البيانات (Backend Final QA)</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>تشغيل حزمة الاختبارات الشاملة لكافة مسارات الـ REST ونماذج قاعدة البيانات والتأكد من نجاح 100%.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/tests/unit/**</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>team_delivery/YOUSEF/reviews/BACKEND_QA_REPORT.md</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<li class="list-item"><code>backend/app/websocket/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>_TEAM/00_SHARED/DELIVERY_RULES.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>التأكد من جاهزية نواة الـ Backend وقاعدة البيانات بنسبة 100% للدمج والتسليم النهائي.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/</code> والتأكد من خلو النظام من أي خطأ.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تأكيد نجاح 100% PASS لكافة مسارات المصادقة والغرف والرسائل والإحصائيات.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة تقرير الجودة النهائي واعتماد طبقة الـ REST والـ Database.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>فحص شامل لكافة الحالات الاستثنائية والـ Edge Cases في الـ REST.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>مراجعة أمنية شاملة لكافة المسارات والاعتماديات.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>جاهزية تامة للربط مع الواجهة الأمامية والـ WebSocket.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> جميع اختبارات الـ Backend تمر بنسبة 100% خضراء</li>
+<li class="list-item"><span class="chk">⬜</span> تقرير QA معتمد</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 وجود أي اختبار فاشل أو تسريب بيانات حساسة</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/YOUSEF/handoff/TASK-12-BACKEND-INTEGRATION-AND-FINAL-QA.md</code></p>
+<p><strong>محتوى التسليم:</strong> تقرير الجودة النهائي للـ Backend.</p>
+<hr class="divider"/>
+<hr class="divider"/>
+<h1 class="section-title">🧪 11. منظومة الاختبارات وطريقة التشغيل</h1>
+<h3>كيفية تشغيل واختبار الباك إند وقاعدة البيانات:</h3>
+<p>1. <strong>تشغيل كافة اختبارات الـ REST وقاعدة البيانات والأمان:</strong></p>
+<pre><code class="language-bash">   pytest backend/tests/unit/ -v</code></pre>
+<p>2. <strong>اختبار المصادقة والأمان ونماذج الجداول:</strong></p>
+<pre><code class="language-bash">   pytest backend/tests/unit/test_security.py backend/tests/unit/test_auth_*.py backend/tests/unit/test_models.py -v</code></pre>
+<p>3. <strong>تطبيق هجرات قاعدة البيانات:</strong></p>
+<pre><code class="language-bash">   cd backend
+   alembic upgrade head</code></pre>
+<div class="callout-box">💡 <strong>معيار النجاح (PASS):</strong> نجاح كافة الاختبارات بنسبة <strong>100% PASSED</strong> وتطبيق هجرات Alembic دون أي تضارب.</div>
+<hr class="divider"/>
+<h1 class="section-title">🛡️ 12. الضوابط والمتطلبات الأمنية</h1>
+<li class="list-item"><strong>تشفير كلمات المرور:</strong> استخدام خوارزمية Passlib Bcrypt بمعامل تكلفة <code>rounds=12</code>.</li>
+<li class="list-item"><strong>توليد رموز JWT:</strong> استخدام خوارزمية <code>HS256</code> مع مدة صلاحية 60 دقيقة وتضمين <code>sub=user_id</code> و <code>exp</code>.</li>
+<li class="list-item"><strong>حجب الحقول الحساسة:</strong> منع إرجاع <code>hashed_password</code> في أي Response للـ API نهائياً.</li>
+<li class="list-item"><strong>رسائل أخطاء موحدة:</strong> إرجاع رمز 401 موحد عند فشل الدخول لمنع هجمات تخمين أسماء المستخدمين (User Enumeration).</li>
+<li class="list-item"><strong>حماية المسارات:</strong> استخدام تابع <code>get_current_user</code> للتحقق من صلاحية الجلسة قبل أي عملية على الغرف أو الرسائل.</li>
+<hr class="divider"/>
+<h1 class="section-title">🔌 13. مصفوفة التكامل والاعتمادية مع بقية الفريق</h1>
+<table>
+<tr><th>العضو</th><th>ماذا يحتاج يوسف منه؟</th><th>ماذا يقدم يوسف له؟</th></tr>
+<tr><td>**أحمد العماري**</td><td>إرسال طلبات الـ REST بتنسيق JSON المعياري مع الـ Bearer Token</td><td>توفير مسارات المصادقة، الغرف، العضويات، تاريخ الرسائل، والإحصائيات</td></tr>
+<tr><td>**محمد الداعس**</td><td>تمرير كائنات الرسائل لحفظها في جداول `messages` و `translations`</td><td>دوال فك التوكن `decode_access_token`، التحقق من العضوية، وخدمات حفظ الرسائل</td></tr>
+<tr><td>**مؤيد الصوفي**</td><td>توفير دالة الترجمة `translate_message` عند الرغبة في توليد ترجمات مسبقة</td><td>تخزين واسترجاع الرسائل المترجمة في قاعدة البيانات وإتاحتها للاستعلام</td></tr>
+</table>
+<div class="diagram"><pre><code>flowchart LR
+    YOUSEF["يوسف (Backend & DB Lead)"]
+    AHMED["أحمد (Frontend Lead)"]
+    MOHAMMED["محمد (WebSocket Lead)"]
+    MOAYAD["مؤيد (Translation Lead)"]
+
+    AHMED -->|1. طلبات REST API| YOUSEF
+    YOUSEF -->|2. بيانات JSON واستجابات معيارية| AHMED
+    MOHAMMED -->|3. التحقق من التوكن والعضوية| YOUSEF
+    YOUSEF -->|4. تأكيد الهوية والصلاحيات| MOHAMMED
+    MOHAMMED -->|5. حفظ الرسالة والترجمة| YOUSEF
+    MOAYAD -.->|6. توليد ترجمات السجلات| YOUSEF</code></pre></div>
+<hr class="divider"/>
+<h1 class="section-title">🚨 14. الحالات الحدية والمشاكل المحتملة</h1>
+<li class="list-item"><strong>تسجيل اسم مستخدم مكرر:</strong> إرجاع كود <code>409 Conflict</code> مع كود الخطأ <code>USERNAME_ALREADY_EXISTS</code>.</li>
+<li class="list-item"><strong>طلب رسائل غرفة من غير الأعضاء:</strong> إرجاع كود <code>403 Forbidden</code> مع كود الخطأ <code>NOT_ROOM_MEMBER</code>.</li>
+<li class="list-item"><strong>طلب غرفة غير موجودة:</strong> إرجاع كود <code>404 Not Found</code> مع كود الخطأ <code>ROOM_NOT_FOUND</code>.</li>
+<li class="list-item"><strong>حدوث خطأ أثناء استعلام SQLAlchemy:</strong> تنفيذ <code>await session.rollback()</code> تلقائياً لمنع خطأ <code>PendingRollbackError</code>.</li>
+<li class="list-item"><strong>قاعدة بيانات جديدة بدون بيانات سابقة:</strong> مسار الإحصائيات يعيد قيم صفرية بدون أي أخطاء حسابية.</li>
+<hr class="divider"/>
+<h1 class="section-title">🛑 15. بروتوكول التصعيد والتعامل مع الأخطاء</h1>
+<p>إذا واجهت أي خطأ برمجي أو تعارض أثناء العمل:</p>
+<div class="diagram"><pre><code>flowchart TD
+    ERR["🚨 حدوث خطأ أو فشل اختبار"] --> STOP["1. التوقف الفوري (Stop & Fail)"]
+    STOP --> CHECK["2. فحص سجل الأخطاء والـ Traceback"]
+    CHECK --> LOCAL{"هل الخطأ داخل ملفاتك الخاصة؟"}
+    LOCAL -->|نعم| FIX_LOCAL["3. إصلاح الكود وإعادة تشغيل الاختبار"]
+    FIX_LOCAL --> TEST["4. التأكد من PASS"]
+    LOCAL -->|لا تعارض عقود / ملكية| ESCALATE["3. رفع المشكلة فوراً لقائد المشروع أحمد العماري"]
+    ESCALATE --> RESOLVE["4. صدور قرار رسمي بتعديل العقد أو توجيه الزميل"]</code></pre></div>
+<div class="callout-box">⚠️ <strong>ممنوع قطيعاً:</strong> محاولة عمل Workaround غير معتمد، أو تعديل ملف زميلك، أو تغيير أسماء حقول العقود لتجاوز الخطأ.</div>
+<hr class="divider"/>
+<h1 class="section-title">📦 16. بروتوكول التسليم والاعتماد النهائي</h1>
+<h3>شروط اعتبار المهمة منتهية وجاهزة للتسليم:</h3>
+<p>1. <strong>الاختبارات الآلية:</strong> نجاح كافة الاختبارات بنسبة <strong>100% PASS</strong> دون أي تخطٍّ.</p>
+<p>2. <strong>المراجعة الخارجية:</strong> اجتياز فحص <code>03_EXTERNAL_AI_REVIEW.md</code> بدون ملاحظات حرجة.</p>
+<p>3. <strong>عزل التعديلات:</strong> عدم تعديل أي ملف خارج نطاق ملكيتك المعتمد.</p>
+<p>4. <strong>خلو الأسرار:</strong> خلو الكود تماماً من أي Hardcoded Keys أو كلمات مرور.</p>
+<p>5. <strong>تقرير التسليم:</strong> إنشاء ملف التقرير داخل مجلد <code>team_delivery/YOUSEF/handoff/</code>.</p>
+<hr class="divider"/>
+<h1 class="section-title">📊 17. لوحة تتبع الإنجاز (Progress Tracker)</h1>
+<table>
+<tr><th>#</th><th>المهمة</th><th>كود التنفيذ</th><th>الاختبار الآلي</th><th>المراجعة السحابية</th><th>حالة التسليم</th></tr>
+<tr><td>01</td><td>`TASK-01-DATABASE-FOUNDATION`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>02</td><td>`TASK-02-DATABASE-MODELS`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>03</td><td>`TASK-03-DATABASE-MIGRATIONS`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>04</td><td>`TASK-04-SECURITY-AND-PASSWORD-HASHING`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>05</td><td>`TASK-05-AUTH-REGISTRATION-API`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>06</td><td>`TASK-06-AUTH-LOGIN-JWT-API`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>07</td><td>`TASK-07-USERS-AUTH-DEPENDENCY`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>08</td><td>`TASK-08-ROOMS-MANAGEMENT-API`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>09</td><td>`TASK-09-ROOM-MEMBERSHIP-API`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>10</td><td>`TASK-10-MESSAGE-PERSISTENCE-AND-HISTORY-API`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>11</td><td>`TASK-11-DASHBOARD-STATS-API`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>12</td><td>`TASK-12-BACKEND-INTEGRATION-AND-FINAL-QA`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+</table>
+<hr class="divider"/>
+<h1 class="section-title">🏁 18. بوابة الاعتماد النهائي (FINAL GATE)</h1>
+<div class="diagram"><pre><code>flowchart TD
+    A["جميع المهام منجزة بنسبة 100%"] --> B["كافة الاختبارات الآلية PASSED"]
+    B --> C["المراجعة الخارجية معتمدة"]
+    C --> D["فحص الملكية: لا تعديلات خارجية"]
+    D --> E["فحص العقود: تطابق تام 100%"]
+    E --> F["فحص الأمان: خلو تام من الأسرار"]
+    F --> G["تقرير Handoff مكتمل"]
+    G --> H{"بوابة الاعتماد FINAL GATE"}
+    H -->|PASS| READY["🎉 اعتماد الميزة وجاهزيتها للدمج الشامل"]
+    H -->|FAIL| REWORK["🛠️ تصحيح النواقص"]
+    REWORK --> A</code></pre></div>
+<div class="callout-box">🏆 <strong>النتيجة:</strong> بعد اجتياز بوابة الاعتماد، يكون عملك جاهزاً للدمج في الإصدار الرئيسي لمشروع LinguaChat تحت إشراف القائد أحمد العماري.</div>
+
+</body>
+</html>

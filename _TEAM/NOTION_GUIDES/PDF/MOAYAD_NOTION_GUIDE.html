@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>دليل العمل: مؤيد الصوفي (Moayad Al-Soufi)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap');
+        @page {
+            size: A4;
+            margin: 12mm;
+            @bottom-right {
+                content: counter(page);
+                font-family: 'Cairo', sans-serif;
+                font-size: 8.5pt;
+                color: #64748b;
+            }
+        }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            line-height: 1.55;
+            margin: 0;
+            padding: 0;
+            font-size: 9pt;
+        }
+        .hero {
+            background: linear-gradient(135deg, #090d16 0%, #1e1b4b 60%, #f59e0b 100%);
+            color: #ffffff;
+            padding: 22px 18px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            page-break-after: avoid;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 8.5pt;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        h1.main-title {
+            font-size: 18pt;
+            font-weight: 900;
+            margin: 0 0 4px 0;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+        .sub-title { font-size: 11pt; color: #cbd5e1; margin-bottom: 10px; }
+        .meta-strip {
+            background: rgba(0, 0, 0, 0.35);
+            padding: 6px 12px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 8.5pt;
+        }
+        h1.section-title {
+            color: #0f172a;
+            font-size: 13pt;
+            font-weight: 900;
+            border-bottom: 2px solid #f59e0b;
+            padding-bottom: 4px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            page-break-after: avoid;
+        }
+        h2 {
+            color: #0f172a;
+            font-size: 11.5pt;
+            font-weight: 800;
+            border-right: 5px solid #f59e0b;
+            padding-right: 8px;
+            margin-top: 16px;
+            margin-bottom: 8px;
+            page-break-after: avoid;
+        }
+        h3 {
+            color: #1e293b;
+            font-size: 10pt;
+            font-weight: 700;
+            margin-top: 12px;
+            margin-bottom: 6px;
+            page-break-after: avoid;
+            background: #f1f5f9;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        h4 {
+            color: #334155;
+            font-size: 9pt;
+            font-weight: 700;
+            margin-top: 8px;
+            margin-bottom: 3px;
+            page-break-after: avoid;
+        }
+        p { margin: 0 0 6px 0; text-align: justify; }
+        .callout-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-right: 4px solid #f59e0b;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin: 8px 0;
+            page-break-inside: avoid;
+            font-size: 8.5pt;
+        }
+        .diagram {
+            background-color: #090d16;
+            color: #38bdf8;
+            padding: 8px 10px;
+            border-radius: 6px;
+            font-family: 'Fira Code', monospace;
+            font-size: 7.2pt;
+            line-height: 1.35;
+            direction: ltr;
+            text-align: left;
+            margin: 8px 0;
+            border: 1px solid #1e293b;
+            page-break-inside: avoid;
+        }
+        pre, code { font-family: 'Fira Code', monospace; direction: ltr; text-align: left; }
+        code {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-size: 8pt;
+        }
+        pre {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 7px 10px;
+            border-radius: 4px;
+            font-size: 7.5pt;
+            margin: 5px 0;
+            line-height: 1.3;
+            page-break-inside: avoid;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 8px 0;
+            font-size: 8.2pt;
+            page-break-inside: avoid;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 4px 6px;
+            text-align: right;
+        }
+        th { background-color: #f1f5f9; font-weight: 700; color: #0f172a; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+        .list-item {
+            margin-bottom: 3px;
+            padding-right: 4px;
+        }
+        .chk { font-size: 8.5pt; }
+        .divider {
+            border: 0;
+            height: 1px;
+            background: #e2e8f0;
+            margin: 14px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="badge">LinguaChat Engineering Handbook — Notion Standard Edition</div>
+    <div class="main-title">دليل العمل الكامل — مؤيد الصوفي (Moayad Al-Soufi)</div>
+    <div class="sub-title">مهندس خدمات الترجمة والذكاء الاصطناعي والكاش (Translation & AI Engineer)</div>
+    <div class="meta-strip">
+        <div><strong>المشروع:</strong> LinguaChat</div>
+        <div><strong>حالة النظام:</strong> Notion Ready &amp; Architecture Frozen 100%</div>
+    </div>
+</div>
+
+<h1 class="section-title">📘 دليل العمل الكامل — مؤيد الصوفي (Moayad Al-Soufi)</h1>
+<h2>👤 العضو</h2>
+<p><strong>مؤيد الصوفي (Moayad Al-Soufi)</strong></p>
+<h2>🎯 الدور</h2>
+<p><strong>مهندس خدمات الترجمة والذكاء الاصطناعي والكاش (Translation & AI Engineer)</strong></p>
+<h2>📦 نطاق العمل والملكية البرمجية</h2>
+<p><code>backend/app/translation/<strong>, backend/tests/unit/test_translation*, team_delivery/MOAYAD/</strong></code></p>
+<h2>🚦 الحالة الحالية للمهام</h2>
+<li class="list-item"><strong>ما تم إنجازه:</strong> تجهيز البنية التحتية، الفهرسة، وهياكل المهام الـ 9 بالكامل.</li>
+<li class="list-item"><strong>ما لم يبدأ بعد:</strong> برمجة كاشف اللغات، مزود LibreTranslate، الكاش SHA-256، قاعدة Identity، والمزود الاحتياطي.</li>
+<li class="list-item"><strong>ما ينتظر أعضاء آخرين:</strong> جاهز للعمل بشكل مستقل تماماً، ويوفر خدماته لمحمد ويوسف.</li>
+<hr class="divider"/>
+<h1 class="section-title">📑 فهرس الدليل</h1>
+<p>1. [🏗️ 1. صورة النظام كاملة](#-1-صورة-النظام-كاملة)</p>
+<p>2. [🧭 2. مكان العضو داخل المعمارية](#-2-مكان-العضو-داخل-المعمارية)</p>
+<p>3. [📜 3. الميثاق البصري للقواعد الذهبية ومسار التنفيذ والتسليم](#-3-الميثاق-البصري-للقواعد-الذهبية-ومسار-التنفيذ-والتسليم)</p>
+<p>4. [🔐 4. حدود الملكية البرمجية](#-4-حدود-الملكية-البرمجية)</p>
+<p>5. [📊 5. جدول الحصر التنفيذي لمهام العضو ومكان الكود ومسار التسليم](#-5-جدول-الحصر-التنفيذي-لمهام-العضو-ومكان-الكود-ومسار-التسليم)</p>
+<p>6. [📚 6. الملفات المشتركة التي يجب قراءتها](#-6-الملفات-المشتركة-التي-يجب-قراءتها)</p>
+<p>7. [🧱 7. مراحل التأسيس المشترك COMMON FOUNDATION](#-7-مراحل-التأسيس-المشترك-common-foundation)</p>
+<p>8. [🤖 8. طريقة استخدام Antigravity IDE](#-8-طريقة-استخدام-antigravity-ide)</p>
+<p>9. [🔄 9. دورة تنفيذ المهمة الواحدة](#-9-دورة-تنفيذ-المهمة-الواحدة)</p>
+<p>10. [🧩 10. شرح المهام تفصيلياً خطوة بخطوة](#-10-شرح-المهام-تفصيلياً-خطوة-بخطوة)</p>
+<p>11. [🧪 11. منظومة الاختبارات وطريقة التشغيل](#-11-منظومة-الاختبارات-وطريقة-التشغيل)</p>
+<p>12. [🛡️ 12. الضوابط والمتطلبات الأمنية](#-12-الضوابط-والمتطلبات-الأمنية)</p>
+<p>13. [🔌 13. مصفوفة التكامل والاعتمادية مع بقية الفريق](#-13-مصفوفة-التكامل-والاعتمادية-مع-بقية-الفريق)</p>
+<p>14. [🚨 14. الحالات الحدية والمشاكل المحتملة](#-14-الحالات-الحدية-والمشاكل-المحتملة)</p>
+<p>15. [🛑 15. بروتوكول التصعيد والتعامل مع الأخطاء](#-15-بروتوكول-التصعيد-والتعامل-مع-الأخطاء)</p>
+<p>16. [📦 16. بروتوكول التسليم والاعتماد النهائي](#-16-بروتوكول-التسليم-والاعتماد-النهائي)</p>
+<p>17. [📊 17. لوحة تتبع الإنجاز (Progress Tracker)](#-17-لوحة-تتبع-الإنجاز-progress-tracker)</p>
+<p>18. [🏁 18. بوابة الاعتماد النهائي (FINAL GATE)](#-18-بوابة-الاعتماد-النهائي-final-gate)</p>
+<hr class="divider"/>
+<h1 class="section-title">🏗️ 1. صورة النظام كاملة</h1>
+<p>مشروع <strong>LinguaChat</strong> هو منصة محادثة جماعية فورية متعددة اللغات قائمة على معمارية معزولة تعتمد على FastAPI في الباك إند، React في الواجهة الأمامية، LibreTranslate لخدمات الترجمة الذكية، و PostgreSQL لحفظ البيانات.</p>
+<h3>المشكلة التي يحلها النظام:</h3>
+<p>إتاحة المحادثة الفورية السلسة بين أشخاص يتحدثون لغات مختلفة، بحيث يكتب كل مستخدم بلغته الأم، ويستلم بقية الأعضاء الرسالة مترجمة تلقائياً إلى لغاتهم المفضلة في أجزاء من الثانية.</p>
+<div class="diagram"><pre><code>flowchart TB
+    CALLER["الـ WebSocket (Mohammed) أو الـ REST (Yousef)"]
+    subgraph PIPELINE["Translation Pipeline (Moayad)"]
+        ENTRY["translate_message(text, target_lang, source_lang)"]
+        DETECTOR["1. Language Detector (ISO 639-1)"]
+        IDENTITY_CHK{{"2. هل source == target؟"}}
+        IDENTITY_RES["3. Identity Result (source_used='identity', conf=1.0)"]
+        CACHE_CHK{{"4. فحص الكاش (SHA-256 Hash)"}}
+        CACHE_HIT["5. Cache Hit (source_used='cache')"]
+        LIBRE["6. LibreTranslate Provider (HTTP Timeout 10s)"]
+        FALLBACK["7. Google Fallback Provider"]
+        SET_CACHE["8. حفظ النتيجة في الكاش (TTL 3600s)"]
+    end
+    CALLER --> ENTRY
+    ENTRY --> DETECTOR
+    DETECTOR --> IDENTITY_CHK
+    IDENTITY_CHK -->|نعم| IDENTITY_RES
+    IDENTITY_RES --> CALLER
+    IDENTITY_CHK -->|لا| CACHE_CHK
+    CACHE_CHK -->|موجود| CACHE_HIT
+    CACHE_HIT --> CALLER
+    CACHE_CHK -->|غير موجود| LIBRE
+    LIBRE -->|نجاح| SET_CACHE
+    LIBRE -->|فشل / Timeout| FALLBACK
+    FALLBACK --> SET_CACHE
+    SET_CACHE --> CALLER</code></pre></div>
+<hr class="divider"/>
+<h1 class="section-title">🧭 2. مكان العضو داخل المعمارية</h1>
+<div class="diagram"><pre><code>flowchart LR
+    MOAYAD["مؤيد الصوفي (Translation Lead)"]
+    subgraph OWNED["نطاق الملكية"]
+        SERVICE["backend/app/translation/service.py"]
+        DETECTOR["backend/app/translation/detector.py"]
+        CACHE["backend/app/translation/cache.py"]
+        LIBRE["backend/app/translation/libretranslate.py"]
+        FALLBACK["backend/app/translation/google_fallback.py"]
+        EXCEPTIONS["backend/app/translation/exceptions.py"]
+        TESTS["backend/tests/unit/test_translation*"]
+    end
+    MOAYAD --> OWNED
+    OWNED -->|translate_message| MOHAMMED_WS["بث الرسائل المترجمة لمحمد"]
+    OWNED -->|Translation Pipeline| YOUSEF_HIST["حفظ واسترجاع الرسائل ليوسف"]</code></pre></div>
+<hr class="divider"/>
+<h1 class="section-title">📜 3. الميثاق البصري للقواعد الذهبية ومسار التنفيذ والتسليم</h1>
+<div class="callout-box">💡 <strong>خريطة الطريق:</strong> يوضح المخطط أدناه القواعد الصارمة الحاكمة لعملك، ومكان كتابة الكود، وكيفية فحص واختبار المهمة، وأين يتم تسليم التقرير النهائي تمهيداً للدمج في الفرع الرئيسي:</div>
+<div class="diagram"><pre><code>flowchart TB
+    subgraph CONSTITUTION["📜 الدستور البرمجي والقواعد الذهبية (The Golden Rules)"]
+        R1["1. عزل الملكية: ممنوع كتابة أي سطر خارج مجلدك"]
+        R2["2. تجميد العقود: مسارات الـ API وأنواع الـ WS مجمدة"]
+        R3["3. قاعدة Identity: ممنوع استخدام 'none' نهائياً"]
+        R4["4. حظر الأسرار: كافة المفاتيح تقرأ من .env حصراً"]
+        R5["5. قاعدة Stop & Fail: لا تسليم إذا كان الاختبار FAIL"]
+    end
+
+    subgraph WORKFLOW["🔄 مسار العمل التنفيذي وموقع الكود والتسليم"]
+        direction TB
+        STEP1["1. استلام المهمة<br><code>team_delivery/.../tasks/TASK-XX/</code>"]
+        STEP2["2. كتابة وتعديل الكود<br><b>مكان الكود المسموح لك فقط</b>"]
+        STEP3["3. تشغيل الاختبار الآلي<br><code>pytest / npm test (PASS 100%)</code>"]
+        STEP4["4. مراجعة الذكاء الاصطناعي<br><code>03_EXTERNAL_AI_REVIEW.md</code>"]
+        STEP5["5. توثيق وتسليم الإنجاز<br><code>team_delivery/.../handoff/TASK-XX.md</code>"]
+
+        STEP1 --> STEP2
+        STEP2 --> STEP3
+        STEP3 --> STEP4
+        STEP4 --> STEP5
+    end
+
+    subgraph MERGE_GATE["🏁 بوابة الدمج النهائي والاعتماد"]
+        GATE["مراجعة واعتماد قائد المشروع (أحمد العماري)<br><b>الدمج في الفرع الرئيسي للمشروع</b>"]
+    end
+
+    CONSTITUTION -.->|حاكم لكافة الخطوات| WORKFLOW
+    STEP5 --> GATE</code></pre></div>
+<hr class="divider"/>
+<h1 class="section-title">🔐 4. حدود الملكية البرمجية</h1>
+<div class="callout-box">⚠️ <strong>تنبيه صارم:</strong> لا يحق لك كتابة أو تعديل أي سطر برمجي خارج نطاق ملكيتك المباشرة المبينة في الجدول أدناه.</div>
+<table>
+<tr><th>المسار البرمجي</th><th>الحالة الرسمية</th><th>الشرح والمسؤولية</th></tr>
+<tr><td>`backend/app/translation/**`</td><td>🟢 مسموح ومملوك بالكامل</td><td>تطوير محرك الترجمة، الكاش، كاشف اللغات، والمزودات</td></tr>
+<tr><td>`backend/tests/unit/test_translation*`</td><td>🟢 مسموح</td><td>اختبارات محرك الترجمة والكاش وقاعدة Identity</td></tr>
+<tr><td>`team_delivery/MOAYAD/**`</td><td>🟢 مسموح</td><td>تقارير التسليم والمراجعات الخاصة بمؤيد</td></tr>
+<tr><td>`frontend/**`</td><td>🔴 ممنوع منعاً باتاً</td><td>ملكية أحمد العماري</td></tr>
+<tr><td>`backend/app/websocket/**`</td><td>🔴 ممنوع منعاً باتاً</td><td>ملكية محمد الداعس</td></tr>
+<tr><td>`backend/app/database/**`</td><td>🔴 ممنوع منعاً باتاً</td><td>ملكية يوسف خيري</td></tr>
+<tr><td>`_TEAM/00_SHARED/**`</td><td>🟡 قراءة فقط</td><td>العقود الرسمية المشتركة</td></tr>
+</table>
+<div class="diagram"><pre><code>flowchart TD
+    subgraph ALLOWED["🟢 النطاق المصرح به لمؤيد"]
+        T1["backend/app/translation/service.py"]
+        T2["backend/app/translation/detector.py"]
+        T3["backend/app/translation/cache.py"]
+        T4["backend/app/translation/libretranslate.py"]
+        T5["backend/app/translation/google_fallback.py"]
+        T6["backend/tests/unit/test_translation*"]
+    end
+    subgraph FORBIDDEN["🔴 النطاق المحظور تماماً"]
+        F1["frontend/** (Ahmed)"]
+        F2["backend/app/websocket/** (Mohammed)"]
+        F3["backend/app/database/** (Yousef)"]
+        F4["backend/app/auth/** (Yousef)"]
+    end</code></pre></div>
+<hr class="divider"/>
+<h1 class="section-title">📊 5. جدول الحصر التنفيذي لمهام العضو ومكان الكود ومسار التسليم</h1>
+<div class="callout-box">🎯 <strong>جدول الإدارة السريع:</strong> يلخص هذا الجدول لكافة المهام: رقم المهمة، الهدف الهندسي، مكان الملفات المستهدفة بالكود، أمر الاختبار المطلوب، ومسار تسليم التقرير النهائي في `handoff/`:</div>
+<table>
+<tr><th>#</th><th>المهمة</th><th>الهدف من المهمة</th><th>مكان الكود والملفات المستهدفة</th><th>أمر الاختبار</th><th>مسار التسليم بعد الإنجاز</th></tr>
+<tr><td>01</td><td>**`TASK-01-TRANSLATION-ANALYSIS`**</td><td>دراسة عقد الترجمة TRANSLATION_CONTRACT.md، تحديد واجهات المزودين، وقواعد الكاش وكشف اللغات.</td><td>`backend/app/translation/README.md`</td><td>`فحص وتشغيل`</td><td>`team_delivery/MOAYAD/handoff/TASK-01-TRANSLATION-ANALYSIS.md`</td></tr>
+<tr><td>02</td><td>**`TASK-02-LANGUAGE-DETECTION`**</td><td>برمجة دالة `detect_language` في detector.py لكشف لغة النص وإرجاع رمز ISO 639-1 (مثل 'ar', 'en', 'fr').</td><td>`backend/app/translation/detector.py`</td><td>`pytest backend/tests/unit/test_translation_detector.py`</td><td>`team_delivery/MOAYAD/handoff/TASK-02-LANGUAGE-DETECTION.md`</td></tr>
+<tr><td>03</td><td>**`TASK-03-LIBRETRANSLATE-PROVIDER`**</td><td>إنشاء فئة `LibreTranslateProvider` في libretranslate.py للاتصال بمحرك LibreTranslate عبر HTTP مع Timeout 10s.</td><td>`backend/app/translation/libretranslate.py`</td><td>`pytest backend/tests/unit/test_translation_libre.py`</td><td>`team_delivery/MOAYAD/handoff/TASK-03-LIBRETRANSLATE-PROVIDER.md`</td></tr>
+<tr><td>04</td><td>**`TASK-04-GOOGLE-FALLBACK-PROVIDER`**</td><td>إنشاء مزود احتياطي `GoogleFallbackProvider` في google_fallback.py للعمل تلقائياً عند فشل المزود الأساسي.</td><td>`backend/app/translation/google_fallback.py`</td><td>`pytest backend/tests/unit/test_translation_fallback.py`</td><td>`team_delivery/MOAYAD/handoff/TASK-04-GOOGLE-FALLBACK-PROVIDER.md`</td></tr>
+<tr><td>05</td><td>**`TASK-05-TRANSLATION-CACHE`**</td><td>برمجة فئة `TranslationCache` في cache.py لتخزين الترجمات بمفتاح SHA-256 ومدة صلاحية TTL 3600 ثانية.</td><td>`backend/app/translation/cache.py`</td><td>`pytest backend/tests/unit/test_translation_cache.py`</td><td>`team_delivery/MOAYAD/handoff/TASK-05-TRANSLATION-CACHE.md`</td></tr>
+<tr><td>06</td><td>**`TASK-06-IDENTITY-TRANSLATION`**</td><td>تطبيق قاعدة Identity الصارمة: إذا كانت لغة المصدر هي نفس لغة الهدف (`source == target`)، تُرجع النتيجة فوراً دون استدعاء أي مزود خارجي.</td><td>`backend/app/translation/service.py`</td><td>`pytest backend/tests/unit/test_translation_identity.py`</td><td>`team_delivery/MOAYAD/handoff/TASK-06-IDENTITY-TRANSLATION.md`</td></tr>
+<tr><td>07</td><td>**`TASK-07-TRANSLATION-ERROR-HANDLING`**</td><td>إنشاء فئات الاستثناءات المخصصة `TranslationError`, `ProviderUnavailableError` وضمان المعالجة المتينة.</td><td>`backend/app/translation/exceptions.py`<br>`backend/app/translation/service.py`</td><td>`pytest backend/tests/unit/test_translation_errors.py`</td><td>`team_delivery/MOAYAD/handoff/TASK-07-TRANSLATION-ERROR-HANDLING.md`</td></tr>
+<tr><td>08</td><td>**`TASK-08-TRANSLATION-SERVICE-INTEGRATION`**</td><td>بناء الخدمة المركزية `TranslationService` في service.py التي تجمع الكاشف، الكاش، المزود الأساسي، المزود الاحتياطي، وقاعدة Identity.</td><td>`backend/app/translation/service.py`</td><td>`pytest backend/tests/unit/test_translation_service.py`</td><td>`team_delivery/MOAYAD/handoff/TASK-08-TRANSLATION-SERVICE-INTEGRATION.md`</td></tr>
+<tr><td>09</td><td>**`TASK-09-TRANSLATION-FINAL-QA`**</td><td>تشغيل حزمة اختبارات الترجمة الكاملة، التحقق من تغطية 100%، وتأكيد الامتثال التام لعقد الترجمة والدستور البرمجي.</td><td>`backend/tests/unit/test_translation*`</td><td>`فحص وتشغيل`</td><td>`team_delivery/MOAYAD/handoff/TASK-09-TRANSLATION-FINAL-QA.md`</td></tr>
+</table>
+<hr class="divider"/>
+<h1 class="section-title">📚 6. الملفات المشتركة التي يجب قراءتها</h1>
+<h3>1. يجب قراءته أولاً (Mandatory First)</h3>
+<li class="list-item"><strong><code>_TEAM/00_SHARED/TRANSLATION_CONTRACT.md</code></strong>: العقد الحاكم لخدمات الترجمة والكاش وقيم <code>source_used</code>.</li>
+<li class="list-item"><strong><code>_TEAM/00_SHARED/PROJECT_CONSTITUTION.md</code></strong>: الدستور البرمجي وقاعدة حظر القيمة <code>"none"</code>.</li>
+<h3>2. يجب قراءته قبل التنفيذ (Before Implementation)</h3>
+<li class="list-item"><strong><code>_TEAM/00_SHARED/CODING_RULES.md</code></strong>: معايير استدعاءات HTTP غير المتزامنة والـ Timeouts.</li>
+<li class="list-item"><strong><code>_TEAM/00_SHARED/INTEGRATION_RULES.md</code></strong>: نموذج الكائن العائد من دالة <code>translate_message</code>.</li>
+<h3>3. مرجع مستمر أثناء العمل (Ongoing Reference)</h3>
+<li class="list-item"><strong><code>_TEAM/00_SHARED/DELIVERY_RULES.md</code></strong>: معايير فحص واختبار الترجمة.</li>
+<hr class="divider"/>
+<h1 class="section-title">🧱 7. مراحل التأسيس المشترك COMMON FOUNDATION</h1>
+<p>قبل البدء في تنفيذ المهام الفردية، يمر العضو بمراحل التأسيس السبع لضمان استيعاب كافة القواعد والعقود:</p>
+<div class="diagram"><pre><code>flowchart LR
+    A["01 Orientation"] --> B["02 Architecture"]
+    B --> C["03 Coding Rules"]
+    C --> D["04 Security"]
+    D --> E["05 Integration"]
+    E --> F["06 Member Specific"]
+    F --> G["07 Final Gate"]
+
+    G -->|PASS 100%| TASKS["🔓 فتح المهام الفردية"]
+    G -->|FAIL| FIX["🛠️ مراجعة وتصحيح"]
+    FIX --> G</code></pre></div>
+<li class="list-item"><strong>01 Orientation:</strong> استيعاب دور الترجمة الذكية كجوهر لمنصة LinguaChat.</li>
+<li class="list-item"><strong>02 Architecture:</strong> تسلسل خط الأنابيب Pipeline وسرعة الاستجابة.</li>
+<li class="list-item"><strong>03 Coding Rules:</strong> استخدام <code>httpx.AsyncClient</code> وضبط المهلة 10s.</li>
+<li class="list-item"><strong>04 Security:</strong> قراءة روابط ومفاتيح الـ API من متغيرات البيئة.</li>
+<li class="list-item"><strong>05 Integration:</strong> الالتزام الصارم بالقيم الأربع لمصدر الترجمة: <code>["libretranslate", "google", "cache", "identity"]</code>.</li>
+<li class="list-item"><strong>06 Translation Specific:</strong> التطبيق الحتمي لقاعدة Identity عند تطابق اللغات.</li>
+<li class="list-item"><strong>07 Final Gate:</strong> نجاح كافة اختبارات <code>pytest backend/tests/unit/test_translation*</code>.</li>
+<hr class="divider"/>
+<h1 class="section-title">🤖 8. طريقة استخدام Antigravity IDE</h1>
+<p>اتبع هذا الدليل التفاعلي خطوة بخطوة عند تنفيذ أي مهمة داخل الـ IDE:</p>
+<div class="diagram"><pre><code>flowchart TD
+    S1["1. فتح مجلد المهمة في tasks/"] --> S2["2. قراءة TASK.md بالكامل"]
+    S2 --> S3["3. نسخ برومبت 01_IMPLEMENT_IDE.md"]
+    S3 --> S4["4. لصق البرومبت في Antigravity IDE"]
+    S4 --> S5["5. تنفيذ الكود آلياً داخل ملفاتك"]
+    S5 --> S6["6. نسخ برومبت 02_TEST_IDE.md"]
+    S6 --> S7["7. تشغيل الاختبار في الـ Terminal"]
+    S7 --> CHK1{"هل الاختبار PASSED؟"}
+    CHK1 -->|لا FAIL| FIX1["إصلاح الكود فوراً داخل ملفك"]
+    FIX1 --> S7
+    CHK1 -->|نعم PASS| S8["8. نسخ 03_EXTERNAL_AI_REVIEW.md"]
+    S8 --> S9["9. لصق البرومبت في ChatGPT / Claude"]
+    S9 --> CHK2{"هل المراجعة PASS؟"}
+    CHK2 -->|لا FAIL| FIX2["تعديل الملاحظات الحرجة"]
+    FIX2 --> S7
+    CHK2 -->|نعم PASS| S10["10. كتابة تقرير التسليم في handoff/"]
+    S10 --> S11["11. الانتقال للمهمة التالية"]</code></pre></div>
+<h3>الخطوات التفصيلية للعمل:</h3>
+<p>1. <strong>افتح مجلد المهمة:</strong> توجه إلى <code>team_delivery/MOAYAD/tasks/<TASK_ID>/</code>.</p>
+<p>2. <strong>اقرأ ملف <code>TASK.md</code>:</strong> افهم الهدف، الملفات المسموحة والمحظورة، وشروط النجاح.</p>
+<p>3. <strong>انسخ محتوى <code>01_IMPLEMENT_IDE.md</code> بالكامل:</strong> أرسله لمحادثة Antigravity IDE.</p>
+<p>4. <strong>دع الـ IDE ينفذ الكود:</strong> راقب التعديلات وتأكد أنها تمت فقط داخل ملفاتك المصرحة.</p>
+<p>5. <strong>افتح <code>02_TEST_IDE.md</code>:</strong> انسخ أمر الاختبار وشغله في الـ Terminal.</p>
+<p>6. <strong>تحقق من النتيجة:</strong> ممنوع الانتقال إذا كانت النتيجة <code>FAIL</code>. أصلح الكود حتى يصبح <code>PASSED</code> باللون الأخضر.</p>
+<p>7. <strong>افتح <code>03_EXTERNAL_AI_REVIEW.md</code>:</strong> انسخ البرومبت وافحصه عبر ذكاء اصطناعي خارجي مستقل.</p>
+<p>8. <strong>وثق الإنجاز:</strong> أنشئ تقرير المهمة في مجلد <code>handoff/</code> وانتقل للمهمة التالية.</p>
+<hr class="divider"/>
+<h1 class="section-title">🔄 9. دورة تنفيذ المهمة الواحدة</h1>
+<div class="diagram"><pre><code>flowchart TD
+    A["📄 TASK.md"] --> B["⚙️ 01_IMPLEMENT_IDE.md"]
+    B --> C["💻 تنفيذ Antigravity IDE"]
+    C --> D["🧪 02_TEST_IDE.md"]
+    D --> E["⚡ تشغيل الاختبارات الآلية"]
+    E --> F{"هل النتيجة PASSED 100%؟"}
+    F -->|لا FAIL| K["🛑 التوقف وتحليل الخطأ وإصلاحه"]
+    K --> C
+    F -->|نعم PASS| G["☁️ 03_EXTERNAL_AI_REVIEW.md"]
+    G --> H["🔍 مراجعة الذكاء الاصطناعي الخارجي"]
+    H --> I{"هل المراجعة معتمدة؟"}
+    I -->|لا ملاحظات حرجة| K
+    I -->|نعم APPROVED| J["📦 توثيق الإنجاز في handoff/ والتسليم"]</code></pre></div>
+<hr class="divider"/>
+<h1 class="section-title">🧩 10. شرح المهام تفصيلياً خطوة بخطوة</h1>
+<h3>📌 TASK-01-TRANSLATION-ANALYSIS — تحليل متطلبات الترجمة والذكاء الاصطناعي وهيكلية الكاش</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>دراسة عقد الترجمة TRANSLATION_CONTRACT.md، تحديد واجهات المزودين، وقواعد الكاش وكشف اللغات.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/translation/README.md</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>team_delivery/MOAYAD/reviews/TASK-01-ANALYSIS-REPORT.md</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<li class="list-item"><code>backend/app/websocket/**</code></li>
+<li class="list-item"><code>backend/app/database/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>_TEAM/00_SHARED/TRANSLATION_CONTRACT.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>فهم سلسلة الترجمة: كشف اللغة -> فحص الكاش -> قاعدة Identity -> المزود الأساسي -> المزود الاحتياطي -> تخزين الكاش.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>توثيق معمارية الترجمة وخطة بناء المزودات وتطبيق قاعدة Identity.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>مراجعة تقرير التحليل ومطابقته للعقد الرسمي.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة شمولية تقرير التحليل وتأكيد حظر القيمة 'none' قطيعاً.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>نصوص بلغات غير مدعومة، رموز تعبيرية، انقطاع المزود الخارجي.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>التعامل الآمن مع مفاتيح الـ API وقراءتها من الإعدادات.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>توفير دالة <code>translate_message</code> لمحمد الداعس ويوسف خيري.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> تقرير التحليل مكتمل ومطابق 100% للعقد</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 افتراض استخدام القيمة 'none' أو كسر سلسلة الترجمة</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/MOAYAD/handoff/TASK-01-TRANSLATION-ANALYSIS.md</code></p>
+<p><strong>محتوى التسليم:</strong> تقرير تحليل الترجمة المعتمد.</p>
+<hr class="divider"/>
+<h3>📌 TASK-02-LANGUAGE-DETECTION — بناء كاشف لغة النص التلقائي (Language Detection)</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>برمجة دالة <code>detect_language</code> في detector.py لكشف لغة النص وإرجاع رمز ISO 639-1 (مثل 'ar', 'en', 'fr').</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/translation/detector.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_translation_detector.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<li class="list-item"><code>backend/app/websocket/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>_TEAM/00_SHARED/TRANSLATION_CONTRACT.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>التعرف على اللغة بسرعة فائقة دون تعطيل الخادم، وإرجاع 'unknown' في الحالات غير الواضحة دون كسر.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>بناء الكاشف والتعامل مع النصوص القصيرة والرموز التعبيرية.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_translation_detector.py</code>.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة دقة الكشف وسرعة الاستجابة.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>نصوص تحتوي إيموجي فقط، أرقام فقط، نصوص متعددة اللغات في سطر واحد.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>منع أي استثناءات غير معالجة تتسبب في انهيار السيرفر.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>استخدام الكاشف في خدمة الترجمة لتحديد لغة المصدر عند عدم تحديدها.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> الكاشف يتعرف على اللغات بدقة عالية</li>
+<li class="list-item"><span class="chk">⬜</span> اختبارات الكاشف تنجح 100%</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 رفع أخطاء Unhandled Exceptions عند استقبال نصوص غير اعتيادية</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/MOAYAD/handoff/TASK-02-LANGUAGE-DETECTION.md</code></p>
+<p><strong>محتوى التسليم:</strong> ملف detector.py واختباراته.</p>
+<hr class="divider"/>
+<h3>📌 TASK-03-LIBRETRANSLATE-PROVIDER — بناء مزود الترجمة الأساسي LibreTranslate عبر HTTP</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>إنشاء فئة <code>LibreTranslateProvider</code> في libretranslate.py للاتصال بمحرك LibreTranslate عبر HTTP مع Timeout 10s.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/translation/libretranslate.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_translation_libre.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<li class="list-item"><code>backend/app/database/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>backend/app/core/config.py</code></li>
+<li class="list-item"><code>_TEAM/00_SHARED/TRANSLATION_CONTRACT.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>إرسال طلب الترجمة، استلام النتيجة، وإرجاع <code>source_used='libretranslate'</code> ومعدل الثقة.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>بناء عميل غير متزامن باستخدام <code>httpx.AsyncClient</code> وضبط مهلة 10 ثوانٍ ومعالجة الأخطاء.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_translation_libre.py</code>.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة التعامل مع أخطاء الشبكة والـ Timeouts.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>خادم LibreTranslate مغلق، استجابة برمز 500، استجابة بطيئة تتجاوز 10 ثوانٍ.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>قراءة رابط الخادم ومفتاح API من ملف الإعدادات البيئية.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>استخدامه كمزود أساسي في خدمة الترجمة العامة.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> المزود يتصل بنجاح ويعالج الأخطاء بانضباط</li>
+<li class="list-item"><span class="chk">⬜</span> اختبارات المزود تمر 100%</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 تعليق الاتصال إلى ما لا نهاية بدون Timeout</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/MOAYAD/handoff/TASK-03-LIBRETRANSLATE-PROVIDER.md</code></p>
+<p><strong>محتوى التسليم:</strong> ملف libretranslate.py واختباراته.</p>
+<hr class="divider"/>
+<h3>📌 TASK-04-GOOGLE-FALLBACK-PROVIDER — بناء مزود الترجمة الاحتياطي (Google Fallback Provider)</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>إنشاء مزود احتياطي <code>GoogleFallbackProvider</code> في google_fallback.py للعمل تلقائياً عند فشل المزود الأساسي.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/translation/google_fallback.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_translation_fallback.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>_TEAM/00_SHARED/TRANSLATION_CONTRACT.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>عند تعطل LibreTranslate، يتم التحويل التلقائي للمزود الاحتياطي وإرجاع <code>source_used='google'</code>.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>تنفيذ المزود الاحتياطي والتقاط أي أخطاء شبكة لمنع توقف المحادثة.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_translation_fallback.py</code>.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة سلاسة التبديل بين المزودات (Failover Mechanism).</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>فشل كلا المزودين (التحويل التلقائي لتسليم النص الأصلي كخيار أخير).</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>التعامل الآمن مع استدعاءات الـ Fallback.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>تكامل مع المحرك المركزي للترجمة.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> التبديل الاحتياطي يعمل بسلاسة عند تعطل المزود الأساسي</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 فشل المنظومة بالكامل عند توقف سيرفر الترجمة الأساسي</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/MOAYAD/handoff/TASK-04-GOOGLE-FALLBACK-PROVIDER.md</code></p>
+<p><strong>محتوى التسليم:</strong> ملف google_fallback.py واختباراته.</p>
+<hr class="divider"/>
+<h3>📌 TASK-05-TRANSLATION-CACHE — بناء طبقة التخزين المؤقت للترجمة (Translation Cache)</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>برمجة فئة <code>TranslationCache</code> في cache.py لتخزين الترجمات بمفتاح SHA-256 ومدة صلاحية TTL 3600 ثانية.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/translation/cache.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_translation_cache.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<li class="list-item"><code>backend/app/database/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>_TEAM/00_SHARED/TRANSLATION_CONTRACT.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>توليد المفتاح من <code>hash(source_lang + target_lang + text)</code>، إرجاع النتيجة الفورية وتعيين <code>source_used='cache'</code>.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>بناء الكاش مع دعم قاموس الذاكرة In-Memory وتوافق Redis، وتنفيذ الفحص والاسترجاع والتخزين.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_translation_cache.py</code>.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة سرعة الاستجابة واستقرار مفاتيح التجزئة SHA-256.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>انتهاء مدة الكاش TTL، امتلاء الذاكرة، نصوص متطابقة بمسافات زائدة.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>تنظيف النصوص ومنع هجمات التسميم Cache Poisoning.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>فحص الكاش قبل استدعاء أي مزود خارجي لتوفير الموارد.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> استرجاع الكاش يتم في زمن فوري (0ms)</li>
+<li class="list-item"><span class="chk">⬜</span> اختبارات الكاش تنجح 100%</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 إرجاع قيمة غير معتمدة لمصدر الترجمة</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/MOAYAD/handoff/TASK-05-TRANSLATION-CACHE.md</code></p>
+<p><strong>محتوى التسليم:</strong> ملف cache.py واختباراته.</p>
+<hr class="divider"/>
+<h3>📌 TASK-06-IDENTITY-TRANSLATION — تطبيق قاعدة الترجمة الحتمية (Identity Translation Rule)</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>تطبيق قاعدة Identity الصارمة: إذا كانت لغة المصدر هي نفس لغة الهدف (<code>source == target</code>)، تُرجع النتيجة فوراً دون استدعاء أي مزود خارجي.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/translation/service.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_translation_identity.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>استخدام القيمة 'none'</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>_TEAM/00_SHARED/TRANSLATION_CONTRACT.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>القاعدة الحتمية: <code>translated_text = original_text</code>, <code>source_used = 'identity'</code>, <code>confidence = 1.0</code>. يمنع منعاً باتاً استخدام 'none'.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>وضع فحص تطابق اللغات في أعلى دالة الترجمة لضمان استجابة صفرية التأخير.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_translation_identity.py</code> والتأكد من فحص عدم وجود 'none' نهائياً.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة الامتثال المطلق لقاعدة Identity في الدستور البرمجي.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>نصوص طويلة مرسلة لنفس لغة المتلقي، اختلاف حالة الأحرف في رموز اللغات ('AR' مقابل 'ar').</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>حماية موارد الخوادم الخارجية من الطلبات غير الضرورية.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>توفير النتيجة الفورية لمحمد الداعس في الـ WebSocket.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> قاعدة Identity مطبقة بنسبة 100%</li>
+<li class="list-item"><span class="chk">⬜</span> حظر تام للقيمة 'none'</li>
+<li class="list-item"><span class="chk">⬜</span> الاختبارات تنجح بالكامل</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 ظهور القيمة 'none' في أي استجابة</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/MOAYAD/handoff/TASK-06-IDENTITY-TRANSLATION.md</code></p>
+<p><strong>محتوى التسليم:</strong> تنفيذ قاعدة Identity واختباراتها.</p>
+<hr class="divider"/>
+<h3>📌 TASK-07-TRANSLATION-ERROR-HANDLING — بناء نظام استثناءات الترجمة والمعالجة الآمنة للأخطاء</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>إنشاء فئات الاستثناءات المخصصة <code>TranslationError</code>, <code>ProviderUnavailableError</code> وضمان المعالجة المتينة.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/translation/exceptions.py</code></li>
+<li class="list-item"><code>backend/app/translation/service.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_translation_errors.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>_TEAM/00_SHARED/TRANSLATION_CONTRACT.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>عند حدوث أي فشل في المزودات، يتم التقاط الخطأ وإرجاع النص الأصلي بأمان مع تسجيل الخطأ في الـ Logger.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>بناء هيكل الاستثناءات وكتل الـ try/except الوقائية.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_translation_errors.py</code>.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة سلامة التقاط الاستثناءات ومنع أي تعطل للخادم.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>أخطاء JSON تالف من المزود الخارجي، انقطاع مفاجئ للإنترنت.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>عدم تسريب تفاصيل تقنية حساسة للمستخدم النهائي.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>توفير استجابة آمنة وموثوقة لطبقة الـ WebSocket.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> النظام متين ولا ينهار عند تعطل الخدمات الخارجية</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 ترك أي استثناء غير ممسوك يكسر المحادثة</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/MOAYAD/handoff/TASK-07-TRANSLATION-ERROR-HANDLING.md</code></p>
+<p><strong>محتوى التسليم:</strong> ملف exceptions.py ونظام معالجة الأخطاء.</p>
+<hr class="divider"/>
+<h3>📌 TASK-08-TRANSLATION-SERVICE-INTEGRATION — تجميع خدمة الترجمة المتكاملة (TranslationService Pipeline)</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>بناء الخدمة المركزية <code>TranslationService</code> في service.py التي تجمع الكاشف، الكاش، المزود الأساسي، المزود الاحتياطي، وقاعدة Identity.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/app/translation/service.py</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>backend/tests/unit/test_translation_service.py</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>backend/app/websocket/**</code></li>
+<li class="list-item"><code>frontend/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>backend/app/translation/detector.py</code></li>
+<li class="list-item"><code>backend/app/translation/cache.py</code></li>
+<li class="list-item"><code>backend/app/translation/libretranslate.py</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>توفير دالة <code>translate_message(text, target_lang, source_lang=None)</code> كواجهة موحدة معتمدة لكافة أجزاء النظام.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>تنفيذ التدفق الكامل وإرجاع نموذج الاستجابة المعياري المحتوي على (translated_text, source_language, target_language, source_used, confidence).</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_translation_service.py</code>.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة شمولية خط الأنابيب Pipeline وسرعة المعالجة.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>محادثات متزامنة مكثفة، نصوص متعددة اللغات.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>التحقق من صحة المدخلات وتعقيمها.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>الواجهة البرمجية الأساسية لمحمد الداعس ويوسف خيري.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> خدمة الترجمة المتكاملة تعمل بكفاءة تامة وتمر بجميع مراحل السلسلة</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 فشل أي خطوة في خط أنابيب الترجمة</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/MOAYAD/handoff/TASK-08-TRANSLATION-SERVICE-INTEGRATION.md</code></p>
+<p><strong>محتوى التسليم:</strong> ملف service.py المتكامل واختباراته.</p>
+<hr class="divider"/>
+<h3>📌 TASK-09-TRANSLATION-FINAL-QA — الفحص النهائي الشامل واختبارات الجودة للترجمة (Translation Final QA)</h3>
+<h4>🎯 الهدف الأساسي</h4>
+<p>تشغيل حزمة اختبارات الترجمة الكاملة، التحقق من تغطية 100%، وتأكيد الامتثال التام لعقد الترجمة والدستور البرمجي.</p>
+<h4>📁 مكان الكود والملفات التي سيتم تعديلها (Code Location)</h4>
+<li class="list-item"><code>backend/tests/unit/test_translation*</code></li>
+<h4>📄 الملفات المتوقع إنشاؤها</h4>
+<li class="list-item"><code>team_delivery/MOAYAD/reviews/TRANSLATION_QA_REPORT.md</code></li>
+<h4>🔒 الملفات الممنوع لمسها أو تعديلها</h4>
+<li class="list-item"><code>frontend/**</code></li>
+<li class="list-item"><code>backend/app/websocket/**</code></li>
+<h4>🔗 الاعتماديات والعقود المرجعية</h4>
+<li class="list-item"><code>_TEAM/00_SHARED/DELIVERY_RULES.md</code></li>
+<h4>🧠 ماذا يجب أن يفهم المطور قبل التنفيذ؟</h4>
+<p>التأكد من جاهزية طبقة الترجمة بنسبة 100% للتسليم والدمج النهائي.</p>
+<h4>⚙️ ماذا سينفذ Antigravity IDE تلقائياً؟</h4>
+<p>تشغيل <code>pytest backend/tests/unit/test_translation*</code> والتأكد من نجاح كافة الاختبارات.</p>
+<h4>🧪 ماذا سيختبر المطور في خطوة الفحص؟</h4>
+<p>تأكيد نجاح 100% PASS لكافة الاختبارات وفحص حظر 'none'.</p>
+<h4>☁️ ماذا ستراجع أداة الذكاء الاصطناعي الخارجية (Cloud AI Review)؟</h4>
+<p>مراجعة تقرير الجودة النهائي للترجمة واعتماد المخرجات.</p>
+<h4>⚠️ الحالات الحدية والطرفية (Edge Cases)</h4>
+<p>فحص شامل لكافة الحالات الحدية والطرفية.</p>
+<h4>🔐 المتطلبات والضوابط الأمنية</h4>
+<p>التأكد من سلامة التعامل مع الإعدادات والمفاتيح.</p>
+<h4>🔌 متطلبات التكامل والربط مع الفريق</h4>
+<p>جاهزية تامة للربط مع خادم الـ WebSocket.</p>
+<h4>✅ شروط النجاح والانتقال للمهمة التالية (Success Criteria)</h4>
+<li class="list-item"><span class="chk">⬜</span> كافة اختبارات الترجمة تمر بنجاح 100% خضراء</li>
+<li class="list-item"><span class="chk">⬜</span> تقرير QA معتمد</li>
+<h4>❌ متى تتوقف فوراً وتمنع إكمال العمل؟ (Stop & Fail Triggers)</h4>
+<li class="list-item">🛑 وجود أي اختبار فاشل أو مخالفة للعقد</li>
+<h4>📦 مسار التسليم وماذا يتم توثيقه عند الانتهاء (Handoff Destination)</h4>
+<p><strong>أين تسلم بعد الإنجاز؟</strong> <code>team_delivery/MOAYAD/handoff/TASK-09-TRANSLATION-FINAL-QA.md</code></p>
+<p><strong>محتوى التسليم:</strong> تقرير الجودة النهائي للترجمة.</p>
+<hr class="divider"/>
+<hr class="divider"/>
+<h1 class="section-title">🧪 11. منظومة الاختبارات وطريقة التشغيل</h1>
+<h3>كيفية تشغيل واختبار محرك الترجمة:</h3>
+<p>1. <strong>تشغيل كافة اختبارات الترجمة:</strong></p>
+<pre><code class="language-bash">   pytest backend/tests/unit/test_translation* -v</code></pre>
+<p>2. <strong>اختبار قاعدة Identity وحظر 'none':</strong></p>
+<pre><code class="language-bash">   pytest backend/tests/unit/test_translation_identity.py -v</code></pre>
+<p>3. <strong>اختبار الكاش والـ Fallback:</strong></p>
+<pre><code class="language-bash">   pytest backend/tests/unit/test_translation_cache.py backend/tests/unit/test_translation_fallback.py -v</code></pre>
+<div class="callout-box">💡 <strong>معيار النجاح (PASS):</strong> نجاح 100% وتأكيد عدم ظهور القيمة المحظورة `"none"` نهائياً في أي سياق.</div>
+<hr class="divider"/>
+<h1 class="section-title">🛡️ 12. الضوابط والمتطلبات الأمنية</h1>
+<li class="list-item"><strong>حظر القيمة <code>"none"</code>:</strong> يُمنع منعاً باتاً إرجاع القيمة <code>"none"</code> في حقل <code>source_used</code>؛ القيم المعتمدة حصراً هي: <code>libretranslate</code>, <code>google</code>, <code>cache</code>, <code>identity</code>.</li>
+<li class="list-item"><strong>قاعدة Identity الحتمية:</strong> إذا كان <code>source_language == target_language</code>، تُرجع النتيجة فوراً: <code>source_used = "identity"</code>, <code>confidence = 1.0</code>, <code>translated_text = original_text</code>.</li>
+<li class="list-item"><strong>حظر الأسرار:</strong> قراءة مفاتيح LibreTranslate و Google من <code>app.core.config.settings</code>.</li>
+<li class="list-item"><strong>تأمين الكاش:</strong> تشفير مفاتيح الكاش عبر خوارزمية <code>SHA-256</code> وتحديد مدة بقاء TTL 3600 ثانية.</li>
+<hr class="divider"/>
+<h1 class="section-title">🔌 13. مصفوفة التكامل والاعتمادية مع بقية الفريق</h1>
+<table>
+<tr><th>العضو</th><th>ماذا يحتاج مؤيد منه؟</th><th>ماذا يقدم مؤيد له؟</th></tr>
+<tr><td>**محمد الداعس**</td><td>استدعاء دالة `translate_message` وتمرير معلمات اللغة والنص بشكل سليم</td><td>إرجاع كائن الاستجابة المعياري المترجم لبثه للمستخدمين بالـ WebSocket</td></tr>
+<tr><td>**يوسف خيري**</td><td>استدعاء دالة الترجمة عند الرغبة في توليد ترجمات مسبقة للرسائل</td><td>توفير واجهة برمجية موحدة للترجمة وتخزين نتائجها في الكاش وقاعدة البيانات</td></tr>
+<tr><td>**أحمد العماري**</td><td>عرض نص الرسالة المترجمة ومصدر الترجمة في واجهة المحادثة</td><td>توفير حقول `source_used` و `confidence` لعرضها كشارات في الواجهة</td></tr>
+</table>
+<div class="diagram"><pre><code>flowchart LR
+    MOAYAD["مؤيد (Translation Engine)"]
+    MOHAMMED["محمد (WebSocket)"]
+    YOUSEF["يوسف (Messages DB)"]
+    AHMED["أحمد (Frontend UI)"]
+
+    MOHAMMED -->|1. translate_message(text, target, source)| MOAYAD
+    MOAYAD -->|2. إرجاع كائن الترجمة المعتمد| MOHAMMED
+    MOHAMMED -->|3. تمرير الترجمة للحفظ| YOUSEF
+    MOHAMMED -->|4. بث الرسالة مع الترجمة| AHMED</code></pre></div>
+<hr class="divider"/>
+<h1 class="section-title">🚨 14. الحالات الحدية والمشاكل المحتملة</h1>
+<li class="list-item"><strong>تطابق لغة المصدر والهدف:</strong> تطبيق قاعدة Identity فوراً وإرجاع النتيجة بزمن 0ms وبدون استهلاك كاش أو شبكة.</li>
+<li class="list-item"><strong>انقطاع خادم LibreTranslate:</strong> التقاط استثناء <code>httpx.RequestError</code> والتحويل الفوري لمزود <code>GoogleFallbackProvider</code>.</li>
+<li class="list-item"><strong>تجاوز مهلة الـ 10 ثوانٍ (Timeout):</strong> التقاط <code>httpx.TimeoutException</code> وتفعيل الـ Fallback لتجنب تعليق المحادثة الحية.</li>
+<li class="list-item"><strong>نصوص إيموجي أو أرقام فقط:</strong> الكاشف يعيد <code>'unknown'</code> وتقوم الخدمة بإرجاع النص الأصلي بأمان.</li>
+<li class="list-item"><strong>عدم توفر خادم Redis:</strong> استخدام قاموس الذاكرة In-Memory تلقائياً ككاش مؤقت دون توقف الخدمة.</li>
+<hr class="divider"/>
+<h1 class="section-title">🛑 15. بروتوكول التصعيد والتعامل مع الأخطاء</h1>
+<p>إذا واجهت أي خطأ برمجي أو تعارض أثناء العمل:</p>
+<div class="diagram"><pre><code>flowchart TD
+    ERR["🚨 حدوث خطأ أو فشل اختبار"] --> STOP["1. التوقف الفوري (Stop & Fail)"]
+    STOP --> CHECK["2. فحص سجل الأخطاء والـ Traceback"]
+    CHECK --> LOCAL{"هل الخطأ داخل ملفاتك الخاصة؟"}
+    LOCAL -->|نعم| FIX_LOCAL["3. إصلاح الكود وإعادة تشغيل الاختبار"]
+    FIX_LOCAL --> TEST["4. التأكد من PASS"]
+    LOCAL -->|لا تعارض عقود / ملكية| ESCALATE["3. رفع المشكلة فوراً لقائد المشروع أحمد العماري"]
+    ESCALATE --> RESOLVE["4. صدور قرار رسمي بتعديل العقد أو توجيه الزميل"]</code></pre></div>
+<div class="callout-box">⚠️ <strong>ممنوع قطيعاً:</strong> محاولة عمل Workaround غير معتمد، أو تعديل ملف زميلك، أو تغيير أسماء حقول العقود لتجاوز الخطأ.</div>
+<hr class="divider"/>
+<h1 class="section-title">📦 16. بروتوكول التسليم والاعتماد النهائي</h1>
+<h3>شروط اعتبار المهمة منتهية وجاهزة للتسليم:</h3>
+<p>1. <strong>الاختبارات الآلية:</strong> نجاح كافة الاختبارات بنسبة <strong>100% PASS</strong> دون أي تخطٍّ.</p>
+<p>2. <strong>المراجعة الخارجية:</strong> اجتياز فحص <code>03_EXTERNAL_AI_REVIEW.md</code> بدون ملاحظات حرجة.</p>
+<p>3. <strong>عزل التعديلات:</strong> عدم تعديل أي ملف خارج نطاق ملكيتك المعتمد.</p>
+<p>4. <strong>خلو الأسرار:</strong> خلو الكود تماماً من أي Hardcoded Keys أو كلمات مرور.</p>
+<p>5. <strong>تقرير التسليم:</strong> إنشاء ملف التقرير داخل مجلد <code>team_delivery/MOAYAD/handoff/</code>.</p>
+<hr class="divider"/>
+<h1 class="section-title">📊 17. لوحة تتبع الإنجاز (Progress Tracker)</h1>
+<table>
+<tr><th>#</th><th>المهمة</th><th>كود التنفيذ</th><th>الاختبار الآلي</th><th>المراجعة السحابية</th><th>حالة التسليم</th></tr>
+<tr><td>01</td><td>`TASK-01-TRANSLATION-ANALYSIS`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>02</td><td>`TASK-02-LANGUAGE-DETECTION`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>03</td><td>`TASK-03-LIBRETRANSLATE-PROVIDER`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>04</td><td>`TASK-04-GOOGLE-FALLBACK-PROVIDER`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>05</td><td>`TASK-05-TRANSLATION-CACHE`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>06</td><td>`TASK-06-IDENTITY-TRANSLATION`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>07</td><td>`TASK-07-TRANSLATION-ERROR-HANDLING`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>08</td><td>`TASK-08-TRANSLATION-SERVICE-INTEGRATION`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+<tr><td>09</td><td>`TASK-09-TRANSLATION-FINAL-QA`</td><td>⬜ قيد التنفيذ</td><td>⬜ غير مكتمل</td><td>⬜ بانتظار المراجعة</td><td>⬜ غير مسلم</td></tr>
+</table>
+<hr class="divider"/>
+<h1 class="section-title">🏁 18. بوابة الاعتماد النهائي (FINAL GATE)</h1>
+<div class="diagram"><pre><code>flowchart TD
+    A["جميع المهام منجزة بنسبة 100%"] --> B["كافة الاختبارات الآلية PASSED"]
+    B --> C["المراجعة الخارجية معتمدة"]
+    C --> D["فحص الملكية: لا تعديلات خارجية"]
+    D --> E["فحص العقود: تطابق تام 100%"]
+    E --> F["فحص الأمان: خلو تام من الأسرار"]
+    F --> G["تقرير Handoff مكتمل"]
+    G --> H{"بوابة الاعتماد FINAL GATE"}
+    H -->|PASS| READY["🎉 اعتماد الميزة وجاهزيتها للدمج الشامل"]
+    H -->|FAIL| REWORK["🛠️ تصحيح النواقص"]
+    REWORK --> A</code></pre></div>
+<div class="callout-box">🏆 <strong>النتيجة:</strong> بعد اجتياز بوابة الاعتماد، يكون عملك جاهزاً للدمج في الإصدار الرئيسي لمشروع LinguaChat تحت إشراف القائد أحمد العماري.</div>
+
+</body>
+</html>

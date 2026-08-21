@@ -1,0 +1,120 @@
+# ============================================================
+# LinguaChat — Docker Compose Foundation
+# ============================================================
+# This file defines the infrastructure services for LinguaChat.
+# Application services (backend, frontend) will be added in a
+# later task once they are ready for containerization.
+# ============================================================
+
+version: "3.9"
+
+services:
+
+  # ──────────────────────────────────────────────────────────
+  # PostgreSQL — Primary Database
+  # ──────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:15-alpine
+    container_name: linguachat_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-linguachat}
+      POSTGRES_USER: ${POSTGRES_USER:-linguachat_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-linguachat_user} -d ${POSTGRES_DB:-linguachat}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ──────────────────────────────────────────────────────────
+  # Redis — Translation Cache
+  # ──────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: linguachat_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ──────────────────────────────────────────────────────────
+  # LibreTranslate — Primary Translation Provider
+  # ──────────────────────────────────────────────────────────
+  libretranslate:
+    image: libretranslate/libretranslate:latest
+    container_name: linguachat_libretranslate
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      LT_LOAD_ONLY: ${LT_LOAD_ONLY:-ar,en,fr,de,es,zh,ru,ja,pt,it}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5000/languages || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # ──────────────────────────────────────────────────────────
+  # Backend — FastAPI (placeholder — enable when ready)
+  # ──────────────────────────────────────────────────────────
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   container_name: linguachat_backend
+  #   restart: unless-stopped
+  #   env_file:
+  #     - ./backend/.env
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #   volumes:
+  #     - ./backend:/app
+
+  # ──────────────────────────────────────────────────────────
+  # Frontend — React (placeholder — enable when ready)
+  # ──────────────────────────────────────────────────────────
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   container_name: linguachat_frontend
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - backend
+
+# ──────────────────────────────────────────────────────────
+# Volumes
+# ──────────────────────────────────────────────────────────
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+# ──────────────────────────────────────────────────────────
+# Networks
+# ──────────────────────────────────────────────────────────
+networks:
+  default:
+    name: linguachat_network
+    driver: bridge

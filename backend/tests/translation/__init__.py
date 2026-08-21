@@ -1,0 +1,1 @@
+"""LinguaChat — Translation Tests Package"""

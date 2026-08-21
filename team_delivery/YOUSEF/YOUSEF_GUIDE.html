@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>دليل المطور: يوسف خيري (Yousef Khairy)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
+        @page {
+            size: A4;
+            margin: 15mm;
+            @bottom-right {
+                content: counter(page);
+                font-family: 'Cairo', sans-serif;
+                font-size: 9pt;
+                color: #64748b;
+            }
+        }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            font-size: 10pt;
+        }
+        .cover {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #ffffff;
+            padding: 35px 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            page-break-after: avoid;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.25);
+            border: 1px solid #6366f1;
+            color: #a5b4fc;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 9.5pt;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        h1.title {
+            font-size: 24pt;
+            font-weight: 900;
+            margin: 5px 0 10px 0;
+            color: #38bdf8;
+            line-height: 1.2;
+        }
+        .subtitle { font-size: 13pt; color: #cbd5e1; margin-bottom: 15px; }
+        .meta-box {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 12px 18px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10pt;
+        }
+        h2 {
+            color: #1e1b4b;
+            font-size: 13.5pt;
+            font-weight: 800;
+            border-right: 5px solid #6366f1;
+            padding-right: 10px;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            page-break-after: avoid;
+        }
+        h3 {
+            color: #334155;
+            font-size: 11pt;
+            font-weight: 700;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            page-break-after: avoid;
+        }
+        p { margin: 0 0 10px 0; text-align: justify; }
+        .card {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            page-break-inside: avoid;
+        }
+        .card-header { font-weight: 700; color: #0f172a; margin-bottom: 6px; font-size: 10.5pt; }
+        .diagram {
+            background-color: #0b0f19;
+            color: #38bdf8;
+            padding: 14px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 8pt;
+            line-height: 1.35;
+            direction: ltr;
+            text-align: left;
+            margin: 12px 0;
+            border: 1px solid #1e293b;
+            page-break-inside: avoid;
+        }
+        pre, code { font-family: 'Fira Code', monospace; direction: ltr; text-align: left; }
+        pre {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 8.5pt;
+            margin: 8px 0;
+        }
+        .inline-code {
+            background-color: #e2e8f0;
+            color: #0f172a;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 8.5pt;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 9pt;
+            page-break-inside: avoid;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 6px 8px;
+            text-align: right;
+        }
+        th { background-color: #f1f5f9; font-weight: 700; color: #0f172a; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+        .step-box {
+            display: flex;
+            gap: 12px;
+            background: #eef2ff;
+            border-right: 4px solid #4f46e5;
+            padding: 10px 14px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            page-break-inside: avoid;
+        }
+        .step-num {
+            background: #4f46e5;
+            color: #ffffff;
+            font-weight: 800;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 10pt;
+        }
+        .step-text { font-size: 9.5pt; }
+        .step-text strong { color: #1e1b4b; }
+        .warn-box {
+            background: #fffbeb;
+            border-right: 4px solid #f59e0b;
+            padding: 10px 14px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 9.5pt;
+        }
+        .danger-box {
+            background: #fef2f2;
+            border-right: 4px solid #ef4444;
+            padding: 10px 14px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 9.5pt;
+        }
+        .page-break { page-break-after: always; }
+    </style>
+</head>
+<body>
+
+<div class="cover">
+    <div class="badge">دليل المطور الشامل والخطوات العملية خطوة بخطوة - LinguaChat Dev Guide</div>
+    <div class="title">دليل العمل والتطبيق الخاص بك</div>
+    <div class="subtitle">يوسف خيري (Yousef Khairy) — مهندس الـ Backend وقواعد البيانات والمصادقة والـ REST (Backend & DB Engineer)</div>
+    <div class="meta-box">
+        <div><strong>المشروع:</strong> LinguaChat (منصة المحادثة الفورية والترجمة الحية)</div>
+        <div><strong>حالة الدليل:</strong> إرشادات تطبيقية مباشرة (Step-by-Step Practical)</div>
+    </div>
+</div>
+
+
+<h2>1. ما هو مشروع LinguaChat وما هي مهمتك بالضبط؟</h2>
+<p>
+    مشروع <strong>LinguaChat</strong> هو تطبيق محادثة جماعية متكامل يحتاج إلى قاعدة بيانات قوية، نظام مصادقة آمن بكلمات مرور مشفرة ورموز JWT، ومسارات REST API لإدارة المستخدمين والغرف واسترجاع تاريخ المحادثات والإحصائيات.
+</p>
+<p>
+    <strong>مهمتك يا يوسف (مهندس الـ Backend وقواعد البيانات والمصادقة والـ REST):</strong><br>
+    أنت الأساس والعمود الفقري للبيانات والأمان في المشروع! مسؤوليتك هي بناء طبقة قاعدة البيانات PostgreSQL والجداول الخمسة، وهجرات Alembic، ونظام التشفير (Bcrypt) وصناعة وفك رموز JWT، بالإضافة إلى بناء كافة مسارات الـ REST API في FastAPI (التسجيل، تسجيل الدخول، إنشاء واستعراض الغرف، الانضمام، استرجاع الرسائل المترجمة، ومسار لوحة التحكم).
+</p>
+
+<h2>2. موقعك في المعمارية الهندسية للنظام (Architecture Position)</h2>
+<div class="diagram">
++-----------------------------------------------------------------------------------+
+|  [نطاقك الحصري - YOUSEF]                                                          |
+|  FastAPI Backend &amp; Database Layer                                                 |
+|                                                                                   |
+|  1. مسارات الـ REST API:                                                          |
+|     - POST /api/v1/auth/register (201 Created) | POST /api/v1/auth/login (200 OK) |
+|     - POST &amp; GET /api/v1/rooms | POST /api/v1/rooms/{id}/join                     |
+|     - GET /api/v1/rooms/{id}/messages | GET /api/v1/dashboard/stats               |
+|                                                                                   |
+|  2. طبقة الأمان (Security &amp; JWT):                                                 |
+|     - passlib[bcrypt] cost 12 | jwt.encode/decode HS256 (60 min)                  |
+|     - get_current_user Dependency لحماية المسارات                                 |
+|                                                                                   |
+|  3. طبقة قاعدة البيانات (PostgreSQL &amp; SQLAlchemy 2.0):                           |
+|     - 5 ORM Models: users, rooms, room_members, messages, translations            |
+|     - Alembic Migrations: إدارة ترقية وتراجع جداول قاعدة البيانات                  |
++-----------------------------------------------------------------------------------+
+</div>
+
+<h2>3. حدود الملكية: ما الذي تعدله وما الممنوع لمسه قطيعاً؟</h2>
+<div class="card">
+    <div class="card-header" style="color: #15803d;">✅ الملفات والمجلدات التي تملكها وتعدلها أنت فقط:</div>
+    <ul>
+        <li><code>backend/app/database/**</code> (محرك الجلسات والنماذج الخمسة).</li>
+        <li><code>backend/app/core/security.py</code> (التشفير وإدارة JWT).</li>
+        <li><code>backend/app/auth/**</code>, <code>backend/app/rooms/**</code>, <code>backend/app/messages/**</code>, <code>backend/app/dashboard/**</code>.</li>
+        <li><code>backend/alembic/**</code> و <code>backend/alembic.ini</code>.</li>
+        <li><code>backend/tests/unit/**</code> (اختبارات قاعدة البيانات والـ API).</li>
+        <li><code>team_delivery/YOUSEF/**</code> (مجلد عملك ومهامك وتقارير تسليمك).</li>
+    </ul>
+</div>
+<div class="danger-box">
+    <strong>⛔ الملفات الممنوع عليك تعديلها نهائياً (Forbidden):</strong><br>
+    يمنع تعديل أي ملف في <code>frontend/**</code> أو <code>backend/app/websocket/**</code> أو <code>backend/app/translation/**</code> أو <code>docs/**</code>.
+</div>
+
+<div class="page-break"></div>
+
+<h2>4. خريطة طريق مهامك الـ 12 من البداية حتى النهاية (Your 12 Tasks)</h2>
+<table>
+    <thead>
+        <tr>
+            <th>رقم المهمة</th>
+            <th>اسم المهمة</th>
+            <th>الملف الأساسي للتعديل</th>
+            <th>الهدف والمطلوب باختصار</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>TASK-01</strong></td>
+            <td>DATABASE-FOUNDATION</td>
+            <td><code>backend/app/database/session.py</code></td>
+            <td>تهيئة محرك SQLAlchemy غير المتزامن ودالة <code>get_db</code>.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-02</strong></td>
+            <td>DATABASE-MODELS</td>
+            <td><code>backend/app/database/models/**</code></td>
+            <td>بناء نماذج الجداول الخمسة بالـ UUID والمفاتيح الأجنبية والقيود.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-03</strong></td>
+            <td>DATABASE-MIGRATIONS</td>
+            <td><code>backend/alembic/**</code></td>
+            <td>إعداد ملفات Alembic وتوليد وتطبيق هجرة إنشاء الجداول.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-04</strong></td>
+            <td>SECURITY-HASHING</td>
+            <td><code>backend/app/core/security.py</code></td>
+            <td>تشفير Bcrypt cost 12، وصناعة وفك رموز JWT HS256.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-05</strong></td>
+            <td>AUTH-REGISTRATION</td>
+            <td><code>backend/app/auth/router.py</code></td>
+            <td>مسار <code>POST /auth/register</code> وإنشاء المستخدم مع لغته المفضلة.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-06</strong></td>
+            <td>AUTH-LOGIN</td>
+            <td><code>backend/app/auth/router.py</code></td>
+            <td>مسار <code>POST /auth/login</code> والتحقق من كلمة المرور وإرجاع JWT.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-07</strong></td>
+            <td>USERS-AUTH-DEPENDENCY</td>
+            <td><code>backend/app/auth/service.py</code></td>
+            <td>دالة <code>get_current_user</code> لاستخراج المستخدم من التوكن وحماية المسارات.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-08</strong></td>
+            <td>ROOMS-MANAGEMENT</td>
+            <td><code>backend/app/rooms/router.py</code></td>
+            <td>مسارات <code>POST /rooms</code> لإنشاء غرفة و <code>GET /rooms</code> للاستعراض.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-09</strong></td>
+            <td>ROOM-MEMBERSHIP</td>
+            <td><code>backend/app/rooms/router.py</code></td>
+            <td>مسار <code>POST /rooms/{id}/join</code> ودالة التحقق من عضوية المستخدم.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-10</strong></td>
+            <td>MESSAGES-HISTORY</td>
+            <td><code>backend/app/messages/router.py</code></td>
+            <td>مسار <code>GET /rooms/{id}/messages</code> لاسترجاع الرسائل المترجمة السابقة.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-11</strong></td>
+            <td>DASHBOARD-STATS</td>
+            <td><code>backend/app/dashboard/router.py</code></td>
+            <td>مسار <code>GET /dashboard/stats</code> واستخراج المؤشرات الإحصائية الخمسة.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-12</strong></td>
+            <td>BACKEND-FINAL-QA</td>
+            <td><code>backend/tests/unit/**</code></td>
+            <td>الفحص الشامل لكافة مسارات الـ REST وقاعدة البيانات بنسبة 100%.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>5. كيف تطبق خطوة بخطوة عملياً؟ (Step-by-Step Walkthrough)</h2>
+<div class="step-box">
+    <div class="step-num">1</div>
+    <div class="step-text"><strong>افتح مجلد مهامك:</strong> <code>team_delivery/YOUSEF/tasks/</code>.</div>
+</div>
+<div class="step-box">
+    <div class="step-num">2</div>
+    <div class="step-text"><strong>اختر المهمة:</strong> افتح مجلد المهمة (مثلاً <code>TASK-01-DATABASE-FOUNDATION/</code>) واقرأ <code>TASK.md</code>.</div>
+</div>
+<div class="step-box">
+    <div class="step-num">3</div>
+    <div class="step-text"><strong>التنفيذ بالذكاء الاصطناعي:</strong> انسخ محتوى <code>01_IMPLEMENT_IDE.md</code> إلى AI المساعد لتنفيذ الكود ونماذج SQLAlchemy.</div>
+</div>
+<div class="step-box">
+    <div class="step-num">4</div>
+    <div class="step-text"><strong>شغل الاختبار:</strong> نفذ الأمر من <code>02_TEST_IDE.md</code>:<br><code>pytest backend/tests/unit/ -v</code></div>
+</div>
+<div class="step-box">
+    <div class="step-num">5</div>
+    <div class="step-text"><strong>المراجعة السحابية:</strong> راجع عبر <code>03_EXTERNAL_AI_REVIEW.md</code> وتأكد من الحصول على <strong>PASS</strong>، ثم انتقل للمهمة التالية.</div>
+</div>
+
+
+</body>
+</html>

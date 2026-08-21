@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>دليل المطور: مؤيد الصوفي (Moayad Al-Soufi)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
+        @page {
+            size: A4;
+            margin: 15mm;
+            @bottom-right {
+                content: counter(page);
+                font-family: 'Cairo', sans-serif;
+                font-size: 9pt;
+                color: #64748b;
+            }
+        }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            font-size: 10pt;
+        }
+        .cover {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #ffffff;
+            padding: 35px 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            page-break-after: avoid;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.25);
+            border: 1px solid #6366f1;
+            color: #a5b4fc;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 9.5pt;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        h1.title {
+            font-size: 24pt;
+            font-weight: 900;
+            margin: 5px 0 10px 0;
+            color: #38bdf8;
+            line-height: 1.2;
+        }
+        .subtitle { font-size: 13pt; color: #cbd5e1; margin-bottom: 15px; }
+        .meta-box {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 12px 18px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10pt;
+        }
+        h2 {
+            color: #1e1b4b;
+            font-size: 13.5pt;
+            font-weight: 800;
+            border-right: 5px solid #6366f1;
+            padding-right: 10px;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            page-break-after: avoid;
+        }
+        h3 {
+            color: #334155;
+            font-size: 11pt;
+            font-weight: 700;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            page-break-after: avoid;
+        }
+        p { margin: 0 0 10px 0; text-align: justify; }
+        .card {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            page-break-inside: avoid;
+        }
+        .card-header { font-weight: 700; color: #0f172a; margin-bottom: 6px; font-size: 10.5pt; }
+        .diagram {
+            background-color: #0b0f19;
+            color: #38bdf8;
+            padding: 14px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 8pt;
+            line-height: 1.35;
+            direction: ltr;
+            text-align: left;
+            margin: 12px 0;
+            border: 1px solid #1e293b;
+            page-break-inside: avoid;
+        }
+        pre, code { font-family: 'Fira Code', monospace; direction: ltr; text-align: left; }
+        pre {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 8.5pt;
+            margin: 8px 0;
+        }
+        .inline-code {
+            background-color: #e2e8f0;
+            color: #0f172a;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 8.5pt;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 9pt;
+            page-break-inside: avoid;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 6px 8px;
+            text-align: right;
+        }
+        th { background-color: #f1f5f9; font-weight: 700; color: #0f172a; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+        .step-box {
+            display: flex;
+            gap: 12px;
+            background: #eef2ff;
+            border-right: 4px solid #4f46e5;
+            padding: 10px 14px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            page-break-inside: avoid;
+        }
+        .step-num {
+            background: #4f46e5;
+            color: #ffffff;
+            font-weight: 800;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 10pt;
+        }
+        .step-text { font-size: 9.5pt; }
+        .step-text strong { color: #1e1b4b; }
+        .warn-box {
+            background: #fffbeb;
+            border-right: 4px solid #f59e0b;
+            padding: 10px 14px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 9.5pt;
+        }
+        .danger-box {
+            background: #fef2f2;
+            border-right: 4px solid #ef4444;
+            padding: 10px 14px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 9.5pt;
+        }
+        .page-break { page-break-after: always; }
+    </style>
+</head>
+<body>
+
+<div class="cover">
+    <div class="badge">دليل المطور الشامل والخطوات العملية خطوة بخطوة - LinguaChat Dev Guide</div>
+    <div class="title">دليل العمل والتطبيق الخاص بك</div>
+    <div class="subtitle">مؤيد الصوفي (Moayad Al-Soufi) — مهندس خدمات ومحركات الترجمة والكاش (Translation & Caching Engineer)</div>
+    <div class="meta-box">
+        <div><strong>المشروع:</strong> LinguaChat (منصة المحادثة الفورية والترجمة الحية)</div>
+        <div><strong>حالة الدليل:</strong> إرشادات تطبيقية مباشرة (Step-by-Step Practical)</div>
+    </div>
+</div>
+
+
+<h2>1. ما هو مشروع LinguaChat وما هي مهمتك بالضبط؟</h2>
+<p>
+    مشروع <strong>LinguaChat</strong> يقوم على ترجمة الرسائل في الوقت الحقيقي؛ إذا أرسل أحدهم رسالة بالعربية وأنت تفضل الإنجليزية، تترجم لك فوراً دون تأخير.
+</p>
+<p>
+    <strong>مهمتك يا مؤيد (مهندس خدمات ومحركات الترجمة والكاش):</strong><br>
+    أنت عقل الترجمة والذكاء الاصطناعي في المشروع! مسؤوليتك هي بناء وحدة الترجمة المتكاملة داخل <code>backend/app/translation/</code>.
+    مهمتك تشمل: كشف لغة الرسالة تلقائياً (Language Detection)، استدعاء محرك LibreTranslate عبر HTTP بمهلة 10 ثوانٍ، تفعيل مزود Google الاحتياطي، تخزين الترجمات في كاش سريع (In-Memory و Redis)، والأهم من ذلك تطبيق <strong>قاعدة الـ Identity</strong> الذكية لتوفير الموارد عندما تكون لغة المرسل هي نفس لغة المستقبل.
+</p>
+
+<h2>2. موقعك في المعمارية الهندسية للنظام (Architecture Position)</h2>
+<div class="diagram">
++-----------------------------------------------------------------------------------+
+|  WebSocket Server (Mohammed) يستدعي خدمتك عبر:                                     |
+|  translate_message(text="مرحباً", source_language="ar", target_language="en")     |
++------------------------------------------+----------------------------------------+
+                                           | استدعاء مباشر في الذاكرة
+                                           v
++-----------------------------------------------------------------------------------+
+|  [نطاقك الحصري - MOAYAD]                                                          |
+|  Translation Engine Architecture                                                  |
+|                                                                                   |
+|  1. فحص تطابق اللغات (Identity Rule):                                             |
+|     إذا source == target -> أرجع النص الأصلي فوراً مع source_used="identity"       |
+|                                                                                   |
+|  2. فحص الكاش (Cache Lookup):                                                     |
+|     فحص مفتاح SHA-256 في الذاكرة / Redis -> عند المطابقة أرجع source_used="cache"   |
+|                                                                                   |
+|  3. مزود LibreTranslate (Primary Provider):                                       |
+|     استدعاء HTTP بمهلة 10 ثوانٍ -> عند النجاح أرجع source_used="libretranslate"   |
+|                                                                                   |
+|  4. مزود Google Fallback (Secondary Provider):                                    |
+|     عند تعطل المزود الأساسي -> أرجع source_used="google"                          |
++-----------------------------------------------------------------------------------+
+</div>
+
+<div class="warn-box">
+    <strong>⚠️ قاعدة الـ Identity الصارمة وتأكيد حظر "none":</strong><br>
+    - إذا كانت <code>source_language == target_language</code>، يجب أن تعيد: <code>source_used = "identity"</code> و <code>confidence = 1.0</code>.<br>
+    - <strong>ممنوع منعاً باتاً</strong> استخدام القيمة <code>"none"</code> في أي حقل أو استجابة في النظام.
+</div>
+
+<h2>3. حدود الملكية: ما الذي تعدله وما الممنوع لمسه قطيعاً؟</h2>
+<div class="card">
+    <div class="card-header" style="color: #15803d;">✅ الملفات والمجلدات التي تملكها وتعدلها أنت فقط:</div>
+    <ul>
+        <li><code>backend/app/translation/**</code> (detector, providers, cache, service).</li>
+        <li><code>backend/tests/unit/test_translation*</code> (اختبارات الترجمة والكاش).</li>
+        <li><code>team_delivery/MOAYAD/**</code> (مجلد عملك ومهامك وتقارير تسليمك).</li>
+    </ul>
+</div>
+<div class="danger-box">
+    <strong>⛔ الملفات الممنوع عليك تعديلها نهائياً (Forbidden):</strong><br>
+    يمنع تعديل ملفات <code>frontend/**</code> أو <code>backend/app/websocket/**</code> أو <code>backend/app/database/**</code> أو <code>docs/**</code>.
+</div>
+
+<div class="page-break"></div>
+
+<h2>4. خريطة طريق مهامك الـ 9 من البداية حتى النهاية (Your 9 Tasks)</h2>
+<table>
+    <thead>
+        <tr>
+            <th>رقم المهمة</th>
+            <th>اسم المهمة</th>
+            <th>الملف الأساسي للتعديل</th>
+            <th>الهدف والمطلوب باختصار</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>TASK-01</strong></td>
+            <td>TRANSLATION-ANALYSIS</td>
+            <td>قراءة فقط</td>
+            <td>دراسة عقد <code>docs/translation-contract.md</code> وقاعدة Identity.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-02</strong></td>
+            <td>LANGUAGE-DETECTION</td>
+            <td><code>backend/app/translation/detector.py</code></td>
+            <td>بناء كاشف اللغات وإرجاع رموز ISO 639-1 دون رفع استثناءات.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-03</strong></td>
+            <td>LIBRETRANSLATE-PROVIDER</td>
+            <td><code>backend/app/translation/providers.py</code></td>
+            <td>بناء عميل LibreTranslate غير المتزامن مع مهلة زمنية 10 ثوانٍ.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-04</strong></td>
+            <td>GOOGLE-FALLBACK</td>
+            <td><code>backend/app/translation/providers.py</code></td>
+            <td>بناء المزود الاحتياطي عند تعطل المزود الأساسي.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-05</strong></td>
+            <td>TRANSLATION-CACHE</td>
+            <td><code>backend/app/translation/cache.py</code></td>
+            <td>بناء طبقة الكاش السريعة بمفتاح SHA-256 وصلاحية 3600 ثانية.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-06</strong></td>
+            <td>IDENTITY-TRANSLATION</td>
+            <td><code>backend/app/translation/service.py</code></td>
+            <td>تطبيق قاعدة الـ Identity ومنع استخدام القيمة "none" نهائياً.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-07</strong></td>
+            <td>ERROR-HANDLING</td>
+            <td><code>backend/app/translation/service.py</code></td>
+            <td>معالجة الاستثناءات وتوليد TranslationError عند فشل كافة المزودين.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-08</strong></td>
+            <td>SERVICE-INTEGRATION</td>
+            <td><code>backend/app/translation/service.py</code></td>
+            <td>تجميع كافة الوحدات في الدالة الرئيسية <code>translate_message</code>.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-09</strong></td>
+            <td>TRANSLATION-FINAL-QA</td>
+            <td><code>backend/app/translation/**</code></td>
+            <td>الفحص الشامل وتشغيل كافة اختبارات الترجمة والكاش بنسبة 100%.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>5. كيف تطبق خطوة بخطوة عملياً؟ (Step-by-Step Walkthrough)</h2>
+<div class="step-box">
+    <div class="step-num">1</div>
+    <div class="step-text"><strong>افتح مجلد مهامك:</strong> <code>team_delivery/MOAYAD/tasks/</code>.</div>
+</div>
+<div class="step-box">
+    <div class="step-num">2</div>
+    <div class="step-text"><strong>افتح المهمة الحالية:</strong> اقرأ <code>TASK.md</code> لتفهم المدخلات والمخرجات.</div>
+</div>
+<div class="step-box">
+    <div class="step-num">3</div>
+    <div class="step-text"><strong>التنفيذ بالذكاء الاصطناعي:</strong> انسخ برومبت <code>01_IMPLEMENT_IDE.md</code> إلى AI المساعد لتنفيذ الكود.</div>
+</div>
+<div class="step-box">
+    <div class="step-num">4</div>
+    <div class="step-text"><strong>شغل الاختبارات:</strong> نفذ الأمر من <code>02_TEST_IDE.md</code>:<br><code>pytest backend/tests/unit/test_translation* -v</code></div>
+</div>
+<div class="step-box">
+    <div class="step-num">5</div>
+    <div class="step-text"><strong>المراجعة السحابية:</strong> راجع عبر <code>03_EXTERNAL_AI_REVIEW.md</code> وتأكد من <strong>PASS</strong>، ثم انتقل للمهمة التالية.</div>
+</div>
+
+
+</body>
+</html>

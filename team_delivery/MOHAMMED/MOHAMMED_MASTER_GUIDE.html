@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>دليل المطور: محمد الداعس (Mohammed Al-Daees)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap');
+        @page {
+            size: A4;
+            margin: 12mm;
+            @bottom-right {
+                content: counter(page);
+                font-family: 'Cairo', sans-serif;
+                font-size: 8.5pt;
+                color: #64748b;
+            }
+        }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            line-height: 1.55;
+            margin: 0;
+            padding: 0;
+            font-size: 9.5pt;
+        }
+        .hero {
+            background: linear-gradient(135deg, #090d16 0%, #1e1b4b 60%, #8b5cf6 100%);
+            color: #ffffff;
+            padding: 22px 18px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            page-break-after: avoid;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 8.5pt;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        h1.main-title {
+            font-size: 19pt;
+            font-weight: 900;
+            margin: 0 0 4px 0;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+        .sub-title { font-size: 11pt; color: #cbd5e1; margin-bottom: 10px; }
+        .meta-strip {
+            background: rgba(0, 0, 0, 0.35);
+            padding: 6px 12px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 8.5pt;
+        }
+        h2 {
+            color: #0f172a;
+            font-size: 12pt;
+            font-weight: 800;
+            border-right: 5px solid #8b5cf6;
+            padding-right: 8px;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            page-break-after: avoid;
+        }
+        h3 {
+            color: #1e293b;
+            font-size: 10pt;
+            font-weight: 700;
+            margin-top: 10px;
+            margin-bottom: 4px;
+            page-break-after: avoid;
+        }
+        p { margin: 0 0 6px 0; text-align: justify; }
+        .box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 9px 12px;
+            margin-bottom: 8px;
+            page-break-inside: avoid;
+        }
+        .click-step {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-right: 4px solid #3b82f6;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            page-break-inside: avoid;
+        }
+        .click-header {
+            font-weight: 800;
+            color: #1e3a8a;
+            font-size: 9.5pt;
+            margin-bottom: 3px;
+        }
+        .diagram {
+            background-color: #090d16;
+            color: #38bdf8;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: 'Fira Code', monospace;
+            font-size: 7.5pt;
+            line-height: 1.35;
+            direction: ltr;
+            text-align: left;
+            margin: 8px 0;
+            border: 1px solid #1e293b;
+            page-break-inside: avoid;
+        }
+        pre, code { font-family: 'Fira Code', monospace; direction: ltr; text-align: left; }
+        pre {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 7px 10px;
+            border-radius: 4px;
+            font-size: 7.8pt;
+            margin: 5px 0;
+            line-height: 1.3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 6px 0;
+            font-size: 8.5pt;
+            page-break-inside: avoid;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 4px 6px;
+            text-align: right;
+        }
+        th { background-color: #f1f5f9; font-weight: 700; color: #0f172a; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+        .danger-alert {
+            background: #fef2f2;
+            border-right: 4px solid #ef4444;
+            padding: 6px 10px;
+            border-radius: 4px;
+            margin: 6px 0;
+            font-size: 8.5pt;
+            color: #991b1b;
+        }
+        .page-break { page-break-after: always; }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="badge">دليل العمل والتطبيق التفاعلي بالنقرات + ميثاق منع أخطاء الدمج</div>
+    <div class="main-title">دليل العمل الشامل للمطور: محمد الداعس (Mohammed Al-Daees)</div>
+    <div class="sub-title">مهندس الاتصال الفوري والويب سوكت (WebSocket & Real-Time Engineer)</div>
+    <div class="meta-strip">
+        <div><strong>المشروع:</strong> LinguaChat</div>
+        <div><strong>حالة النظام:</strong> معتمد وموحد للأعضاء الأربعة (Unified 100%)</div>
+    </div>
+</div>
+
+
+<h2>1. ما هو المشروع وما هي مهمتك بالضبط؟ (ابدأ من هنا إذا كنت مبتدئاً تماماً)</h2>
+<p>
+    مشروع <strong>LinguaChat</strong> هو تطبيق محادثة جماعية فورية بين أشخاص يتحدثون لغات مختلفة.
+    عندما يكتب شخص بالعربية، يقرأها الآخر بالإنجليزي أو الفرنسي فوراً في نفس اللحظة مترجمة.
+</p>
+<p>
+    <strong>دورك ومهمتك يا محمد الداعس (Mohammed Al-Daees) (مهندس الاتصال الفوري والويب سوكت (WebSocket & Real-Time Engineer)):</strong><br>
+    أنت مسؤول عن: <strong>خادم WebSocket في FastAPI، مدير الاتصالات ConnectionManager، بروتوكول الأحداث، نبضات Heartbeat وعزل الغرف.</strong>.
+</p>
+
+<h2>2. موقعك في المعمارية الهندسية للنظام (Architecture Map)</h2>
+<div class="diagram">
++-----------------------------------------------------------------------------------+
+|  [المعمارية الشاملة - محدد مكانك ونطاقك الحصري]                                   |
+|                                                                                   |
+|  1. FRONTEND (Ahmed): React + Vite SPA (index.css, LoginPage, RoomsPage, ChatPage)|
+|                     ▲                      ▲                                      |
+|                     │ HTTP REST            │ WebSocket ws://.../ws/{id}?token=   |
+|                     ▼                      ▼                                      |
+|  2. WEBSOCKET (Mohammed): ConnectionManager, Router, Events (4001,4003,4004)      |
+|                     ▲                      ▲                                      |
+|                     │ translate_message()  │ save & check membership             |
+|                     ▼                      ▼                                      |
+|  3. TRANSLATION (Moayad): detect_language(), Identity, LibreTranslate, Cache      |
+|                                                                                   |
+|  4. DATABASE & AUTH (Yousef): PostgreSQL, Alembic, 5 Models, Bcrypt, JWT, REST    |
++-----------------------------------------------------------------------------------+
+</div>
+
+<h2>3. مصفوفة الملفات: ما تملكه وما يحظر لمسه قطيعاً (Ownership Matrix)</h2>
+<div class="box">
+    <div style="font-weight: 700; color: #15803d; margin-bottom: 4px;">✅ الملفات التي يحق لك فتحها وتعديلها وبرمجتها:</div>
+    <ul>
+        <li><code>backend/app/websocket/**</code></li><li><code>backend/tests/websocket/**</code></li><li><code>team_delivery/MOHAMMED/**</code></li>
+    </ul>
+</div>
+<div class="danger-alert">
+    <strong>⛔ الملفات الممنوع عليك تعديلها نهائياً (Strictly Forbidden):</strong><br>
+    <code>frontend/**</code> - <code>backend/app/translation/**</code> - <code>backend/app/database/**</code> - <code>docs/**</code>
+</div>
+
+<div class="page-break"></div>
+
+<h2>4. دليل النقرات العملي من لحظة فتح الشاشة حتى إنهاء المهمة (Click-by-Click Guide)</h2>
+<p>
+    اتبع هذه الخطوات الست بدقة لكل مهمة تعمل عليها كأنك تفتح البرنامج لأول مرة:
+</p>
+
+<div class="click-step">
+    <div class="click-header">🖱️ الخطوة 1: أين تضغط أول ما تفتح البرنامج (IDE)؟</div>
+    <p>
+        افتح برنامج <strong>VS Code</strong> أو <strong>Antigravity</strong>. انظر للقائمة الجانبية (File Explorer) وافتح المجلد:<br>
+        📁 <code>team_delivery/MOHAMMED/tasks/</code>
+    </p>
+</div>
+
+<div class="click-step">
+    <div class="click-header">📂 الخطوة 2: اختيار المهمة وقراءة المطلوب (TASK.md)</div>
+    <p>
+        اضغط على مجلد المهمة الحالية (مثلاً <code>TASK-01-...</code> أو <code>TASK-02-...</code>).<br>
+        اضغط دبل كليك على ملف: 📄 <code>TASK.md</code> واقرأ الهدف والملفات المطلوبة.
+    </p>
+</div>
+
+<div class="click-step">
+    <div class="click-header">📋 الخطوة 3: نسخ برومبت التنفيذ للذكاء الاصطناعي (01_IMPLEMENT_IDE.md)</div>
+    <p>
+        1. اضغط على ملف 📄 <code>01_IMPLEMENT_IDE.md</code>.<br>
+        2. اضغط <code>Ctrl + A</code> لتحديد الكل، ثم <code>Ctrl + C</code> لنسخ النص.<br>
+        3. افتح نافذة المحادثة (AI Chat) في الـ IDE والصق النص <code>Ctrl + V</code> واضغط <strong>Enter</strong> ↵.<br>
+        🤖 <em>الذكاء الاصطناعي سيقوم بكتابة الكود المطلوب داخل ملفك البرمجي المخصص فقط.</em>
+    </p>
+</div>
+
+<div class="click-step">
+    <div class="click-header">🧪 الخطوة 4: تشغيل الاختبار والتحقق (02_TEST_IDE.md)</div>
+    <p>
+        1. اضغط على ملف 📄 <code>02_TEST_IDE.md</code> وانسخ أمر الاختبار المكتوب فيه.<br>
+        2. افتح الطرفية (Terminal) عبر اختصار <code>Ctrl + `</code> والصق الأمر:<br>
+        <code>pytest backend/tests/websocket/ -v</code><br>
+        3. اضغط <strong>Enter</strong> ↵ وتأكد أن النتيجة تظهر باللون الأخضر (PASSED / SUCCESS).
+    </p>
+</div>
+
+<div class="click-step">
+    <div class="click-header">🔍 الخطوة 5: المراجعة السحابية الخارجية (03_EXTERNAL_AI_REVIEW.md)</div>
+    <p>
+        1. افتح ملف 📄 <code>03_EXTERNAL_AI_REVIEW.md</code> وانسخ نصه بالكامل.<br>
+        2. الصقه في محادثة ذكاء اصطناعي ثانية مع كود الملف الذي تم إنشاؤه للتأكد من حصولك على تقييم <strong>PASS</strong>.
+    </p>
+</div>
+
+<div class="click-step">
+    <div class="click-header">🚀 الخطوة 6: التسليم والانتقال للمهمة التالية (Handoff)</div>
+    <p>
+        افتح مجلد 📁 <code>team_delivery/MOHAMMED/handoff/</code> وأنشئ ملفاً سريعاً <code>TASK-DONE.md</code> يوضح نجاح الاختبارات، ثم انتقل للمهمة التالية مباشرة!
+    </p>
+</div>
+
+<div class="page-break"></div>
+
+<h2>5. قائمة مهامك المعتمدة بالتفصيل (Approved Tasks Inventory)</h2>
+<table>
+    <thead>
+        <tr>
+            <th>رمز المهمة</th>
+            <th>اسم المهمة</th>
+            <th>الملف المستهدف بالتعديل</th>
+            <th>الهدف والمطلوب البرمجي</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+<tr><td>TASK-01</td><td>WEBSOCKET-ANALYSIS</td><td>قراءة فقط</td><td>دراسة بروتوكول الويب سوكت والأنواع الستة في websocket-contract.md.</td></tr>
+<tr><td>TASK-02</td><td>WEBSOCKET-PROTOCOL</td><td>backend/app/websocket/schemas.py</td><td>نماذج Pydantic للغلاف الموحد وتقييد الحجم بـ 4096 بايت.</td></tr>
+<tr><td>TASK-03</td><td>CONNECTION-MANAGER</td><td>backend/app/websocket/manager.py</td><td>إدارة اتصالات وقنوات الغرف وعزل المستخدمين.</td></tr>
+<tr><td>TASK-04</td><td>WEBSOCKET-AUTH</td><td>backend/app/websocket/router.py</td><td>التحقق من JWT وعضوية الغرفة وأكواد الإغلاق (4001, 4003, 4004).</td></tr>
+<tr><td>TASK-05</td><td>JOIN-LEAVE-EVENTS</td><td>backend/app/websocket/router.py</td><td>معالجة وبث أحداث الانضمام والمغادرة اللحظية.</td></tr>
+<tr><td>TASK-06</td><td>TEXT-MESSAGE-HANDLING</td><td>backend/app/websocket/router.py</td><td>استقبال ومعالجة الرسائل النصية وتوجيهها للترجمة والتوزيع.</td></tr>
+<tr><td>TASK-07</td><td>TYPING-INDICATOR</td><td>backend/app/websocket/router.py</td><td>معالجة وبث مؤشر "يكتب الآن..." لبقية أعضاء الغرفة.</td></tr>
+<tr><td>TASK-08</td><td>HEARTBEAT-AND-TIMEOUT</td><td>backend/app/websocket/router.py</td><td>نبضات كل 30 ثانية وفصل العميل الصامت بعد 90 ثانية.</td></tr>
+<tr><td>TASK-09</td><td>TRANSLATION-INTEGRATION</td><td>backend/app/websocket/router.py</td><td>استدعاء دالة translate_message وترجمة الرسالة لكل مستلم.</td></tr>
+<tr><td>TASK-10</td><td>MESSAGE-PERSISTENCE</td><td>backend/app/websocket/router.py</td><td>استدعاء خدمة الرسائل لحفظ النص والترجمات في قاعدة البيانات.</td></tr>
+<tr><td>TASK-11</td><td>WEBSOCKET-FINAL-QA</td><td>backend/app/websocket/**</td><td>الفحص النهائي الشامل وتشغيل كافة اختبارات الويب سوكت.</td></tr>
+
+    </tbody>
+</table>
+
+<h2>6. إرشادات وقواعد ذهبية خاصة بنطاقك البرمجي</h2>
+<div class="success-alert">
+    <strong>💡 نصائح الجودة والأمان:</strong><br>
+    الالتزام بالأنواع الستة فقط (JOIN, LEAVE, TEXT_MESSAGE, TYPING, HEARTBEAT, ERROR)، وأكواد الإغلاق 4001 و 4003 و 4004 و 1000، وحد حجم 4096 بايت.
+</div>
+
+<div class="page-break"></div>
+
+<h2>10. المتطلبات الوظيفية وغير الوظيفية والحالات الحدية لمهام محمد (FR, NFR & Edge Cases)</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>المهمة</th>
+            <th>المتطلبات الوظيفية (FR)</th>
+            <th>المتطلبات غير الوظيفية (NFR)</th>
+            <th>الحالات الحدية والطرفية (Edge Cases)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>TASK-02 &amp; 03 (Protocol &amp; Manager)</strong></td>
+            <td>نماذج Pydantic للغلاف الموحد، وإدارة قنوات اتصالات الغرف (connect, disconnect, broadcast).</td>
+            <td>حجم رسالة لا يتجاوز 4096 بايت، وعزل تام لقنوات الغرف بحيث لا تستلم غرفة رسائل غرفة أخرى.</td>
+            <td>عميل يرسل JSON تالف (Bad JSON)، عميل يرسل رسالة فارغة، بث رسالة لغرفة فارغة بدون مستخدمين.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-04 &amp; 05 (Auth &amp; Events)</strong></td>
+            <td>التحقق من توكن JWT في query param، فحص عضوية الغرفة، وبث أحداث JOIN و LEAVE اللحظية.</td>
+            <td>إغلاق الاتصال غير المصرح فورياً بأكواد قياسية: 4001 (Unauth), 4003 (Forbidden), 4004 (Not Found).</td>
+            <td>توكن منتهي، توكن مزور، مستخدم يحاول الاتصال بغرفة لم ينضم إليها في قاعدة البيانات.</td>
+        </tr>
+        <tr>
+            <td><strong>TASK-08 &amp; 09 (Heartbeat &amp; Translation)</strong></td>
+            <td>نبضات كل 30 ثانية، فصل العميل الصامت بعد 90 ثانية، واستدعاء <code>translate_message</code> لكل متلقٍّ.</td>
+            <td>عدم حظر حلقة الأحداث غير المتزامنة (Zero Async Blocking) أثناء الترجمة أو فحص النبضات.</td>
+            <td>عميل ينقطع اتصاله فجأة دون إرسال LEAVE (يتم تنظيفه بالـ Timeout)، تعطل محرك الترجمة (تسليم النص الأصلي).</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>11. المشاكل والأخطاء الشائعة وكيفية تصحيحها وحلها فوراً (Mohammed Troubleshooting Guide)</h2>
+
+<div class="box" style="border-right: 4px solid #ef4444;">
+    <div style="font-weight: 800; color: #b91c1c; margin-bottom: 4px;">🚨 المشكلة 1: خطأ RuntimeError أثناء بث الرسائل (Dictionary changed size during iteration)</div>
+    <p><strong>السبب:</strong> قيام مستخدم بقطع الاتصال في نفس اللحظة التي يقوم فيها الـ Loop بالمرور على قائمة اتصالات الغرفة.</p>
+    <p><strong>الحل البرمجي السريع:</strong> استخدم نسخة سريعة من القائمة عند البث: <code>for ws in list(self.rooms[room_id]):</code> وليس القائمة الأصلية مباشرة.</p>
+</div>
+
+<div class="box" style="border-right: 4px solid #ef4444;">
+    <div style="font-weight: 800; color: #b91c1c; margin-bottom: 4px;">🚨 المشكلة 2: انهيار السيرفر عند إغلاق العميل للمتصفح فجأة (Unhandled WebSocketDisconnect)</div>
+    <p><strong>الحل البرمجي السريع:</strong> ضع حلقة الاستقبال داخل كتلة <code>try...except WebSocketDisconnect:</code> وقم باستدعاء <code>manager.disconnect(room_id, ws)</code> وبث حدث <code>LEAVE</code> في قسم الـ <code>finally</code>.</p>
+</div>
+
+<div class="box" style="border-right: 4px solid #ef4444;">
+    <div style="font-weight: 800; color: #b91c1c; margin-bottom: 4px;">🚨 المشكلة 3: تأخر بث الرسائل بسبب انتظار الترجمة (Async Block in Loop)</div>
+    <p><strong>الحل البرمجي السريع:</strong> استخدم <code>asyncio.gather</code> لترجمة وإرسال الرسائل لجميع المستلمين المتصلين بالتوازي بدلاً من حلقة <code>for</code> المتسلسلة البطيئة.</p>
+</div>
+
+
+
+<div class="page-break"></div>
+
+<h2>7. الميثاق والدستور الموحد لأعضاء الفريق الأربعة (Unified Team Constitution)</h2>
+<p>
+    لضمان نجاح دمج المشروع ومنع حدوث أي تعارضات أو أخطاء عند تجميع أعمال الفريق، يلتزم كل عضو بالقواعد الصارمة التالية:
+</p>
+
+<div class="box" style="border-right: 4px solid #4f46e5;">
+    <div style="font-weight: 800; color: #4338ca; font-size: 10.5pt; margin-bottom: 6px;">📜 الدستور البرمجي الموحد (The Golden Rules)</div>
+    <ol style="margin: 0; padding-right: 18px;">
+        <li><strong>عزل الملكية التام (Zero Cross-Editing):</strong> ممنوع منعاً باتاً تعديل أي ملف خارج نطاق ملكيتك المحددة. إذا احتجت ميزة من زميلك، استدعِ الدالة المصرح بها ولا تكتب كوده بنفسك.</li>
+        <li><strong>تجميد العقود الرسمية (Frozen Contracts):</strong> لا يحق لأي عضو تغيير أسماء مسارات الـ API أو صيغ رسائل الـ WebSocket أو أسماء حقول قاعدة البيانات دون موافقة كتابية رسمية من قائد المشروع أحمد العماري.</li>
+        <li><strong>قاعدة الترجمة الحتمية (Identity Rule):</strong> يمنع استخدام القيمة <code>"none"</code> نهائياً في أي سياق للترجمة. إذا كانت لغة المصدر هي نفس لغة الهدف، تكون النتيجة دائماً: <code>source_used = "identity"</code> و <code>confidence = 1.0</code>.</li>
+        <li><strong>حظر الأسرار والـ Hardcoded Keys:</strong> ممنوع وضع أي مفتاح سري أو كلمة مرور أو Token داخل ملفات الكود البرمجي؛ كافة الإعدادات تُقرأ من ملف <code>.env</code> حصراً.</li>
+        <li><strong>قاعدة الـ Stop &amp; Fail:</strong> إذا فشل الاختبار في الخطوة 4، لا تنتقل للمهمة التالية أبداً، ولا تخفِ المشكلة، بل أصلح الكود داخل ملفك المخصص حتى يظهر <code>PASSED</code> باللون الأخضر.</li>
+    </ol>
+</div>
+
+<h2>8. بروتوكول منع أخطاء التكامل والدمج (Zero-Regression &amp; Merge Policy)</h2>
+<table>
+    <thead>
+        <tr>
+            <th>مجال التكامل</th>
+            <th>الالتزام الصارم المطلوب من العضو</th>
+            <th>الخطأ الشائع المحظور قطيعاً</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>الـ REST API</strong></td>
+            <td>الالتزام بنموذج الاستجابة الموحد <code>data / error</code> وأكواد الحالة (200, 201, 400, 401, 403, 404, 409).</td>
+            <td>تغيير اسم حقل في JSON أو إرجاع كود 200 عند حدوث خطأ.</td>
+        </tr>
+        <tr>
+            <td><strong>الـ WebSocket</strong></td>
+            <td>الالتزام بالأنواع الستة فقط (<code>JOIN, LEAVE, TEXT_MESSAGE, TYPING, HEARTBEAT, ERROR</code>) وحجم 4096B.</td>
+            <td>ابتكار نوع رسالة جديد أو تجاوز حد حجم الرسالة المسموح به.</td>
+        </tr>
+        <tr>
+            <td><strong>الـ Database</strong></td>
+            <td>استخدام معرفات <code>UUIDv4</code> لكافة الجداول، وإجراء التعديلات عبر هجرات <code>Alembic</code> حصراً.</td>
+            <td>تعديل الجداول يدوياً في قاعدة البيانات دون كتابة سكريبت Migration.</td>
+        </tr>
+        <tr>
+            <td><strong>الـ Frontend</strong></td>
+            <td>حفظ التوكن في <code>localStorage</code>، والتعامل السلس مع حالات التحميل والخطأ وتحديث الواجهة تلقائياً.</td>
+            <td>افتراض استجابة الـ API دائماً دون معالجة حالات الانقطاع أو البطء.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>9. خطوات التسليم والاعتماد النهائي (Handoff &amp; QA Checklist)</h2>
+<div class="box">
+    <p>قبل تسليم أي مهمة لقائد المشروع أحمد العماري، تأكد من استيفاء هذه القائمة بالكامل:</p>
+    <ul style="margin: 0; padding-right: 18px;">
+        <li>[ ] تم تشغيل الاختبارات الآلية بنجاح بنسبة <strong>100% PASS</strong>.</li>
+        <li>[ ] تم اجتياز المراجعة السحابية (Cloud Review) دون أي ملاحظات حرجة.</li>
+        <li>[ ] لم يتم تعديل أي ملف خارج نطاق مسؤوليتك المباشرة.</li>
+        <li>[ ] تم إنشاء تقرير التسليم داخل مجلد <code>handoff/</code>.</li>
+        <li>[ ] تم إبلاغ القائد أحمد بجاهزية الميزة للدمج النهائي.</li>
+    </ul>
+</div>
+
+
+</body>
+</html>
