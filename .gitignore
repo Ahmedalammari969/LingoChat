@@ -109,3 +109,6 @@ Thumbs.db
 *.cert
 *.p12
 secrets/
+
+# PDF files - excluded from repository
+*.pdf
