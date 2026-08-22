@@ -4,8 +4,9 @@
  * Centralized HTTP client for all REST API calls.
  * Uses native fetch. Token is read from localStorage.
  *
- * Base URL is read from VITE_API_BASE_URL env var.
+ * Base URL is read from VITE_API_BASE_URL env var (default: /api/v1).
  * See: docs/api-contract.md for all endpoints.
+ * Implementation: Ahmed Alammari — TASK-01-AHMED
  */
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1'
@@ -42,22 +43,37 @@ async function request(path, options = {}) {
     ...options.headers,
   }
 
-  const response = await fetch(url, { ...options, headers })
+  try {
+    const response = await fetch(url, { ...options, headers })
 
-  if (!response.ok) {
-    const errorBody = await response.json().catch(() => ({
-      error: { code: 'NETWORK_ERROR', message: 'Request failed' },
-    }))
-    const error = new Error(errorBody?.error?.message || 'Request failed')
-    error.code = errorBody?.error?.code
-    error.status = response.status
-    throw error
+    if (response.status === 401) {
+      // Clean expired session
+      localStorage.removeItem('linguachat_token')
+      localStorage.removeItem('linguachat_user')
+    }
+
+    if (!response.ok) {
+      const errorBody = await response.json().catch(() => ({
+        error: { code: 'HTTP_ERROR', message: response.statusText || 'Request failed' },
+      }))
+      const message = errorBody?.detail || errorBody?.error?.message || response.statusText || 'Request failed'
+      const error = new Error(typeof message === 'string' ? message : JSON.stringify(message))
+      error.code = errorBody?.error?.code || `HTTP_${response.status}`
+      error.status = response.status
+      throw error
+    }
+
+    // 204 No Content
+    if (response.status === 204) return null
+
+    return response.json()
+  } catch (err) {
+    if (!err.status && !err.code) {
+      err.code = 'NETWORK_ERROR'
+      err.message = 'تعذر الاتصال بالخادم، يرجى التأكد من تشغيل الباك إند.'
+    }
+    throw err
   }
-
-  // 204 No Content
-  if (response.status === 204) return null
-
-  return response.json()
 }
 
 export const apiClient = {

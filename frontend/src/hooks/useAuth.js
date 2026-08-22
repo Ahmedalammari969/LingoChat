@@ -1,8 +1,8 @@
 /**
- * LinguaChat — useAuth Hook (Skeleton)
+ * LinguaChat — useAuth Hook
  *
  * Provides auth state and login/logout actions.
- * Implementation: Ahmed Alammari — TASK: Frontend / Integration
+ * Implementation: Ahmed Alammari — TASK-02-AHMED
  */
 
 import { useState, useCallback } from 'react'
@@ -20,7 +20,9 @@ export function useAuth() {
     try {
       const result = await apiLogin({ username, password })
       authService.setToken(result.access_token)
-      // TODO: fetch user profile after login
+      const userData = { username }
+      authService.setUser(userData)
+      setUser(userData)
       return result
     } catch (err) {
       setError(err.message)
@@ -51,5 +53,5 @@ export function useAuth() {
     setUser(null)
   }, [])
 
-  return { user, loading, error, login, register, logout }
+  return { user, loading, error, login, register, logout, isAuthenticated: authService.isAuthenticated() }
 }
