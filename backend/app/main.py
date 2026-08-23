@@ -38,15 +38,17 @@ register_exception_handlers(app)
 #
 # from app.auth.router import router as auth_router
 # from app.rooms.router import router as rooms_router
-# from app.websocket.router import router as websocket_router
 # from app.dashboard.router import router as dashboard_router
 # from app.users.router import router as users_router
 #
 # app.include_router(auth_router, prefix="/api/v1/auth", tags=["Authentication"])
 # app.include_router(users_router, prefix="/api/v1/users", tags=["Users"])
 # app.include_router(rooms_router, prefix="/api/v1/rooms", tags=["Rooms"])
-# app.include_router(websocket_router, prefix="/ws", tags=["WebSocket"])
 # app.include_router(dashboard_router, prefix="/api/v1/dashboard", tags=["Dashboard"])
+
+from app.websocket.router import router as websocket_router
+
+app.include_router(websocket_router, prefix="/ws", tags=["WebSocket"])
 
 
 # ── Health Check ──────────────────────────────────────────────────────────────
