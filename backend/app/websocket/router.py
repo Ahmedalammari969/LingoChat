@@ -3,19 +3,22 @@ from __future__ import annotations
 LinguaChat — WebSocket Router
 
 Endpoint: ws://localhost:8000/ws/{room_id}?token=<access_token>
-Implementation: Mohammed Al-Daees — TASK-03-MOHAMMED
-Contract: docs/websocket-contract.md § Connection Lifecycle & Close Codes
+Implementation: Mohammed Al-Daees — TASK-04-MOHAMMED
+Contract: docs/websocket-contract.md § Message Types & Translation Flow
 """
 
+import asyncio
 import logging
 import uuid
 from datetime import datetime, timezone
-from typing import Any, Callable, Dict, Optional, Union
+from typing import Any, Callable, Dict, List, Optional, Union
 
-from fastapi import APIRouter, Query, WebSocket, WebSocketDisconnect, status
+from fastapi import APIRouter, Query, WebSocket, WebSocketDisconnect
 from jose import JWTError, jwt
 
 from app.core.config import settings
+from app.core.errors import TranslationError
+from app.translation import service as translation_service
 from app.websocket.manager import manager
 from app.websocket.protocol import (
     WSMessageType,
@@ -29,9 +32,9 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 # ── Dependency Hooks for Room & Membership Verification ────────────────────────
-# In unit tests or decoupled testing, these hooks can be mocked/overridden.
 _room_validator: Optional[Callable[[str], bool]] = None
 _membership_validator: Optional[Callable[[str, str], bool]] = None
+_message_persister: Optional[Callable[..., Any]] = None
 
 
 def set_room_validator(func: Optional[Callable[[str], bool]]) -> None:
@@ -44,6 +47,12 @@ def set_membership_validator(func: Optional[Callable[[str, str], bool]]) -> None
     """Set custom room membership validator hook."""
     global _membership_validator
     _membership_validator = func
+
+
+def set_message_persister(func: Optional[Callable[..., Any]]) -> None:
+    """Set custom database persistence hook."""
+    global _message_persister
+    _message_persister = func
 
 
 def decode_token_payload(token: str) -> Dict[str, Any]:
@@ -121,6 +130,54 @@ async def validate_websocket_auth(
     return user_info
 
 
+async def _translate_and_send_to_recipient(
+    recipient_conn: Dict[str, Any],
+    room_id: str,
+    message_id: str,
+    sender_id: str,
+    sender_username: str,
+    original_text: str,
+    source_lang: str,
+    now_iso: str,
+) -> bool:
+    """
+    Translate text into recipient's preferred language and send the TEXT_MESSAGE envelope.
+    """
+    ws: WebSocket = recipient_conn["ws"]
+    target_lang = str(recipient_conn.get("preferred_language") or "en")
+
+    try:
+        res = await translation_service.translate_message(
+            text=original_text,
+            source_lang=source_lang,
+            target_lang=target_lang,
+        )
+        translated_text = res.get("translated_text", original_text)
+        translation_source = res.get("source_used", "identity")
+    except (TranslationError, Exception) as ex:
+        logger.warning(f"Translation failed for recipient {recipient_conn.get('username')}: {ex}")
+        translated_text = original_text
+        translation_source = "identity" if source_lang == target_lang else "libretranslate"
+
+    inbound_message = {
+        "type": WSMessageType.TEXT_MESSAGE.value,
+        "payload": {
+            "message_id": message_id,
+            "sender_id": sender_id,
+            "sender_username": sender_username,
+            "original_text": original_text,
+            "original_language": source_lang if source_lang != "auto" else "en",
+            "translated_text": translated_text,
+            "target_language": target_lang,
+            "translation_source": translation_source,
+        },
+        "timestamp": now_iso,
+        "room_id": room_id,
+    }
+
+    return await manager.send_to_connection(ws, inbound_message)
+
+
 @router.websocket("/{room_id}")
 @router.websocket("/ws/{room_id}")
 async def websocket_endpoint(
@@ -129,20 +186,21 @@ async def websocket_endpoint(
     token: Optional[str] = Query(None, description="JWT access token"),
 ) -> None:
     """
-    WebSocket endpoint for real-time room messaging.
+    WebSocket endpoint for real-time room messaging and translation.
 
     Connection flow (docs/websocket-contract.md):
-    1. Validate JWT token -> close 4001 if invalid.
-    2. Validate room existence -> close 4004 if not found.
-    3. Validate room membership -> close 4003 if not member.
-    4. Accept connection and register in ConnectionManager.
-    5. Broadcast JOIN event to all room members.
-    6. Message loop (receive -> parse -> process).
-    7. On disconnect -> unregister and broadcast LEAVE event.
+    1. Pre-accept security validation (JWT 4001, Room 4004, Member 4003).
+    2. Accept connection and register in ConnectionManager.
+    3. Broadcast JOIN event to all room members.
+    4. Message loop:
+       - HEARTBEAT -> record last_heartbeat
+       - TYPING -> broadcast to other room members
+       - TEXT_MESSAGE -> translate per recipient's preferred_language & broadcast
+    5. On disconnect -> unregister and broadcast LEAVE event.
     """
     r_id = str(room_id)
 
-    # ── Pre-Accept Security Verification ──────────────────────────────────────
+    # ── 1. Pre-Accept Security Verification ──────────────────────────────────
     user_info = await validate_websocket_auth(
         websocket=websocket,
         room_id=r_id,
@@ -155,7 +213,7 @@ async def websocket_endpoint(
     username = str(user_info.get("username") or user_info.get("name") or user_id[:8])
     preferred_language = str(user_info.get("preferred_language") or "en")
 
-    # ── Accept & Register Connection ──────────────────────────────────────────
+    # ── 2. Accept & Register Connection ──────────────────────────────────────
     await manager.connect(
         websocket=websocket,
         room_id=r_id,
@@ -165,7 +223,7 @@ async def websocket_endpoint(
         accept_connection=True,
     )
 
-    # ── Broadcast JOIN Event ──────────────────────────────────────────────────
+    # ── 3. Broadcast JOIN Event ──────────────────────────────────────────────
     join_event = {
         "type": WSMessageType.JOIN.value,
         "payload": {
@@ -177,26 +235,28 @@ async def websocket_endpoint(
     }
     await manager.broadcast_to_room(r_id, join_event)
 
-    # ── Message Processing Loop ───────────────────────────────────────────────
+    # ── 4. Message Processing Loop ───────────────────────────────────────────
     try:
         while True:
             raw_text = await websocket.receive_text()
             msg_dict, err_dict = parse_and_validate_message(raw_text)
 
             if err_dict:
-                # Send error envelope back to the sender
+                # Deliver standard ERROR envelope to the sender without dropping connection
                 await manager.send_to_connection(websocket, err_dict)
                 continue
 
             msg_type = msg_dict.get("type")
             payload = msg_dict.get("payload", {})
+            now_iso = datetime.now(timezone.utc).isoformat()
 
+            # ── A. HEARTBEAT ─────────────────────────────────────────────────
             if msg_type == WSMessageType.HEARTBEAT.value:
                 manager.record_heartbeat(r_id, user_id)
                 continue
 
+            # ── B. TYPING ────────────────────────────────────────────────────
             elif msg_type == WSMessageType.TYPING.value:
-                # Broadcast typing indicator to all OTHER members in room
                 typing_event = {
                     "type": WSMessageType.TYPING.value,
                     "payload": {
@@ -204,7 +264,7 @@ async def websocket_endpoint(
                         "username": username,
                         "is_typing": bool(payload.get("is_typing", False)),
                     },
-                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                    "timestamp": now_iso,
                     "room_id": r_id,
                 }
                 await manager.broadcast_to_room(
@@ -213,12 +273,51 @@ async def websocket_endpoint(
                     exclude_connection=websocket,
                 )
 
+            # ── C. TEXT_MESSAGE (Real-Time Translation Pipeline) ─────────────
+            elif msg_type == WSMessageType.TEXT_MESSAGE.value:
+                text_content = str(payload.get("text", "")).strip()
+                orig_lang = payload.get("original_language") or "auto"
+                msg_id = str(uuid.uuid4())
+
+                # Optional Persistence hook
+                if _message_persister is not None:
+                    try:
+                        await _message_persister(
+                            room_id=r_id,
+                            sender_id=user_id,
+                            text=text_content,
+                            original_language=orig_lang,
+                            message_id=msg_id,
+                        )
+                    except Exception as pe:
+                        logger.error(f"Error persisting message: {pe}")
+
+                # Snapshot active room connections
+                room_connections = manager._rooms.get(r_id, {})
+                if room_connections:
+                    recipients = list(room_connections.values())
+                    # Translate and send concurrently to all room members
+                    tasks = [
+                        _translate_and_send_to_recipient(
+                            recipient_conn=recipient,
+                            room_id=r_id,
+                            message_id=msg_id,
+                            sender_id=user_id,
+                            sender_username=username,
+                            original_text=text_content,
+                            source_lang=orig_lang,
+                            now_iso=now_iso,
+                        )
+                        for recipient in recipients
+                    ]
+                    await asyncio.gather(*tasks, return_exceptions=True)
+
     except WebSocketDisconnect:
         logger.info(f"WebSocket disconnected normally for user '{username}' in room '{r_id}'")
     except Exception as e:
         logger.warning(f"WebSocket connection error for user '{username}' in room '{r_id}': {e}")
     finally:
-        # ── Cleanup & Broadcast LEAVE Event ───────────────────────────────────
+        # ── 5. Cleanup & Broadcast LEAVE Event ───────────────────────────────
         await manager.disconnect(
             websocket=websocket,
             room_id=r_id,
