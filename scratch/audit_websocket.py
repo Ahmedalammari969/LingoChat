@@ -6,7 +6,6 @@ Contract: docs/websocket-contract.md
 import ast
 import asyncio
 import json
-import os
 import sys
 from pathlib import Path
 
@@ -56,7 +55,7 @@ def audit_websocket_enums():
     }
     actual_error_codes = {e.value for e in WSErrorCode}
     assert expected_error_codes == actual_error_codes, f"Mismatch in WSErrorCode: {actual_error_codes ^ expected_error_codes}"
-    print(f"[OK] WSErrorCode matches contract exactly (10 error codes).")
+    print(f"[OK] WSErrorCode matches contract exactly (10 error codes): {actual_error_codes}")
 
 
 def audit_ast_and_syntax():
@@ -116,6 +115,7 @@ def audit_schemas():
 
     # Heartbeat & Error Payloads
     hb = HeartbeatPayload()
+    assert isinstance(hb.model_dump(), dict)
     err_p = ErrorPayload(code=WSErrorCode.INVALID_JSON.value, message="Invalid JSON", original_type="TEXT_MESSAGE")
     assert err_p.code == "INVALID_JSON"
     print("[OK] All 8 Pydantic payload models validated successfully.")
@@ -188,6 +188,9 @@ def audit_protocol_parsing_and_error_builders():
 
 async def audit_connection_manager_concurrency():
     print("\n--- 5. Auditing ConnectionManager Under Heavy Concurrency ---")
+    # Verify singleton manager exists
+    assert isinstance(manager, ConnectionManager)
+    
     mgr = ConnectionManager()
     
     class FakeWS:
