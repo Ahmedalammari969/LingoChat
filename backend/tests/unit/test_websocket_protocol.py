@@ -217,3 +217,57 @@ def test_parse_and_validate_message_helper():
     assert err is not None
     assert err["type"] == "ERROR"
     assert err["payload"]["code"] == "INVALID_JSON"
+
+
+def test_arabic_multibyte_text_and_size_boundary():
+    """Test multi-byte Arabic character encoding and exact boundary size check."""
+    arabic_text = "مرحبا بالعالم! هذه رسالة تجريبية باللغة العربية"
+    raw = json.dumps({
+        "type": "TEXT_MESSAGE",
+        "payload": {"text": arabic_text, "original_language": "ar"},
+        "timestamp": "2026-08-24T00:00:00.000Z",
+        "room_id": "room-arabic-123"
+    }, ensure_ascii=False)
+    msg = parse_message(raw)
+    assert msg.payload["text"] == arabic_text
+    assert msg.payload["original_language"] == "ar"
+
+
+def test_reject_invalid_typing_boolean():
+    """Test rejecting non-boolean typing payload."""
+    raw = json.dumps({
+        "type": "TYPING",
+        "payload": {"is_typing": "yes_typing"},
+        "room_id": "room-123"
+    })
+    with pytest.raises(WSProtocolError) as exc_info:
+        parse_message(raw)
+    assert exc_info.value.code == WSErrorCode.VALIDATION_ERROR.value
+
+
+def test_reject_non_dict_payload():
+    """Test rejecting payload that is not a JSON object."""
+    raw = json.dumps({
+        "type": "TEXT_MESSAGE",
+        "payload": "just a string instead of object",
+        "room_id": "room-123"
+    })
+    with pytest.raises(WSProtocolError) as exc_info:
+        parse_message(raw)
+    assert exc_info.value.code == WSErrorCode.VALIDATION_ERROR.value
+
+
+def test_to_dict_and_to_json():
+    """Test WSMessage serialization helpers."""
+    msg = WSMessage(
+        type=WSMessageType.TEXT_MESSAGE,
+        payload={"text": "ping"},
+        timestamp="2026-08-24T00:00:00.000Z",
+        room_id="room-uuid"
+    )
+    d = msg.to_dict()
+    assert d["type"] == "TEXT_MESSAGE"
+    assert d["payload"]["text"] == "ping"
+    j = msg.to_json()
+    assert "TEXT_MESSAGE" in j
+

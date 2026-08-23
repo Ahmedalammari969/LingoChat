@@ -61,25 +61,25 @@ _integration/Mohammed/DELIVERY/DELIVERY-TASK-01.md
 
 | ملف الاختبار (Test File) | الحالات التي تم اختبارها (Scenarios Tested) |
 | :--- | :--- |
-| `backend/tests/unit/test_websocket_protocol.py` | 1. قبول وتحليل الأنواع الستة السليمة.<br>2. رفض JSON غير الصالح (`INVALID_JSON`).<br>3. رفض الأنواع المجهولة (`UNKNOWN_MESSAGE_TYPE`).<br>4. رفض الرسائل النصية الفارغة (`EMPTY_MESSAGE`).<br>5. رفض الرسائل المتجاوزة لـ 4096 بايت (`MESSAGE_TOO_LONG`).<br>6. رفض الحقول الناقصة (`VALIDATION_ERROR`).<br>7. اختبار دوال بناء رسائل الخطأ ودوائر المساعدة. |
+| `backend/tests/unit/test_websocket_protocol.py` | 1. قبول وتحليل الأنواع الستة السليمة.<br>2. رفض JSON غير الصالح (`INVALID_JSON`).<br>3. رفض الأنواع المجهولة (`UNKNOWN_MESSAGE_TYPE`).<br>4. رفض الرسائل النصية الفارغة (`EMPTY_MESSAGE`).<br>5. رفض الرسائل المتجاوزة لـ 4096 بايت (`MESSAGE_TOO_LONG`).<br>6. رفض الحقول الناقصة (`VALIDATION_ERROR`).<br>7. اختبار دوال بناء رسائل الخطأ ودوائر المساعدة.<br>8. اختبار النصوص العربية متعددة البايتات (Multi-byte UTF-8).<br>9. اختبار رفض البيانات غير المنطقية للـ typing.<br>10. اختبار التسلسل والتحويل العكسي (Serialization roundtrips). |
 
 ---
 
 ## 6. نتائج تشغيل الاختبارات الفعلية (Test Results Output)
 
 ```text
-collected 13 items
+collected 17 items
 
-backend\tests\unit\test_websocket_protocol.py .............              [100%]
+backend\tests\unit\test_websocket_protocol.py .................          [100%]
 
-======================== 13 passed in 1.98s ========================
+======================== 17 passed in 2.05s ========================
 ```
 
 - **نتائج كامل اختبارات المشروع (Full Backend Suite)**:
 ```text
-collected 91 items
+collected 95 items
 
-======================== 91 passed in 4.15s ========================
+======================== 95 passed in 5.10s (100% SUCCESS) ========================
 ```
 
 ---
