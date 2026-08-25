@@ -312,6 +312,41 @@ async def websocket_endpoint(
                     ]
                     await asyncio.gather(*tasks, return_exceptions=True)
 
+            # ── D. Live Stream & WebRTC Signaling Events ─────────────────────
+            elif msg_type in {
+                WSMessageType.LIVE_START.value,
+                WSMessageType.LIVE_STOP.value,
+                WSMessageType.LIVE_REQUEST_JOIN.value,
+                WSMessageType.LIVE_ACCEPT_GUEST.value,
+                WSMessageType.LIVE_REJECT_GUEST.value,
+                WSMessageType.LIVE_LEAVE_GUEST.value,
+                WSMessageType.RTC_OFFER.value,
+                WSMessageType.RTC_ANSWER.value,
+                WSMessageType.RTC_ICE_CANDIDATE.value,
+            }:
+                live_event = {
+                    "type": msg_type,
+                    "payload": {
+                        **payload,
+                        "sender_id": user_id,
+                        "sender_username": username,
+                    },
+                    "timestamp": now_iso,
+                    "room_id": r_id,
+                }
+                target_user = payload.get("target_user_id")
+                if target_user:
+                    room_connections = manager._rooms.get(r_id, {})
+                    target_conn = room_connections.get(str(target_user))
+                    if target_conn and "websocket" in target_conn:
+                        await manager.send_to_connection(target_conn["websocket"], live_event)
+                else:
+                    await manager.broadcast_to_room(
+                        r_id,
+                        live_event,
+                        exclude_connection=websocket if msg_type == WSMessageType.LIVE_REQUEST_JOIN.value else None,
+                    )
+
     except WebSocketDisconnect:
         logger.info(f"WebSocket disconnected normally for user '{username}' in room '{r_id}'")
     except Exception as e:

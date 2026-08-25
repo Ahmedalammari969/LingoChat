@@ -13,7 +13,15 @@
  *   ws.disconnect()
  */
 
-const WS_BASE_URL = import.meta.env.VITE_WS_BASE_URL || 'ws://localhost:8000/ws'
+const getWsBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_WS_BASE_URL || 'ws://localhost:8000/ws'
+  if (typeof window !== 'undefined' && window.location?.hostname && window.location.hostname !== 'localhost') {
+    return envUrl.replace('localhost', window.location.hostname).replace('127.0.0.1', window.location.hostname)
+  }
+  return envUrl
+}
+
+const WS_BASE_URL = getWsBaseUrl()
 
 // Reconnection constants — see docs/websocket-contract.md § Reconnect Strategy
 const RECONNECT_BASE_MS = 1000
@@ -132,5 +140,10 @@ export function createWebSocketService(roomId, token, handlers = {}) {
     socket.send(buildEnvelope('TYPING', { is_typing: isTyping }))
   }
 
-  return { connect, disconnect, sendMessage, sendTyping }
+  function sendLiveSignal(type, payload = {}) {
+    if (socket?.readyState !== WebSocket.OPEN) return
+    socket.send(buildEnvelope(type, payload))
+  }
+
+  return { connect, disconnect, sendMessage, sendTyping, sendLiveSignal }
 }

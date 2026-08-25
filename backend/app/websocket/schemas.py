@@ -25,6 +25,16 @@ class WSMessageType(str, Enum):
     TYPING = "TYPING"
     HEARTBEAT = "HEARTBEAT"
     ERROR = "ERROR"
+    # Live Stream & WebRTC Signaling
+    LIVE_START = "LIVE_START"
+    LIVE_STOP = "LIVE_STOP"
+    LIVE_REQUEST_JOIN = "LIVE_REQUEST_JOIN"
+    LIVE_ACCEPT_GUEST = "LIVE_ACCEPT_GUEST"
+    LIVE_REJECT_GUEST = "LIVE_REJECT_GUEST"
+    LIVE_LEAVE_GUEST = "LIVE_LEAVE_GUEST"
+    RTC_OFFER = "RTC_OFFER"
+    RTC_ANSWER = "RTC_ANSWER"
+    RTC_ICE_CANDIDATE = "RTC_ICE_CANDIDATE"
 
 
 # ── Official Error Codes ───────────────────────────────────────────────────────

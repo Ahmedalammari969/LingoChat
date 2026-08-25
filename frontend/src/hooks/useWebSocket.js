@@ -42,9 +42,13 @@ export function useWebSocket(roomId, handlers) {
     serviceRef.current?.sendTyping(isTyping)
   }, [])
 
+  const sendLiveSignal = useCallback((type, payload) => {
+    serviceRef.current?.sendLiveSignal(type, payload)
+  }, [])
+
   const disconnect = useCallback(() => {
     serviceRef.current?.disconnect()
   }, [])
 
-  return { sendMessage, sendTyping, disconnect }
+  return { sendMessage, sendTyping, sendLiveSignal, disconnect }
 }
