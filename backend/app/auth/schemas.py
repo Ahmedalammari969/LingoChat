@@ -1,21 +1,37 @@
+from __future__ import annotations
 """
 LinguaChat — Auth Schemas (Pydantic)
 
 Request/response schemas for authentication endpoints.
-Endpoint contracts defined in: docs/api-contract.md
-Implementation: Yousef Khairy — TASK: Authentication
+Endpoint contracts defined in: docs/api-contract.md § 1 & 2
+Implementation: Yousef Khairy — TASK-03-YOUSEF
 """
 
-from pydantic import BaseModel, Field, field_validator
 import re
+from pydantic import BaseModel, Field, field_validator
 
 
 class RegisterRequest(BaseModel):
     """POST /auth/register request body."""
 
-    username: str = Field(..., min_length=3, max_length=50)
-    password: str = Field(..., min_length=8)
-    preferred_language: str = Field(..., min_length=2, max_length=10)
+    username: str = Field(
+        ...,
+        min_length=3,
+        max_length=50,
+        description="Alphanumeric characters and underscores only",
+    )
+    password: str = Field(
+        ...,
+        min_length=8,
+        max_length=128,
+        description="Plaintext password, minimum 8 characters",
+    )
+    preferred_language: str = Field(
+        default="en",
+        min_length=2,
+        max_length=10,
+        description="ISO 639-1 language code (e.g., 'en', 'ar', 'fr')",
+    )
 
     @field_validator("username")
     @classmethod
@@ -26,7 +42,7 @@ class RegisterRequest(BaseModel):
 
 
 class RegisterResponse(BaseModel):
-    """POST /auth/register success response."""
+    """POST /auth/register success response (201 Created)."""
 
     id: str
     username: str
@@ -42,7 +58,7 @@ class LoginRequest(BaseModel):
 
 
 class LoginResponse(BaseModel):
-    """POST /auth/login success response."""
+    """POST /auth/login success response (200 OK)."""
 
     access_token: str
     token_type: str = "bearer"
