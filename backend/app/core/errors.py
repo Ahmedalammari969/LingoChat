@@ -111,12 +111,23 @@ def register_exception_handlers(app: FastAPI) -> None:
     async def validation_exception_handler(
         request: Request, exc: RequestValidationError
     ) -> JSONResponse:
+        # Sanitize errors: convert non-serializable objects (e.g., ValueError)
+        # to string representations for safe JSON serialization.
+        safe_errors = []
+        for err in exc.errors():
+            safe_err = {}
+            for k, v in err.items():
+                if k == "ctx" and isinstance(v, dict):
+                    safe_err[k] = {ck: str(cv) for ck, cv in v.items()}
+                else:
+                    safe_err[k] = v
+            safe_errors.append(safe_err)
         return JSONResponse(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             content=error_response(
                 "VALIDATION_ERROR",
                 "Request validation failed",
-                {"errors": exc.errors()},
+                {"errors": safe_errors},
             ),
         )
 
