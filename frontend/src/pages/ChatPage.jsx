@@ -544,25 +544,34 @@ export default function ChatPage() {
 
         {/* مؤشر "فلان يكتب الآن..." */}
         {typingUsers.length > 0 && (
-          <div className="typing-indicator">
-            {typingUsers.join(', ')} يكتب الآن...
+          <div style={{ fontSize: '12px', color: 'var(--accent)', padding: '6px 12px', fontStyle: 'italic' }}>
+            ✍️ {typingUsers.join(', ')} يكتب الآن...
           </div>
         )}
 
         <div ref={messagesEndRef} />
       </div>
 
-      {/* ── حقل إرسال الرسائل ── */}
-      <form className="chat-page__input-bar" onSubmit={handleSend}>
+      {/* شريط كتابة وإرسال الرسالة */}
+      <form className="message-input" onSubmit={handleSend}>
         <input
+          className="message-input__field"
           type="text"
-          placeholder="اكتب رسالتك هنا... (سيتم ترجمتها تلقائياً للغة الطرف الآخر)"
+          placeholder="اكتب رسالتك هنا... (اضغط Enter للإرسال)"
           value={inputText}
           onChange={handleInputChange}
-          autoFocus
+          disabled={connectionStatus !== 'open'}
         />
-        <button type="submit" disabled={!inputText.trim()}>
-          إرسال ➔
+        <button
+          className="message-input__send-btn"
+          type="submit"
+          disabled={connectionStatus !== 'open' || !inputText.trim()}
+          title="إرسال"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
         </button>
       </form>
     </div>
