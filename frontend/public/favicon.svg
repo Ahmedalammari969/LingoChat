@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="50%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+    <linearGradient id="bubbleGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#e0e7ff" />
+    </linearGradient>
+    <linearGradient id="bubbleGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- App Background -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)" />
+
+  <!-- Main Speech Bubble (Back) -->
+  <g filter="url(#shadow)">
+    <path d="M120 160 C120 120, 150 90, 200 90 L340 90 C390 90, 420 120, 420 160 L420 250 C420 290, 390 320, 340 320 L240 320 L160 380 L170 320 L200 320 C150 320, 120 290, 120 250 Z" 
+          fill="url(#bubbleGrad1)" />
+  </g>
+
+  <!-- Front Speech Bubble (Multilingual Accent) -->
+  <g filter="url(#shadow)">
+    <path d="M160 220 C160 190, 185 170, 220 170 L320 170 C355 170, 380 190, 380 220 L380 280 C380 310, 355 330, 320 330 L270 330 L210 380 L220 330 L220 330 C185 330, 160 310, 160 280 Z" 
+          fill="url(#bubbleGrad2)" />
+  </g>
+
+  <!-- Letter 'A' and Arabic 'ع' / Translation Symbol in Bubbles -->
+  <text x="235" y="225" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="52" font-weight="900" fill="#4338ca" text-anchor="middle">A</text>
+  <text x="300" y="275" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Cairo', sans-serif" font-size="52" font-weight="900" fill="#ffffff" text-anchor="middle">ع</text>
+
+  <!-- Translate Arrow Connection -->
+  <path d="M255 240 L280 240 M272 233 L282 240 L272 247" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
