@@ -10,6 +10,7 @@ export default function RoomsPage() {
   const [rooms, setRooms] = useState([])
   const [newRoomName, setNewRoomName] = useState('')
   const [isPrivate, setIsPrivate] = useState(false)
+  const [joinLinkInput, setJoinLinkInput] = useState('')
   const [createdRoomInfo, setCreatedRoomInfo] = useState(null)
   const [copySuccess, setCopySuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -62,6 +63,16 @@ export default function RoomsPage() {
       // في حال كان منضماً بالفعل أو أي كود، نوجهه مباشرة للدردشة
       navigate(`/rooms/${roomId}`)
     }
+  }
+
+  // الانضمام عبر لصق الرابط أو الكود مباشرة
+  const handleJoinByInput = (e) => {
+    e.preventDefault()
+    const raw = joinLinkInput.trim()
+    if (!raw) return
+    const match = raw.match(/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/)
+    const targetRoomId = match ? match[0] : raw
+    handleJoinAndEnter(targetRoomId)
   }
 
   // نسخ رابط/كود الدعوة
@@ -210,10 +221,29 @@ export default function RoomsPage() {
         )}
       </div>
 
+      {/* بطاقة الانضمام المباشر عبر رابط أو كود الدعوة */}
+      <div className="room-creation-card" style={{ marginTop: '-10px' }}>
+        <h2>الانضمام لغرفة عبر الرابط أو المعرف</h2>
+        <p>إذا أرسل لك صديقك رابط دعوة أو معرف غرفة خاصة، الصقه هنا للدخول مباشرة:</p>
+        <form className="room-form" onSubmit={handleJoinByInput} style={{ display: 'flex', gap: '10px' }}>
+          <input
+            type="text"
+            placeholder="الصق رابط الدعوة كاملاً أو كود الغرفة هنا..."
+            value={joinLinkInput}
+            onChange={(e) => setJoinLinkInput(e.target.value)}
+            style={{ flex: 1 }}
+            required
+          />
+          <button type="submit" style={{ whiteSpace: 'nowrap', padding: '0 24px' }}>
+            دخول الغرفة ➔
+          </button>
+        </form>
+      </div>
+
       {/* بطاقة قائمة الغرف المتاحة */}
       <div className="room-list-section">
-        <h2>الغرف المتاحة حالياً</h2>
-        <p>انضم إلى أي من الغرف المتاحة للدردشة المباشرة مع الأعضاء.</p>
+        <h2>الغرف المتاحة حالياً (العامة)</h2>
+        <p>انضم إلى أي من الغرف العامة المفتوحة للدردشة المباشرة مع الأعضاء.</p>
 
         {isLoading ? (
           <p style={{ textAlign: 'center', color: 'var(--muted-text)' }}>جارٍ تحميل الغرف...</p>

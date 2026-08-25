@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth.js'
 import { useWebSocket } from '../hooks/useWebSocket.js'
-import { getRoomMessages } from '../api/rooms.js'
+import { getRoomMessages, joinRoom } from '../api/rooms.js'
 
 export default function ChatPage() {
   const { roomId } = useParams()
@@ -27,10 +27,11 @@ export default function ChatPage() {
     scrollToBottom()
   }, [messages, typingUsers])
 
-  // جلب سجل الرسائل السابقة عند فتح الغرفة
+  // الانضمام التلقائي للغرفة وجلب سجل الرسائل عند فتح الرابط المباشر
   useEffect(() => {
     async function loadHistory() {
       try {
+        await joinRoom(roomId).catch(() => {})
         const data = await getRoomMessages(roomId)
         if (data?.messages) {
           const formatted = data.messages.map((m) => ({
