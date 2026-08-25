@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth.js'
 import { useWebSocket } from '../hooks/useWebSocket.js'
-import { getRoomMessages, joinRoom } from '../api/rooms.js'
+import { getRoomMessages, joinRoom, getRoomDetails } from '../api/rooms.js'
 
 export default function ChatPage() {
   const { roomId } = useParams()
   const { user } = useAuth()
   const navigate = useNavigate()
 
+  const [roomInfo, setRoomInfo] = useState(null)
   const [messages, setMessages] = useState([])
   const [inputText, setInputText] = useState('')
   const [connectionStatus, setConnectionStatus] = useState('connecting')
@@ -28,7 +29,7 @@ export default function ChatPage() {
     scrollToBottom()
   }, [messages, typingUsers])
 
-  // الانضمام التلقائي للغرفة وجلب سجل الرسائل عند فتح الرابط المباشر
+  // الانضمام التلقائي للغرفة وجلب معلوماتها وسجل الرسائل عند فتح الرابط المباشر
   useEffect(() => {
     const token = localStorage.getItem('linguachat_token')
     if (!token) {
@@ -36,9 +37,14 @@ export default function ChatPage() {
       return
     }
 
-    async function loadHistory() {
+    async function loadRoomAndHistory() {
       try {
         await joinRoom(roomId).catch(() => {})
+        
+        // جلب معلومات الغرفة واسمها
+        getRoomDetails(roomId).then(setRoomInfo).catch(() => {})
+
+        // جلب سجل الرسائل
         const data = await getRoomMessages(roomId)
         if (data?.messages) {
           const formatted = data.messages.map((m) => ({
@@ -55,10 +61,10 @@ export default function ChatPage() {
           setMessages(formatted)
         }
       } catch (err) {
-        console.error('فشل جلب الرسائل السابقة:', err)
+        console.error('فشل جلب تفاصيل الغرفة أو الرسائل:', err)
       }
     }
-    if (roomId) loadHistory()
+    if (roomId) loadRoomAndHistory()
   }, [roomId])
 
   // إعداد مستمعات الـ WebSocket
@@ -179,7 +185,20 @@ export default function ChatPage() {
           >
             ← الغرف
           </button>
-          <h1>غرفة المحادثة</h1>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <h1 style={{ fontSize: '18px', fontWeight: 700, margin: 0, color: '#fff' }}>
+              {roomInfo?.name || 'غرفة المحادثة'}
+            </h1>
+            {roomInfo?.is_private ? (
+              <span style={{ fontSize: '11px', background: 'rgba(99, 102, 241, 0.2)', color: 'var(--accent)', padding: '2px 8px', borderRadius: '8px', fontWeight: 700 }}>
+                🔒 خاصة
+              </span>
+            ) : roomInfo ? (
+              <span style={{ fontSize: '11px', background: 'rgba(16, 185, 129, 0.2)', color: '#10b981', padding: '2px 8px', borderRadius: '8px', fontWeight: 700 }}>
+                🌐 عامة
+              </span>
+            ) : null}
+          </div>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>

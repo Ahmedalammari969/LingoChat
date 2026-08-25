@@ -71,6 +71,31 @@ async def list_rooms(
     return await rooms_service.list_rooms(db, limit, offset)
 
 
+@router.get(
+    "/{room_id}",
+    response_model=RoomResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Get room details by ID",
+)
+async def get_room(
+    room_id: uuid.UUID,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(auth_service.get_current_user),
+) -> RoomResponse:
+    """Retrieve details for a specific room."""
+    room = await rooms_service.get_room_by_id(db, room_id)
+    if not room:
+        raise NotFoundError("ROOM", str(room_id))
+    return RoomResponse(
+        id=str(room.id),
+        name=room.name,
+        invitation_link=f"/rooms/{room.id}/join",
+        created_by=str(room.created_by),
+        created_at=room.created_at.isoformat(),
+        is_private=getattr(room, "is_private", False),
+    )
+
+
 @router.post(
     "/{room_id}/join",
     response_model=JoinRoomResponse,

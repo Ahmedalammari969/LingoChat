@@ -18,6 +18,11 @@ export async function listRooms(limit = 20, offset = 0) {
   return apiClient.get(`/rooms?limit=${limit}&offset=${offset}`)
 }
 
+/** GET /rooms/:roomId — Get room details. */
+export async function getRoomDetails(roomId) {
+  return apiClient.get(`/rooms/${roomId}`)
+}
+
 /** POST /rooms/:roomId/join — Join a room. */
 export async function joinRoom(roomId) {
   return apiClient.post(`/rooms/${roomId}/join`, {})
