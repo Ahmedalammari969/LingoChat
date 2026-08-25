@@ -6,8 +6,9 @@ Endpoints:
 - POST /rooms — Create a room
 - GET /rooms — List rooms
 - POST /rooms/{room_id}/join — Join a room
-Implementation: Yousef Khairy — TASK-04-YOUSEF
-See: docs/api-contract.md § 3, 4, 5
+- GET /rooms/{room_id}/messages — Message history
+Implementation: Yousef Khairy — TASK-04 & TASK-05
+See: docs/api-contract.md § 3, 4, 5, 6
 """
 
 import uuid
@@ -17,8 +18,11 @@ from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.auth import service as auth_service
+from app.core.errors import ForbiddenError, NotFoundError
 from app.database.models.user import User
 from app.database.session import get_db
+from app.messages import service as messages_service
+from app.messages.schemas import MessageHistoryResponse
 from app.rooms import service as rooms_service
 from app.rooms.schemas import (
     CreateRoomRequest,
@@ -83,3 +87,45 @@ async def join_room(
     Contract: docs/api-contract.md § 5. POST /rooms/{room_id}/join
     """
     return await rooms_service.join_room(db, room_id, current_user.id)
+
+
+@router.get(
+    "/{room_id}/messages",
+    response_model=MessageHistoryResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Retrieve paginated room message history",
+)
+async def get_messages(
+    room_id: uuid.UUID,
+    limit: int = Query(default=50, ge=1, le=200, description="Max messages to return"),
+    before: Optional[str] = Query(default=None, description="ISO timestamp cursor"),
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(auth_service.get_current_user),
+) -> MessageHistoryResponse:
+    """
+    Retrieve message history for a room, paired with translations in the user's preferred language.
+    Contract: docs/api-contract.md § 6. GET /rooms/{room_id}/messages
+
+    Security:
+    - 401 Unauthorized if not logged in.
+    - 404 Not Found if room does not exist.
+    - 403 Forbidden if user is not a member of the room.
+    """
+    # 1. Verify room exists
+    room = await rooms_service.get_room_by_id(db, room_id)
+    if not room:
+        raise NotFoundError("ROOM", str(room_id))
+
+    # 2. Verify membership
+    is_member = await rooms_service.is_user_member_of_room(db, room_id, current_user.id)
+    if not is_member:
+        raise ForbiddenError("You are not a member of this room")
+
+    # 3. Retrieve messages
+    return await messages_service.get_room_messages(
+        db,
+        room_id=room_id,
+        user_lang=current_user.preferred_language,
+        limit=limit,
+        before=before,
+    )
