@@ -14,6 +14,7 @@ export default function ChatPage() {
   const [connectionStatus, setConnectionStatus] = useState('connecting')
   const [typingUsers, setTypingUsers] = useState([])
   const [showOriginalMap, setShowOriginalMap] = useState({})
+  const [copySuccess, setCopySuccess] = useState(false)
 
   const messagesEndRef = useRef(null)
   const typingTimeoutRef = useRef(null)
@@ -150,6 +151,14 @@ export default function ChatPage() {
     setShowOriginalMap((prev) => ({ ...prev, [msgId]: !prev[msgId] }))
   }
 
+  // نسخ رابط الغرفة مباشرة من داخل الغرفة
+  const handleCopyLink = () => {
+    const inviteUrl = `${window.location.origin}/rooms/${roomId}`
+    navigator.clipboard.writeText(inviteUrl)
+    setCopySuccess(true)
+    setTimeout(() => setCopySuccess(false), 2000)
+  }
+
   return (
     <div className="chat-page">
       {/* رأس المحادثة */}
@@ -173,10 +182,35 @@ export default function ChatPage() {
           <h1>غرفة المحادثة</h1>
         </div>
 
-        <div className={`chat-page__status chat-page__status--${connectionStatus}`}>
-          {connectionStatus === 'open' && '🟢 متصل فوري'}
-          {connectionStatus === 'connecting' && '🟡 جارٍ الاتصال...'}
-          {connectionStatus === 'error' && '🔴 انقطع الاتصال'}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          {/* زر نسخ رابط الغرفة من الداخل */}
+          <button
+            type="button"
+            onClick={handleCopyLink}
+            style={{
+              background: copySuccess ? 'rgba(16, 185, 129, 0.2)' : 'rgba(99, 102, 241, 0.15)',
+              border: copySuccess ? '1px solid #10b981' : '1px solid var(--accent)',
+              color: copySuccess ? '#10b981' : 'var(--accent)',
+              padding: '6px 14px',
+              borderRadius: '12px',
+              cursor: 'pointer',
+              fontSize: '12px',
+              fontWeight: 600,
+              fontFamily: 'inherit',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            {copySuccess ? '✓ تم نسخ الرابط!' : '🔗 نسخ رابط الغرفة'}
+          </button>
+
+          <div className={`chat-page__status chat-page__status--${connectionStatus}`}>
+            {connectionStatus === 'open' && '🟢 متصل فوري'}
+            {connectionStatus === 'connecting' && '🟡 جارٍ الاتصال...'}
+            {connectionStatus === 'error' && '🔴 انقطع الاتصال'}
+          </div>
         </div>
       </header>
 
