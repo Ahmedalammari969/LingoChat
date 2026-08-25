@@ -37,11 +37,13 @@ register_exception_handlers(app)
 # DO NOT add a router here without the corresponding implementation being done.
 #
 from app.auth.router import router as auth_router
+from app.dashboard.router import router as dashboard_router
 from app.rooms.router import router as rooms_router
 from app.websocket.router import router as websocket_router
 
 app.include_router(auth_router, prefix="/api/v1/auth", tags=["Authentication"])
 app.include_router(rooms_router, prefix="/api/v1/rooms", tags=["Rooms"])
+app.include_router(dashboard_router, prefix="/api/v1/dashboard", tags=["Dashboard"])
 app.include_router(websocket_router, prefix="/ws", tags=["WebSocket"])
 
 
