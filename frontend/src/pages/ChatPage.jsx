@@ -29,6 +29,12 @@ export default function ChatPage() {
 
   // الانضمام التلقائي للغرفة وجلب سجل الرسائل عند فتح الرابط المباشر
   useEffect(() => {
+    const token = localStorage.getItem('linguachat_token')
+    if (!token) {
+      navigate(`/login?redirect=${encodeURIComponent(window.location.pathname)}`)
+      return
+    }
+
     async function loadHistory() {
       try {
         await joinRoom(roomId).catch(() => {})

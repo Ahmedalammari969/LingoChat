@@ -57,7 +57,9 @@ export default function LoginPage() {
         // تسجيل الدخول
         await login(trimmedUsername, password)
       }
-      navigate('/rooms')
+      const searchParams = new URLSearchParams(window.location.search)
+      const redirectUrl = searchParams.get('redirect') || '/rooms'
+      navigate(redirectUrl)
     } catch (err) {
       setErrorMessage(err.message || 'حدث خطأ أثناء الاتصال بالخادم')
     } finally {

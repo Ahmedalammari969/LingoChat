@@ -31,6 +31,11 @@ export default function RoomsPage() {
   }
 
   useEffect(() => {
+    const token = localStorage.getItem('linguachat_token')
+    if (!token) {
+      navigate('/login')
+      return
+    }
     fetchRooms()
   }, [])
 
