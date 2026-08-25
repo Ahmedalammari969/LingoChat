@@ -78,6 +78,37 @@ def test_create_room_success(client, test_user, auth_header):
         assert data["created_by"] == str(test_user.id)
         assert data["invitation_link"] == f"/rooms/{r_id}/join"
         assert "id" in data
+        assert data["is_private"] is False
+
+
+def test_create_private_room_success(client, test_user, auth_header):
+    """Test creating a private room returns 201 Created with is_private=True."""
+    r_id = uuid.uuid4()
+    mock_response = RoomResponse(
+        id=str(r_id),
+        name="Secret Study Room",
+        invitation_link=f"/rooms/{r_id}/join",
+        created_by=str(test_user.id),
+        created_at=datetime.now(timezone.utc).isoformat(),
+        is_private=True,
+    )
+
+    with patch("app.users.service.get_user_by_id", new_callable=AsyncMock) as mock_get_user, \
+         patch("app.rooms.service.create_room", new_callable=AsyncMock) as mock_create_room:
+
+        mock_get_user.return_value = test_user
+        mock_create_room.return_value = mock_response
+
+        response = client.post(
+            "/api/v1/rooms",
+            headers=auth_header,
+            json={"name": "Secret Study Room", "is_private": True},
+        )
+
+        assert response.status_code == 201
+        data = response.json()
+        assert data["name"] == "Secret Study Room"
+        assert data["is_private"] is True
 
 
 def test_create_room_unauthorized_without_token(client):

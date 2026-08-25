@@ -9,6 +9,7 @@ export default function RoomsPage() {
 
   const [rooms, setRooms] = useState([])
   const [newRoomName, setNewRoomName] = useState('')
+  const [isPrivate, setIsPrivate] = useState(false)
   const [createdRoomInfo, setCreatedRoomInfo] = useState(null)
   const [copySuccess, setCopySuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -40,9 +41,10 @@ export default function RoomsPage() {
     setIsCreating(true)
     setErrorMessage('')
     try {
-      const room = await createRoom(newRoomName.trim())
+      const room = await createRoom(newRoomName.trim(), isPrivate)
       setCreatedRoomInfo(room)
       setNewRoomName('')
+      setIsPrivate(false)
       fetchRooms()
     } catch (err) {
       setErrorMessage(err.message || 'فشل إنشاء الغرفة')
@@ -55,10 +57,10 @@ export default function RoomsPage() {
   const handleJoinAndEnter = async (roomId) => {
     try {
       await joinRoom(roomId)
-      navigate(`/chat/${roomId}`)
+      navigate(`/rooms/${roomId}`)
     } catch (err) {
       // في حال كان منضماً بالفعل أو أي كود، نوجهه مباشرة للدردشة
-      navigate(`/chat/${roomId}`)
+      navigate(`/rooms/${roomId}`)
     }
   }
 
@@ -146,12 +148,21 @@ export default function RoomsPage() {
             اسم الغرفة (Room Name)
             <input
               type="text"
-              placeholder="مثال: غرفة المطورين العامة"
+              placeholder="مثال: غرفة المطورين العامة أو الخاصة"
               value={newRoomName}
               onChange={(e) => setNewRoomName(e.target.value)}
               disabled={isCreating}
               required
             />
+          </label>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', margin: '4px 0 14px', fontSize: '13px', color: isPrivate ? 'var(--accent)' : 'var(--muted-text)', userSelect: 'none' }}>
+            <input
+              type="checkbox"
+              checked={isPrivate}
+              onChange={(e) => setIsPrivate(e.target.checked)}
+              style={{ width: '16px', height: '16px', accentColor: 'var(--accent)', cursor: 'pointer' }}
+            />
+            <span>🔒 جعل الغرفة خاصة (مخفية من قائمة الاستكشاف — الدخول برابط الدعوة فقط)</span>
           </label>
           <button type="submit" disabled={isCreating}>
             {isCreating ? 'جارٍ الإنشاء...' : 'إنشاء الغرفة'}
@@ -161,7 +172,14 @@ export default function RoomsPage() {
         {/* بطاقة رابط الدعوة عند إنشاء الغرفة بنجاح */}
         {createdRoomInfo && (
           <div className="invite-card">
-            <p className="invite-note">🎉 تم إنشاء الغرفة بنجاح! شارك الرابط:</p>
+            <p className="invite-note">
+              🎉 تم إنشاء الغرفة بنجاح!
+              {createdRoomInfo.is_private ? (
+                <span style={{ display: 'inline-block', fontSize: '11px', background: 'rgba(99, 102, 241, 0.2)', color: 'var(--accent)', padding: '2px 8px', borderRadius: '8px', marginRight: '8px', fontWeight: 700 }}>🔒 غرفة خاصة</span>
+              ) : (
+                <span style={{ display: 'inline-block', fontSize: '11px', background: 'rgba(16, 185, 129, 0.2)', color: '#10b981', padding: '2px 8px', borderRadius: '8px', marginRight: '8px', fontWeight: 700 }}>🌐 غرفة عامة</span>
+              )}
+            </p>
             <label className="invite-link-label">
               رابط الدعوة:
               <input

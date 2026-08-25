@@ -91,8 +91,10 @@ async def create_room(
     if not clean_name:
         raise ValidationError("Room name cannot be empty")
 
+    is_priv = bool(getattr(data, "is_private", False))
     room = Room(
         name=clean_name,
+        is_private=is_priv,
         created_by=u_uuid,
     )
     db.add(room)
@@ -115,6 +117,7 @@ async def create_room(
         invitation_link=invitation_link,
         created_by=str(room.created_by),
         created_at=room.created_at.isoformat(),
+        is_private=room.is_private,
     )
 
 
@@ -124,19 +127,20 @@ async def list_rooms(
     offset: int = 0,
 ) -> RoomListResponse:
     """
-    List chat rooms with member count and total pagination count.
+    List public chat rooms with member count and total pagination count.
+    Private rooms (is_private=True) are hidden from the explore list.
 
     Contract: docs/api-contract.md § 4. GET /rooms
     """
     clamped_limit = max(1, min(limit, 100))
     clamped_offset = max(0, offset)
 
-    # 1. Total rooms count
-    total_query = select(func.count(Room.id))
+    # 1. Total public rooms count
+    total_query = select(func.count(Room.id)).where(Room.is_private.is_(False))
     total_result = await db.execute(total_query)
     total_count = total_result.scalar_one() or 0
 
-    # 2. Paginated rooms with member count query (efficient single query)
+    # 2. Paginated public rooms with member count query (efficient single query)
     query = (
         select(
             Room.id,
@@ -145,6 +149,7 @@ async def list_rooms(
             func.count(RoomMember.id).label("member_count"),
         )
         .outerjoin(RoomMember, Room.id == RoomMember.room_id)
+        .where(Room.is_private.is_(False))
         .group_by(Room.id, Room.name, Room.created_at)
         .order_by(Room.created_at.desc())
         .limit(clamped_limit)

@@ -52,7 +52,7 @@ def test_rooms_table_columns_and_foreign_keys():
     """Verify 'rooms' table structure strictly matches docs/database-schema.md § 2."""
     table = Base.metadata.tables["rooms"]
     col_names = {c.name for c in table.columns}
-    expected_cols = {"id", "name", "created_by", "created_at"}
+    expected_cols = {"id", "name", "created_by", "created_at", "is_private"}
     assert expected_cols == col_names
 
     # Check Foreign Key on created_by -> users.id with SET NULL

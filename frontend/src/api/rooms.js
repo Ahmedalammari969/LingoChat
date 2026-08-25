@@ -9,8 +9,8 @@
 import { apiClient } from './client.js'
 
 /** POST /rooms — Create a new room. */
-export async function createRoom(name) {
-  return apiClient.post('/rooms', { name })
+export async function createRoom(name, isPrivate = false) {
+  return apiClient.post('/rooms', { name, is_private: isPrivate })
 }
 
 /** GET /rooms — List rooms. */

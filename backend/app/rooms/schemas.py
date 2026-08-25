@@ -22,6 +22,10 @@ class CreateRoomRequest(BaseModel):
         max_length=100,
         description="Display name of the chat room (1-100 characters)",
     )
+    is_private: bool = Field(
+        default=False,
+        description="Whether this room is private/hidden from the public rooms list",
+    )
 
 
 class RoomResponse(BaseModel):
@@ -31,6 +35,7 @@ class RoomResponse(BaseModel):
     invitation_link: str
     created_by: str
     created_at: str
+    is_private: bool = False
 
 
 class RoomListItem(BaseModel):
