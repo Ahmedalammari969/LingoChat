@@ -3,18 +3,21 @@ from __future__ import annotations
 LinguaChat — Translation ORM Model
 
 Schema defined in: docs/database-schema.md § 5. translations
-Implementation: Yousef Khairy (schema) / Moayad Al-Soufi (service usage)
+Implementation: Yousef Khairy — TASK-01-YOUSEF
 """
 
 import uuid
-from datetime import datetime, timezone
-from typing import Optional
+from datetime import datetime
+from typing import Optional, TYPE_CHECKING
 
 from sqlalchemy import DateTime, Float, ForeignKey, String, Text, UniqueConstraint
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.database.base import Base
+from app.database.base import Base, utcnow
+
+if TYPE_CHECKING:
+    from app.database.models.message import Message
 
 
 class Translation(Base):
@@ -56,22 +59,22 @@ class Translation(Base):
     provider_used: Mapped[str] = mapped_column(
         String(50),
         nullable=False,
-        # Values: "libretranslate", "google", "cache"
-        # See docs/translation-contract.md
     )
     confidence: Mapped[Optional[float]] = mapped_column(
         Float,
         nullable=True,
-        # 0.0–1.0 or None if provider does not return confidence
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
-        default=lambda: datetime.now(timezone.utc),
+        default=utcnow,
     )
 
     # ── Relationships ──────────────────────────────────────────────────────────
-    # message = relationship("Message", back_populates="translations")
+    message: Mapped["Message"] = relationship(
+        "Message",
+        back_populates="translations",
+    )
 
     def __repr__(self) -> str:
         return (

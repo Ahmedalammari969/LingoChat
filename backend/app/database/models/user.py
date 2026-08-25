@@ -1,18 +1,25 @@
+from __future__ import annotations
 """
 LinguaChat — User ORM Model
 
 Schema defined in: docs/database-schema.md § 1. users
-Implementation: Yousef Khairy — TASK: Database
+Implementation: Yousef Khairy — TASK-01-YOUSEF
 """
 
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime
+from typing import List, TYPE_CHECKING
 
 from sqlalchemy import Boolean, DateTime, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.database.base import Base
+from app.database.base import Base, utcnow
+
+if TYPE_CHECKING:
+    from app.database.models.room import Room
+    from app.database.models.room_member import RoomMember
+    from app.database.models.message import Message
 
 
 class User(Base):
@@ -49,13 +56,13 @@ class User(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
-        default=lambda: datetime.now(timezone.utc),
+        default=utcnow,
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
-        default=lambda: datetime.now(timezone.utc),
-        onupdate=lambda: datetime.now(timezone.utc),
+        default=utcnow,
+        onupdate=utcnow,
     )
     is_active: Mapped[bool] = mapped_column(
         Boolean,
@@ -64,10 +71,21 @@ class User(Base):
     )
 
     # ── Relationships ──────────────────────────────────────────────────────────
-    # Defined on related models to avoid circular imports at foundation stage.
-    # rooms_created = relationship("Room", back_populates="creator")
-    # room_memberships = relationship("RoomMember", back_populates="user")
-    # messages_sent = relationship("Message", back_populates="sender")
+    rooms_created: Mapped[List["Room"]] = relationship(
+        "Room",
+        back_populates="creator",
+        foreign_keys="Room.created_by",
+    )
+    room_memberships: Mapped[List["RoomMember"]] = relationship(
+        "RoomMember",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
+    messages_sent: Mapped[List["Message"]] = relationship(
+        "Message",
+        back_populates="sender",
+        foreign_keys="Message.sender_id",
+    )
 
     def __repr__(self) -> str:
         return f"<User id={self.id} username={self.username!r}>"

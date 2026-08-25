@@ -1,18 +1,24 @@
+from __future__ import annotations
 """
 LinguaChat — RoomMember ORM Model
 
 Schema defined in: docs/database-schema.md § 3. room_members
-Implementation: Yousef Khairy — TASK: Database
+Implementation: Yousef Khairy — TASK-01-YOUSEF
 """
 
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy import DateTime, ForeignKey, UniqueConstraint
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.database.base import Base
+from app.database.base import Base, utcnow
+
+if TYPE_CHECKING:
+    from app.database.models.room import Room
+    from app.database.models.user import User
 
 
 class RoomMember(Base):
@@ -46,12 +52,18 @@ class RoomMember(Base):
     joined_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
-        default=lambda: datetime.now(timezone.utc),
+        default=utcnow,
     )
 
     # ── Relationships ──────────────────────────────────────────────────────────
-    # room = relationship("Room", back_populates="members")
-    # user = relationship("User", back_populates="room_memberships")
+    room: Mapped["Room"] = relationship(
+        "Room",
+        back_populates="members",
+    )
+    user: Mapped["User"] = relationship(
+        "User",
+        back_populates="room_memberships",
+    )
 
     def __repr__(self) -> str:
         return f"<RoomMember room={self.room_id} user={self.user_id}>"

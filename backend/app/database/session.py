@@ -1,22 +1,23 @@
+from __future__ import annotations
 """
 LinguaChat — Database Session Management
 
-Provides async SQLAlchemy session factory.
-Implementation: Yousef Khairy — TASK: Database
+Provides async SQLAlchemy engine, sessionmaker, and FastAPI dependency.
+Schema Source of Truth: docs/database-schema.md
+Implementation: Yousef Khairy — TASK-01-YOUSEF
 """
 
-from typing import Optional
-
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
-from sqlalchemy.orm import DeclarativeBase
+from typing import AsyncGenerator
+from sqlalchemy.ext.asyncio import (
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
 
 from app.core.config import settings
 
-
 # ── Engine ────────────────────────────────────────────────────────────────────
-# NOTE: DATABASE_URL must use asyncpg driver:
-# postgresql+asyncpg://user:password@host:port/dbname
-
+# DATABASE_URL uses asyncpg driver: postgresql+asyncpg://user:password@host:port/dbname
 engine = create_async_engine(
     settings.DATABASE_URL,
     echo=settings.APP_DEBUG,
@@ -36,12 +37,13 @@ AsyncSessionLocal = async_sessionmaker(
 
 
 # ── Dependency ────────────────────────────────────────────────────────────────
-async def get_db() -> AsyncSession:
+async def get_db() -> AsyncGenerator[AsyncSession, None]:
     """
-    FastAPI dependency that provides an async database session.
+    FastAPI dependency that yields an async database session and ensures proper closure.
 
     Usage:
-        async def endpoint(db: AsyncSession = Depends(get_db)):
+        @router.get("/users")
+        async def list_users(db: AsyncSession = Depends(get_db)):
             ...
     """
     async with AsyncSessionLocal() as session:

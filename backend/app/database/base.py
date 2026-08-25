@@ -2,14 +2,12 @@
 LinguaChat — SQLAlchemy Declarative Base
 
 All ORM models must inherit from Base defined here.
+Schema Source of Truth: docs/database-schema.md
+Implementation: Yousef Khairy — TASK-01-YOUSEF
 """
 
-import uuid
 from datetime import datetime, timezone
-
-from sqlalchemy import DateTime, func
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
+from sqlalchemy.orm import DeclarativeBase
 
 
 class Base(DeclarativeBase):
@@ -21,5 +19,5 @@ class Base(DeclarativeBase):
 
 
 def utcnow() -> datetime:
-    """Return current UTC time. Used as column defaults."""
+    """Return current UTC time with timezone awareness. Used as column defaults."""
     return datetime.now(timezone.utc)

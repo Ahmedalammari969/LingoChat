@@ -3,18 +3,23 @@ from __future__ import annotations
 LinguaChat — Message ORM Model
 
 Schema defined in: docs/database-schema.md § 4. messages
-Implementation: Yousef Khairy — TASK: Database
+Implementation: Yousef Khairy — TASK-01-YOUSEF
 """
 
 import uuid
-from datetime import datetime, timezone
-from typing import Optional
+from datetime import datetime
+from typing import List, Optional, TYPE_CHECKING
 
 from sqlalchemy import DateTime, ForeignKey, String, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.database.base import Base
+from app.database.base import Base, utcnow
+
+if TYPE_CHECKING:
+    from app.database.models.room import Room
+    from app.database.models.user import User
+    from app.database.models.translation import Translation
 
 
 class Message(Base):
@@ -57,14 +62,25 @@ class Message(Base):
     sent_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
-        default=lambda: datetime.now(timezone.utc),
+        default=utcnow,
         index=True,
     )
 
     # ── Relationships ──────────────────────────────────────────────────────────
-    # room = relationship("Room", back_populates="messages")
-    # sender = relationship("User", back_populates="messages_sent")
-    # translations = relationship("Translation", back_populates="message")
+    room: Mapped["Room"] = relationship(
+        "Room",
+        back_populates="messages",
+    )
+    sender: Mapped[Optional["User"]] = relationship(
+        "User",
+        back_populates="messages_sent",
+        foreign_keys=[sender_id],
+    )
+    translations: Mapped[List["Translation"]] = relationship(
+        "Translation",
+        back_populates="message",
+        cascade="all, delete-orphan",
+    )
 
     def __repr__(self) -> str:
         return f"<Message id={self.id} room={self.room_id} lang={self.original_language!r}>"
