@@ -47,10 +47,14 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const request = event.request
 
-  // Never intercept WebSocket or API mutations
+  // Never intercept WebSocket, API, or Vite development modules
   if (
     request.url.includes('/ws') ||
-    request.url.includes('/api/v1') ||
+    request.url.includes('/api') ||
+    request.url.includes('/@vite') ||
+    request.url.includes('/src/') ||
+    request.url.includes('/@fs') ||
+    request.url.includes('/@id') ||
     request.method !== 'GET'
   ) {
     return
