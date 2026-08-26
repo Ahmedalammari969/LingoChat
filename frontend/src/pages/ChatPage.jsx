@@ -560,12 +560,12 @@ export default function ChatPage() {
           placeholder="اكتب رسالتك هنا... (اضغط Enter للإرسال)"
           value={inputText}
           onChange={handleInputChange}
-          disabled={connectionStatus !== 'open'}
+          autoFocus
         />
         <button
           className="message-input__send-btn"
           type="submit"
-          disabled={connectionStatus !== 'open' || !inputText.trim()}
+          disabled={!inputText.trim()}
           title="إرسال"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">

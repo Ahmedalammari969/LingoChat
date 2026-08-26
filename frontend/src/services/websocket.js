@@ -18,13 +18,13 @@ function buildWsUrls(roomId, token) {
     return [`${import.meta.env.VITE_WS_BASE_URL}/${roomId}?token=${encodeURIComponent(token)}`]
   }
   const urls = []
-  if (typeof window !== 'undefined' && window.location?.hostname) {
+  if (typeof window !== 'undefined' && window.location?.host) {
     const host = window.location.hostname
     const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
-    // 1. Direct FastAPI port 8000
-    urls.push(`${proto}//${host}:8000/ws/${roomId}?token=${encodeURIComponent(token)}`)
-    // 2. Vite Proxy port 3000
+    // 1. Primary: Same port as webpage via Vite proxy (port 3000) - NEVER blocked by firewall if webpage loaded!
     urls.push(`${proto}//${window.location.host}/ws/${roomId}?token=${encodeURIComponent(token)}`)
+    // 2. Secondary: Direct FastAPI port 8000
+    urls.push(`${proto}//${host}:8000/ws/${roomId}?token=${encodeURIComponent(token)}`)
   } else {
     urls.push(`ws://localhost:8000/ws/${roomId}?token=${encodeURIComponent(token)}`)
   }
