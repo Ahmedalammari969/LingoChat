@@ -59,5 +59,9 @@ export function useWebSocket(roomId, handlers) {
     serviceRef.current?.disconnect()
   }, [])
 
-  return { sendMessage, sendTyping, sendLiveSignal, disconnect }
+  const reconnect = useCallback(() => {
+    serviceRef.current?.reconnectNow()
+  }, [])
+
+  return { sendMessage, sendTyping, sendLiveSignal, disconnect, reconnect }
 }

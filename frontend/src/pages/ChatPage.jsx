@@ -82,9 +82,12 @@ export default function ChatPage() {
   }, [roomId, navigate])
 
   // ── إعداد مستمعات الـ WebSocket مع معالجة أحداث البث المباشر ──
-  const { sendMessage, sendTyping, sendLiveSignal } = useWebSocket(roomId, {
+  const { sendMessage, sendTyping, sendLiveSignal, reconnect } = useWebSocket(roomId, {
     onConnect: () => setConnectionStatus('open'),
-    onDisconnect: () => setConnectionStatus('connecting'),
+    onDisconnect: (code) => {
+      if (code === 1000) setConnectionStatus('error')
+      else setConnectionStatus('connecting')
+    },
     onError: () => setConnectionStatus('error'),
     onMessage: async (msg) => {
       if (!msg || !msg.type) return
@@ -450,10 +453,15 @@ export default function ChatPage() {
             {copySuccess ? '✓ تم نسخ الرابط!' : '🔗 نسخ رابط الغرفة'}
           </button>
 
-          <div className={`chat-page__status chat-page__status--${connectionStatus}`}>
+          <div
+            className={`chat-page__status chat-page__status--${connectionStatus}`}
+            onClick={connectionStatus !== 'open' ? reconnect : undefined}
+            style={{ cursor: connectionStatus !== 'open' ? 'pointer' : 'default' }}
+            title={connectionStatus !== 'open' ? 'اضغط لإعادة الاتصال الفوري' : 'الاتصال نشط ومستقر'}
+          >
             {connectionStatus === 'open' && '🟢 متصل فوري'}
-            {connectionStatus === 'connecting' && '🟡 جارٍ الاتصال...'}
-            {connectionStatus === 'error' && '🔴 انقطع الاتصال'}
+            {connectionStatus === 'connecting' && '🟡 جارٍ الاتصال... (اضغط لإعادة المحاولة)'}
+            {connectionStatus === 'error' && '🔴 انقطع الاتصال (اضغط لإعادة الاتصال)'}
           </div>
         </div>
       </header>

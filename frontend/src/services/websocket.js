@@ -53,7 +53,9 @@ export function createWebSocketService(roomId, token, handlers = {}) {
   let socket = null
   let reconnectAttempts = 0
   let heartbeatTimer = null
+  let connectionTimeoutTimer = null
   let urlIndex = 0
+  let isManuallyClosed = false
 
   function getTimestamp() {
     return new Date().toISOString()
@@ -83,21 +85,56 @@ export function createWebSocketService(roomId, token, handlers = {}) {
     }
   }
 
+  function clearConnectionTimeout() {
+    if (connectionTimeoutTimer) {
+      clearTimeout(connectionTimeoutTimer)
+      connectionTimeoutTimer = null
+    }
+  }
+
   function connect() {
+    if (isManuallyClosed) return
+    clearConnectionTimeout()
+    stopHeartbeat()
+
+    if (socket) {
+      try {
+        socket.onopen = null
+        socket.onmessage = null
+        socket.onclose = null
+        socket.onerror = null
+        socket.close()
+      } catch (e) {}
+      socket = null
+    }
+
     const urls = buildWsUrls(roomId, token)
     const url = urls[urlIndex % urls.length]
+    console.log(`[LinguaChat WS] Connecting (${(urlIndex % urls.length) + 1}/${urls.length}):`, url)
 
     try {
       socket = new WebSocket(url)
     } catch (e) {
-      console.warn('[LinguaChat WS] Connection failed for', url, e)
+      console.warn('[LinguaChat WS] Creation error for', url, e)
       urlIndex++
-      scheduleReconnect()
+      scheduleReconnect(500)
       return
     }
 
+    // Failover rapidly if connection takes > 2.5s to open
+    connectionTimeoutTimer = setTimeout(() => {
+      if (socket && socket.readyState !== WebSocket.OPEN) {
+        console.warn('[LinguaChat WS] 2.5s Timeout on', url, '-> trying alternate route...')
+        urlIndex++
+        try { socket.close() } catch (e) {}
+        connect()
+      }
+    }, 2500)
+
     socket.onopen = () => {
+      clearConnectionTimeout()
       reconnectAttempts = 0
+      console.log('[LinguaChat WS] Successfully connected to:', url)
       startHeartbeat()
       handlers.onConnect?.()
     }
@@ -112,28 +149,32 @@ export function createWebSocketService(roomId, token, handlers = {}) {
     }
 
     socket.onclose = (event) => {
+      clearConnectionTimeout()
       stopHeartbeat()
+      console.log(`[LinguaChat WS] Closed (code: ${event.code})`)
       handlers.onDisconnect?.(event.code)
 
       // Attempt reconnect if not deliberate close
-      if (event.code !== 1000 && event.code !== 4001 && event.code !== 4003) {
+      if (!isManuallyClosed && event.code !== 1000 && event.code !== 4001 && event.code !== 4003) {
         urlIndex++
         scheduleReconnect()
       }
     }
 
     socket.onerror = () => {
+      console.warn('[LinguaChat WS] Error on:', url)
       handlers.onError?.('CONNECTION_ERROR', 'WebSocket connection error')
     }
   }
 
-  function scheduleReconnect() {
+  function scheduleReconnect(customDelay = null) {
+    if (isManuallyClosed) return
     if (reconnectAttempts >= RECONNECT_MAX_ATTEMPTS) {
       handlers.onError?.('MAX_RECONNECT_REACHED', 'Connection lost. Please refresh.')
       return
     }
-    const delay = Math.min(
-      RECONNECT_BASE_MS * Math.pow(2, reconnectAttempts),
+    const delay = customDelay !== null ? customDelay : Math.min(
+      RECONNECT_BASE_MS * Math.pow(1.5, reconnectAttempts),
       RECONNECT_MAX_MS
     )
     reconnectAttempts++
@@ -141,9 +182,20 @@ export function createWebSocketService(roomId, token, handlers = {}) {
   }
 
   function disconnect() {
+    isManuallyClosed = true
+    clearConnectionTimeout()
     stopHeartbeat()
-    socket?.close(1000)
-    socket = null
+    if (socket) {
+      try { socket.close(1000) } catch (e) {}
+      socket = null
+    }
+  }
+
+  function reconnectNow() {
+    isManuallyClosed = false
+    reconnectAttempts = 0
+    urlIndex = 0
+    connect()
   }
 
   function sendMessage(text, originalLanguage = null) {
@@ -164,5 +216,5 @@ export function createWebSocketService(roomId, token, handlers = {}) {
     socket.send(buildEnvelope(type, payload))
   }
 
-  return { connect, disconnect, sendMessage, sendTyping, sendLiveSignal }
+  return { connect, disconnect, reconnectNow, sendMessage, sendTyping, sendLiveSignal }
 }
