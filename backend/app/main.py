@@ -6,6 +6,14 @@ Full features (auth, rooms, websocket, translation) are implemented
 by individual team members per their assigned tasks.
 """
 
+import mimetypes
+mimetypes.init()
+mimetypes.add_type("application/javascript", ".js")
+mimetypes.add_type("application/javascript", ".mjs")
+mimetypes.add_type("text/css", ".css")
+mimetypes.add_type("image/svg+xml", ".svg")
+mimetypes.add_type("application/json", ".json")
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
