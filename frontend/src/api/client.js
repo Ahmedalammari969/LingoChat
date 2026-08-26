@@ -9,7 +9,17 @@
  * Implementation: Ahmed Alammari — TASK-01-AHMED
  */
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1'
+const getBaseUrl = () => {
+  if (import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL
+  }
+  if (typeof window !== 'undefined') {
+    return '/api/v1'
+  }
+  return 'http://localhost:8000/api/v1'
+}
+
+const BASE_URL = getBaseUrl()
 
 /**
  * Get stored JWT token.

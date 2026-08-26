@@ -14,11 +14,14 @@
  */
 
 const getWsBaseUrl = () => {
-  const envUrl = import.meta.env.VITE_WS_BASE_URL || 'ws://localhost:8000/ws'
-  if (typeof window !== 'undefined' && window.location?.hostname && window.location.hostname !== 'localhost') {
-    return envUrl.replace('localhost', window.location.hostname).replace('127.0.0.1', window.location.hostname)
+  if (import.meta.env.VITE_WS_BASE_URL) {
+    return import.meta.env.VITE_WS_BASE_URL
   }
-  return envUrl
+  if (typeof window !== 'undefined' && window.location) {
+    const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
+    return `${proto}//${window.location.host}/ws`
+  }
+  return 'ws://localhost:8000/ws'
 }
 
 const WS_BASE_URL = getWsBaseUrl()
