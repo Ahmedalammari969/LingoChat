@@ -5,7 +5,7 @@
  * and enables native PWA installation across Chrome, Edge, Safari, Android, and iOS.
  */
 
-const CACHE_NAME = 'linguachat-pwa-v1'
+const CACHE_NAME = 'linguachat-pwa-v2'
 const STATIC_ASSETS = [
   '/',
   '/index.html',
