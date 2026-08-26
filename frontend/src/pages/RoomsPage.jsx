@@ -202,14 +202,14 @@ export default function RoomsPage() {
                 className="invite-link-input"
                 type="text"
                 readOnly
-                value={createdRoomInfo.invitation_link || `${window.location.origin}/chat/${createdRoomInfo.id}`}
+                value={createdRoomInfo.invitation_link || `${window.location.protocol}//${window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '10.171.146.61' : window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/rooms/${createdRoomInfo.id}`}
               />
             </label>
             <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
               <button
                 type="button"
                 className="copy-button"
-                onClick={() => handleCopyInvite(createdRoomInfo.invitation_link || `${window.location.origin}/chat/${createdRoomInfo.id}`)}
+                onClick={() => handleCopyInvite(createdRoomInfo.invitation_link || `${window.location.protocol}//${window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '10.171.146.61' : window.location.hostname}${window.location.port ? ':' + window.location.port : ''}/rooms/${createdRoomInfo.id}`)}
               >
                 {copySuccess ? '✓ تم النسخ!' : 'نسخ الرابط'}
               </button>

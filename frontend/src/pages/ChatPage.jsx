@@ -340,7 +340,10 @@ export default function ChatPage() {
 
   // نسخ رابط الغرفة
   const handleCopyLink = () => {
-    const inviteUrl = `${window.location.origin}/rooms/${roomId}`
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    const host = isLocal ? '10.171.146.61' : window.location.hostname
+    const port = window.location.port ? `:${window.location.port}` : ''
+    const inviteUrl = `${window.location.protocol}//${host}${port}/rooms/${roomId}`
     navigator.clipboard.writeText(inviteUrl)
     setCopySuccess(true)
     setTimeout(() => setCopySuccess(false), 2000)
