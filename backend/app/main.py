@@ -24,13 +24,24 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.ALLOWED_ORIGINS,
+    allow_origin_regex=r".*",
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["Content-Type", "Authorization"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # ── Exception Handlers ────────────────────────────────────────────────────────
 register_exception_handlers(app)
+
+# ── Database Initialization on Startup ────────────────────────────────────────
+@app.on_event("startup")
+async def on_startup():
+    from app.database.base import Base
+    from app.database.session import engine
+    # Import all models so metadata is populated
+    import app.database.models  # noqa
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
 
 # ── Routers ───────────────────────────────────────────────────────────────────
 # Routers are registered here as they are implemented by team members.
