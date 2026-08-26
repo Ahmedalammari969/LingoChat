@@ -20,12 +20,21 @@ import { authService } from '../services/auth.js'
  */
 export function useWebSocket(roomId, handlers) {
   const serviceRef = useRef(null)
+  const handlersRef = useRef(handlers)
+  handlersRef.current = handlers
 
   useEffect(() => {
     const token = authService.getToken()
     if (!token || !roomId) return
 
-    const service = createWebSocketService(roomId, token, handlers)
+    const proxyHandlers = {
+      onMessage: (msg) => handlersRef.current?.onMessage?.(msg),
+      onConnect: () => handlersRef.current?.onConnect?.(),
+      onDisconnect: (code) => handlersRef.current?.onDisconnect?.(code),
+      onError: (code, msg) => handlersRef.current?.onError?.(code, msg),
+    }
+
+    const service = createWebSocketService(roomId, token, proxyHandlers)
     serviceRef.current = service
     service.connect()
 
