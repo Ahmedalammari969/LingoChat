@@ -20,9 +20,8 @@ export function useAuth() {
     try {
       const result = await apiLogin({ username, password })
       authService.setToken(result.access_token)
-      const userData = { username }
-      authService.setUser(userData)
-      setUser(userData)
+      const currentUser = authService.getUser() || { username }
+      setUser(currentUser)
       return result
     } catch (err) {
       setError(err.message)

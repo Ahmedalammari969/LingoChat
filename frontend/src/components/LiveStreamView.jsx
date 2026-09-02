@@ -17,25 +17,35 @@ export default function LiveStreamView({
   onClose,
   hasRequestedJoin,
 }) {
-  const localVideoRef = useRef(null)
-  const remoteVideoRef = useRef(null)
+  const hostVideoRef = useRef(null)
+  const guestVideoRef = useRef(null)
 
   const [isMuted, setIsMuted] = useState(false)
   const [isVideoOff, setIsVideoOff] = useState(false)
 
-  // Attach local stream to video element
-  useEffect(() => {
-    if (localVideoRef.current && localStream) {
-      localVideoRef.current.srcObject = localStream
-    }
-  }, [localStream])
+  const isCoHostActive = Boolean(guestUsername)
 
-  // Attach remote stream to video element
+  // Attach stream to Host Video Box
   useEffect(() => {
-    if (remoteVideoRef.current && remoteStream) {
-      remoteVideoRef.current.srcObject = remoteStream
+    if (hostVideoRef.current) {
+      const streamToPlay = isHost ? localStream : remoteStream
+      if (streamToPlay) {
+        hostVideoRef.current.srcObject = streamToPlay
+        hostVideoRef.current.play().catch(() => {})
+      }
     }
-  }, [remoteStream])
+  }, [localStream, remoteStream, isHost, isGuest, isCoHostActive])
+
+  // Attach stream to Guest Video Box
+  useEffect(() => {
+    if (guestVideoRef.current) {
+      const streamToPlay = isGuest ? localStream : remoteStream
+      if (streamToPlay) {
+        guestVideoRef.current.srcObject = streamToPlay
+        guestVideoRef.current.play().catch(() => {})
+      }
+    }
+  }, [localStream, remoteStream, isHost, isGuest, isCoHostActive])
 
   // Handle Mute Toggle
   const toggleMute = () => {
@@ -58,8 +68,6 @@ export default function LiveStreamView({
       }
     }
   }
-
-  const isCoHostActive = Boolean(guestUsername)
 
   return (
     <div style={{
@@ -146,17 +154,17 @@ export default function LiveStreamView({
           width: '100%',
           height: '100%',
           maxHeight: isCoHostActive ? '70vh' : '75vh',
-          background: '#000',
+          background: '#0a0d14',
           borderRadius: '24px',
           overflow: 'hidden',
-          border: '2px solid rgba(99, 102, 241, 0.4)',
+          border: '2px solid rgba(99, 102, 241, 0.5)',
           boxShadow: '0 12px 36px rgba(0,0,0,0.5)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
         }}>
           <video
-            ref={isHost ? localVideoRef : remoteVideoRef}
+            ref={hostVideoRef}
             autoPlay
             playsInline
             muted={isHost} // Mute own playback to avoid echo
@@ -191,20 +199,20 @@ export default function LiveStreamView({
             width: '100%',
             height: '100%',
             maxHeight: '70vh',
-            background: '#000',
+            background: '#0a0d14',
             borderRadius: '24px',
             overflow: 'hidden',
-            border: '2px solid rgba(16, 185, 129, 0.4)',
+            border: '2px solid rgba(16, 185, 129, 0.5)',
             boxShadow: '0 12px 36px rgba(0,0,0,0.5)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}>
             <video
-              ref={isGuest ? localVideoRef : remoteVideoRef}
+              ref={guestVideoRef}
               autoPlay
               playsInline
-              muted={isGuest}
+              muted={isGuest} // Mute own playback to avoid echo
               style={{
                 width: '100%',
                 height: '100%',

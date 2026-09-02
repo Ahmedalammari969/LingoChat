@@ -30,7 +30,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/rooms" element={<RoomsPage />} />
         <Route path="/rooms/:roomId" element={<ChatPage />} />
-        <Route path="/chat/:roomId" element={<Navigate to="/rooms/:roomId" replace />} />
+        <Route path="/chat/:roomId" element={<ChatPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         {/* Catch-all: redirect to login */}
         <Route path="*" element={<Navigate to="/login" replace />} />

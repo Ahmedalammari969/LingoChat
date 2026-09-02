@@ -4,32 +4,20 @@
  * Manages the WebSocket connection lifecycle.
  * See: docs/websocket-contract.md for message formats and protocol.
  * Implementation: Ahmed Alammari — TASK: Frontend / Integration
- *
- * Usage:
- *   const ws = createWebSocketService(roomId, token, handlers)
- *   ws.connect()
- *   ws.sendMessage(text)
- *   ws.sendTyping(isTyping)
- *   ws.disconnect()
  */
 
-function buildWsUrls(roomId, token) {
+const getWsBaseUrl = () => {
   if (import.meta.env.VITE_WS_BASE_URL) {
-    return [`${import.meta.env.VITE_WS_BASE_URL}/${roomId}?token=${encodeURIComponent(token)}`]
+    return import.meta.env.VITE_WS_BASE_URL
   }
-  const urls = []
-  if (typeof window !== 'undefined' && window.location?.host) {
-    const host = window.location.hostname
+  if (typeof window !== 'undefined' && window.location) {
     const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
-    // 1. Primary: Same port as webpage via Vite proxy (port 3000) - NEVER blocked by firewall if webpage loaded!
-    urls.push(`${proto}//${window.location.host}/ws/${roomId}?token=${encodeURIComponent(token)}`)
-    // 2. Secondary: Direct FastAPI port 8000
-    urls.push(`${proto}//${host}:8000/ws/${roomId}?token=${encodeURIComponent(token)}`)
-  } else {
-    urls.push(`ws://localhost:8000/ws/${roomId}?token=${encodeURIComponent(token)}`)
+    return `${proto}//${window.location.host}/ws`
   }
-  return urls
+  return 'ws://localhost:8000/ws'
 }
+
+const WS_BASE_URL = getWsBaseUrl()
 
 // Reconnection constants — see docs/websocket-contract.md § Reconnect Strategy
 const RECONNECT_BASE_MS = 1000
@@ -53,9 +41,6 @@ export function createWebSocketService(roomId, token, handlers = {}) {
   let socket = null
   let reconnectAttempts = 0
   let heartbeatTimer = null
-  let connectionTimeoutTimer = null
-  let urlIndex = 0
-  let isManuallyClosed = false
 
   function getTimestamp() {
     return new Date().toISOString()
@@ -85,56 +70,14 @@ export function createWebSocketService(roomId, token, handlers = {}) {
     }
   }
 
-  function clearConnectionTimeout() {
-    if (connectionTimeoutTimer) {
-      clearTimeout(connectionTimeoutTimer)
-      connectionTimeoutTimer = null
-    }
-  }
-
   function connect() {
-    if (isManuallyClosed) return
-    clearConnectionTimeout()
-    stopHeartbeat()
-
-    if (socket) {
-      try {
-        socket.onopen = null
-        socket.onmessage = null
-        socket.onclose = null
-        socket.onerror = null
-        socket.close()
-      } catch (e) {}
-      socket = null
-    }
-
-    const urls = buildWsUrls(roomId, token)
-    const url = urls[urlIndex % urls.length]
-    console.log(`[LinguaChat WS] Connecting (${(urlIndex % urls.length) + 1}/${urls.length}):`, url)
-
-    try {
-      socket = new WebSocket(url)
-    } catch (e) {
-      console.warn('[LinguaChat WS] Creation error for', url, e)
-      urlIndex++
-      scheduleReconnect(500)
-      return
-    }
-
-    // Failover rapidly if connection takes > 2.5s to open
-    connectionTimeoutTimer = setTimeout(() => {
-      if (socket && socket.readyState !== WebSocket.OPEN) {
-        console.warn('[LinguaChat WS] 2.5s Timeout on', url, '-> trying alternate route...')
-        urlIndex++
-        try { socket.close() } catch (e) {}
-        connect()
-      }
-    }, 2500)
+    const url = `${WS_BASE_URL}/${roomId}?token=${encodeURIComponent(token)}`
+    console.log('[LinguaChat WS] Connecting to:', url)
+    socket = new WebSocket(url)
 
     socket.onopen = () => {
-      clearConnectionTimeout()
       reconnectAttempts = 0
-      console.log('[LinguaChat WS] Successfully connected to:', url)
+      console.log('[LinguaChat WS] Connected successfully')
       startHeartbeat()
       handlers.onConnect?.()
     }
@@ -149,31 +92,27 @@ export function createWebSocketService(roomId, token, handlers = {}) {
     }
 
     socket.onclose = (event) => {
-      clearConnectionTimeout()
       stopHeartbeat()
-      console.log(`[LinguaChat WS] Closed (code: ${event.code})`)
+      console.log('[LinguaChat WS] Disconnected (code:', event.code, ')')
       handlers.onDisconnect?.(event.code)
 
       // Attempt reconnect if not deliberate close
-      if (!isManuallyClosed && event.code !== 1000 && event.code !== 4001 && event.code !== 4003) {
-        urlIndex++
+      if (event.code !== 1000 && event.code !== 4001 && event.code !== 4003) {
         scheduleReconnect()
       }
     }
 
     socket.onerror = () => {
-      console.warn('[LinguaChat WS] Error on:', url)
       handlers.onError?.('CONNECTION_ERROR', 'WebSocket connection error')
     }
   }
 
-  function scheduleReconnect(customDelay = null) {
-    if (isManuallyClosed) return
+  function scheduleReconnect() {
     if (reconnectAttempts >= RECONNECT_MAX_ATTEMPTS) {
       handlers.onError?.('MAX_RECONNECT_REACHED', 'Connection lost. Please refresh.')
       return
     }
-    const delay = customDelay !== null ? customDelay : Math.min(
+    const delay = Math.min(
       RECONNECT_BASE_MS * Math.pow(1.5, reconnectAttempts),
       RECONNECT_MAX_MS
     )
@@ -182,20 +121,11 @@ export function createWebSocketService(roomId, token, handlers = {}) {
   }
 
   function disconnect() {
-    isManuallyClosed = true
-    clearConnectionTimeout()
     stopHeartbeat()
     if (socket) {
-      try { socket.close(1000) } catch (e) {}
+      socket.close(1000)
       socket = null
     }
-  }
-
-  function reconnectNow() {
-    isManuallyClosed = false
-    reconnectAttempts = 0
-    urlIndex = 0
-    connect()
   }
 
   function sendMessage(text, originalLanguage = null) {
@@ -216,5 +146,5 @@ export function createWebSocketService(roomId, token, handlers = {}) {
     socket.send(buildEnvelope(type, payload))
   }
 
-  return { connect, disconnect, reconnectNow, sendMessage, sendTyping, sendLiveSignal }
+  return { connect, disconnect, sendMessage, sendTyping, sendLiveSignal }
 }

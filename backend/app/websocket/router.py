@@ -78,14 +78,22 @@ async def validate_websocket_auth(
     token: Optional[str],
 ) -> Optional[Dict[str, Any]]:
     """
-    Perform pre-accept security validation:
-    1. JWT token validation (close with 4001 if invalid/missing).
-    2. Room existence verification (close with 4004 if room not found).
-    3. Room membership check (close with 4003 if not a member).
-
+    Perform security validation after accepting the WebSocket connection.
+    
+    IMPORTANT: We must accept() first, then validate, then close with error code
+    if invalid. Calling close() before accept() causes browsers on external devices
+    to hang in "connecting" state indefinitely.
+    
     Returns:
         User payload dict if valid, or None if connection was closed.
     """
+    # Accept the connection first — this is required before we can send close frames
+    try:
+        await websocket.accept()
+    except Exception as e:
+        logger.warning(f"WebSocket accept failed for room '{room_id}': {e}")
+        return None
+
     # 1. JWT Token Check
     if not token or not token.strip():
         logger.warning(f"WebSocket connection rejected: Missing token for room '{room_id}'")
@@ -128,6 +136,7 @@ async def validate_websocket_auth(
             return None
 
     return user_info
+
 
 
 async def _translate_and_send_to_recipient(
@@ -213,14 +222,14 @@ async def websocket_endpoint(
     username = str(user_info.get("username") or user_info.get("name") or user_id[:8])
     preferred_language = str(user_info.get("preferred_language") or "en")
 
-    # ── 2. Accept & Register Connection ──────────────────────────────────────
+    # ── 2. Register Connection (already accepted in validate_websocket_auth) ──
     await manager.connect(
         websocket=websocket,
         room_id=r_id,
         user_id=user_id,
         username=username,
         preferred_language=preferred_language,
-        accept_connection=True,
+        accept_connection=False,
     )
 
     # ── 3. Broadcast JOIN Event ──────────────────────────────────────────────
@@ -334,12 +343,25 @@ async def websocket_endpoint(
                     "timestamp": now_iso,
                     "room_id": r_id,
                 }
-                target_user = payload.get("target_user_id")
+                target_user = payload.get("target_user_id") or payload.get("target_user")
                 if target_user:
                     room_connections = manager._rooms.get(r_id, {})
-                    target_conn = room_connections.get(str(target_user))
-                    if target_conn and "websocket" in target_conn:
-                        await manager.send_to_connection(target_conn["websocket"], live_event)
+                    t_str = str(target_user).replace("-", "").lower()
+                    target_conn = None
+                    for u_k, u_v in room_connections.items():
+                        if u_k == str(target_user) or str(u_k).replace("-", "").lower() == t_str:
+                            target_conn = u_v
+                            break
+                    target_ws = target_conn.get("ws") or target_conn.get("websocket") if target_conn else None
+                    if target_ws:
+                        await manager.send_to_connection(target_ws, live_event)
+                    else:
+                        # Fallback to broadcast if target connection was not found directly
+                        await manager.broadcast_to_room(
+                            r_id,
+                            live_event,
+                            exclude_connection=websocket if msg_type == WSMessageType.LIVE_REQUEST_JOIN.value else None,
+                        )
                 else:
                     await manager.broadcast_to_room(
                         r_id,

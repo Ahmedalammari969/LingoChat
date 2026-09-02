@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth.js'
 import { useWebSocket } from '../hooks/useWebSocket.js'
+import { authService } from '../services/auth.js'
 import { getRoomMessages, joinRoom, getRoomDetails } from '../api/rooms.js'
 import { WebRTCService } from '../services/webrtc.js'
 import LiveStreamView from '../components/LiveStreamView.jsx'
@@ -178,28 +179,42 @@ export default function ChatPage() {
         ])
       } else if (msg.type === 'LIVE_REQUEST_JOIN') {
         // إشعار المضيف بطلب الصعود
-        if (isHost || user?.username === hostUsername) {
+        const applicantId = payload.sender_id || payload.user_id
+        const applicantName = payload.sender_username || payload.username || 'مستخدم'
+        if (applicantId) {
           setGuestRequests((prev) => [
-            ...prev.filter((r) => r.user_id !== payload.sender_id),
-            { user_id: payload.sender_id, username: payload.sender_username },
+            ...prev.filter((r) => r.user_id !== applicantId),
+            { user_id: applicantId, username: applicantName },
           ])
         }
       } else if (msg.type === 'LIVE_ACCEPT_GUEST') {
+        console.log('[Live] LIVE_ACCEPT_GUEST received:', JSON.stringify(payload))
         setGuestUsername(payload.guest_username)
         setGuestUserId(payload.guest_id)
         setGuestRequests((prev) => prev.filter((r) => r.user_id !== payload.guest_id))
 
+        const currentUserId = user?.id || authService.getUser()?.id
+        const currentUsername = user?.username || authService.getUser()?.username
+        console.log('[Live] My identity: id=', currentUserId, 'username=', currentUsername)
+
         // إذا كنت أنا الضيف الذي تم قبوله
-        if (payload.guest_id === user?.id || payload.guest_username === user?.username) {
+        if (
+          (payload.guest_id && String(payload.guest_id) === String(currentUserId)) ||
+          (payload.guest_username && payload.guest_username === currentUsername)
+        ) {
+          console.log('[Live] ✅ I am the accepted guest!')
           setIsGuest(true)
           setHasRequestedJoin(false)
           setIsLiveModalOpen(true)
           try {
             await webrtcRef.current?.startLocalStream(true, true)
-            // إنشاء اتصال WebRTC مع المضيف
-            await webrtcRef.current?.createOffer(payload.host_id)
+            // sender_id is auto-injected by backend = the host's user ID
+            const targetHost = payload.sender_id || payload.host_id || hostUserId
+            console.log('[Live] Guest creating WebRTC offer to host:', targetHost)
+            await webrtcRef.current?.createOffer(targetHost)
           } catch (err) {
-            console.error('فشل تشغيل كاميرا الضيف:', err)
+            console.error('[Live] ❌ فشل تشغيل كاميرا الضيف:', err)
+            alert('تعذر فتح كاميرا الضيف: ' + err.message)
           }
         }
       } else if (msg.type === 'LIVE_REJECT_GUEST') {
@@ -218,14 +233,17 @@ export default function ChatPage() {
       }
       // ── 5. إشارات WebRTC Signaling ──
       else if (msg.type === 'RTC_OFFER') {
+        console.log('[Live] RTC_OFFER received from:', payload.sender_id, 'sdp type:', payload.sdp?.type)
         if (payload.sdp) {
           await webrtcRef.current?.handleOffer(payload.sender_id, payload.sdp)
         }
       } else if (msg.type === 'RTC_ANSWER') {
+        console.log('[Live] RTC_ANSWER received from:', payload.sender_id, 'sdp type:', payload.sdp?.type)
         if (payload.sdp) {
           await webrtcRef.current?.handleAnswer(payload.sender_id, payload.sdp)
         }
       } else if (msg.type === 'RTC_ICE_CANDIDATE') {
+        console.log('[Live] RTC_ICE_CANDIDATE received from:', payload.sender_id)
         if (payload.candidate) {
           await webrtcRef.current?.handleCandidate(payload.sender_id, payload.candidate)
         }
@@ -234,31 +252,47 @@ export default function ChatPage() {
   })
 
   // تهيئة كائن WebRTC
+  const sendLiveSignalRef = useRef(sendLiveSignal)
+  sendLiveSignalRef.current = sendLiveSignal
+
   useEffect(() => {
-    webrtcRef.current = new WebRTCService({
-      onLocalStream: (stream) => setLocalStream(stream),
-      onRemoteStream: (userId, stream) => setRemoteStream(stream),
-      sendSignal: (type, payload) => sendLiveSignal(type, payload),
+    const rtc = new WebRTCService({
+      onLocalStream: (stream) => {
+        console.log('[ChatPage] onLocalStream called, tracks:', stream.getTracks().map(t => t.kind))
+        setLocalStream(stream)
+      },
+      onRemoteStream: (userId, stream) => {
+        console.log('[ChatPage] onRemoteStream called, tracks:', stream.getTracks().map(t => t.kind))
+        setRemoteStream(stream)
+      },
+      sendSignal: (type, payload) => {
+        console.log('[ChatPage] sendSignal:', type, 'target:', payload?.target_user_id)
+        sendLiveSignalRef.current(type, payload)
+      },
     })
+    webrtcRef.current = rtc
 
     return () => {
-      webrtcRef.current?.stopLocalStream()
+      rtc.stopLocalStream()
     }
-  }, [sendLiveSignal])
+  }, []) // Empty deps - create once, use ref for sendLiveSignal
 
   // ── دوال التحكم في البث المباشر ──
   const handleStartLive = async () => {
     try {
+      const currentUserId = user?.id || authService.getUser()?.id || ''
+      const currentUsername = user?.username || authService.getUser()?.username || 'المضيف'
+
       setIsHost(true)
-      setHostUsername(user?.username || 'المضيف')
-      setHostUserId(user?.id || '')
+      setHostUsername(currentUsername)
+      setHostUserId(currentUserId)
       setIsLiveActive(true)
       setIsLiveModalOpen(true)
 
       await webrtcRef.current?.startLocalStream(true, true)
       sendLiveSignal('LIVE_START', {
-        host_id: user?.id,
-        host_username: user?.username,
+        host_id: currentUserId,
+        host_username: currentUsername,
       })
     } catch (err) {
       alert('تعذر فتح الكاميرا أو الميكروفون: ' + err.message)
@@ -279,8 +313,12 @@ export default function ChatPage() {
 
   const handleRequestJoin = () => {
     setHasRequestedJoin(true)
+    const currentUserId = user?.id || authService.getUser()?.id
+    const currentUsername = user?.username || authService.getUser()?.username
     sendLiveSignal('LIVE_REQUEST_JOIN', {
       target_user_id: hostUserId,
+      user_id: currentUserId,
+      username: currentUsername,
     })
   }
 
@@ -288,10 +326,12 @@ export default function ChatPage() {
     setGuestRequests((prev) => prev.filter((r) => r.user_id !== guestId))
     setGuestUsername(guestName)
     setGuestUserId(guestId)
+    const currentUserId = user?.id || authService.getUser()?.id
     sendLiveSignal('LIVE_ACCEPT_GUEST', {
       guest_id: guestId,
       guest_username: guestName,
-      host_id: user?.id,
+      host_id: currentUserId,
+      target_user_id: guestId,
     })
   }
 
@@ -317,9 +357,13 @@ export default function ChatPage() {
     const trimmed = inputText.trim()
     if (!trimmed) return
 
-    sendMessage(trimmed)
-    setInputText('')
-    sendTyping(false)
+    const sent = sendMessage(trimmed)
+    if (sent !== false) {
+      setInputText('')
+      sendTyping(false)
+    } else {
+      reconnect()
+    }
   }
 
   // التفاعل مع حقل الكتابة
@@ -338,12 +382,9 @@ export default function ChatPage() {
     setShowOriginalMap((prev) => ({ ...prev, [msgId]: !prev[msgId] }))
   }
 
-  // نسخ رابط الغرفة
+  // نسخ رابط الغرفة تلقائياً حسب عنوان المتصفح الحالي
   const handleCopyLink = () => {
-    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    const host = isLocal ? '10.171.146.61' : window.location.hostname
-    const port = window.location.port ? `:${window.location.port}` : ''
-    const inviteUrl = `${window.location.protocol}//${host}${port}/rooms/${roomId}`
+    const inviteUrl = `${window.location.origin}/rooms/${roomId}`
     navigator.clipboard.writeText(inviteUrl)
     setCopySuccess(true)
     setTimeout(() => setCopySuccess(false), 2000)

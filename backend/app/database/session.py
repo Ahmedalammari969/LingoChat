@@ -17,13 +17,17 @@ from sqlalchemy.ext.asyncio import (
 from app.core.config import settings
 
 # ── Engine ────────────────────────────────────────────────────────────────────
-# DATABASE_URL uses asyncpg driver: postgresql+asyncpg://user:password@host:port/dbname
+engine_kwargs = {"echo": settings.APP_DEBUG}
+if "sqlite" not in settings.DATABASE_URL:
+    engine_kwargs.update({
+        "pool_pre_ping": True,
+        "pool_size": 10,
+        "max_overflow": 20,
+    })
+
 engine = create_async_engine(
     settings.DATABASE_URL,
-    echo=settings.APP_DEBUG,
-    pool_pre_ping=True,
-    pool_size=10,
-    max_overflow=20,
+    **engine_kwargs,
 )
 
 # ── Session Factory ───────────────────────────────────────────────────────────

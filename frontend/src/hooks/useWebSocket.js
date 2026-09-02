@@ -1,5 +1,5 @@
 /**
- * LinguaChat — useWebSocket Hook (Skeleton)
+ * LinguaChat — useWebSocket Hook
  *
  * React hook wrapping the WebSocket service for use in ChatPage.
  * Implementation: Ahmed Alammari — TASK: Frontend / Integration
@@ -16,7 +16,7 @@ import { authService } from '../services/auth.js'
  * @param {function} handlers.onConnect
  * @param {function} handlers.onDisconnect
  * @param {function} handlers.onError
- * @returns {{ sendMessage, sendTyping, disconnect }}
+ * @returns {{ sendMessage, sendTyping, sendLiveSignal, disconnect }}
  */
 export function useWebSocket(roomId, handlers) {
   const serviceRef = useRef(null)
@@ -59,9 +59,5 @@ export function useWebSocket(roomId, handlers) {
     serviceRef.current?.disconnect()
   }, [])
 
-  const reconnect = useCallback(() => {
-    serviceRef.current?.reconnectNow()
-  }, [])
-
-  return { sendMessage, sendTyping, sendLiveSignal, disconnect, reconnect }
+  return { sendMessage, sendTyping, sendLiveSignal, disconnect }
 }

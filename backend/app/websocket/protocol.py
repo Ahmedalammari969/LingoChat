@@ -26,7 +26,9 @@ logger = logging.getLogger(__name__)
 
 # ── Constants ─────────────────────────────────────────────────────────────────
 # See docs/websocket-contract.md § Constraints & Validation
-MAX_MESSAGE_BYTES = 4096
+# NOTE: Increased from 4096 to 65536 to support WebRTC SDP messages
+# (RTC_OFFER/RTC_ANSWER contain full SDP which can be 2000-8000+ bytes)
+MAX_MESSAGE_BYTES = 65536
 
 
 # ── Exceptions ────────────────────────────────────────────────────────────────
